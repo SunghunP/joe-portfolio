@@ -1,4 +1,5 @@
 import Shell from './Shell';
+import WageBarChart from './WageBarChart';
 
 export default function Hero() {
     return (
@@ -28,10 +29,11 @@ export default function Hero() {
             </div>
 
             <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-                <div className="flex h-48 items-center justify-center rounded-lg bg-surface text-sm text-muted">
-                    Chartplaceholder
+                <div className="flex items-center justify-center rounded-lg bg-surface p-3">
+                    <WageBarChart compact />
                 </div>
             </div>
+
         </Shell>
     )
 }

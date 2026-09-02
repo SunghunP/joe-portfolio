@@ -1,8 +1,8 @@
-export default function ProjectCard({ title, description, tags, finding, repoUrl, caseStudyUrl }) {
+export default function ProjectCard({ title, description, tags, finding, repoUrl, caseStudyUrl, media }) {
   return (
     <article className="grid gap-6 rounded-xl border border-border bg-card p-6 shadow-sm sm:grid-cols-2 sm:items-center">
-      <div className="flex h-48 items-center justify-center rounded-lg bg-surface text-sm text-muted sm:h-full">
-        Chart coming next
+      <div className="flex items-center justify-center rounded-lg bg-surface p-4">
+        {media}
       </div>
 
       <div className="flex flex-col gap-3">
