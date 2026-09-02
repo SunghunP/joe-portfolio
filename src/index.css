@@ -18,8 +18,14 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     background-color: var(--color-bg);
     color: var(--color-ink);
+  }
+  [id] {
+    scroll-margin-top: 5rem;
   }
 }
