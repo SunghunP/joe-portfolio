@@ -12,7 +12,6 @@ export const experience = [
     period: 'Apr 2024 – Mar 2026',
     description:
       'Wrote a shell script that cut data-collection setup time from five minutes to about five seconds, and co-ran the QA plan behind a 99% accuracy rating.',
-    featured: true,
   },
   {
     role: 'Graduate Engineer',
