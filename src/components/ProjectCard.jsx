@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function ProjectCard({ title, description, tags, finding, repoUrl, caseStudyUrl, media }) {
   return (
     <article className="grid gap-6 rounded-xl border border-border bg-card p-6 shadow-sm sm:grid-cols-2 sm:items-center">
@@ -24,7 +26,7 @@ export default function ProjectCard({ title, description, tags, finding, repoUrl
 
         <div className="mt-2 flex gap-5 font-mono text-sm">
           <a href={repoUrl} className="text-primary hover:underline">GitHub →</a>
-          <a href={caseStudyUrl} className="text-primary hover:underline">Read the analysis →</a>
+          <Link to={caseStudyUrl} className="text-primary hover:underline">Read the analysis →</Link>
         </div>
       </div>
     </article>

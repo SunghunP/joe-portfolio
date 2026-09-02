@@ -7,6 +7,6 @@ export const projects = [
     tags: ['SQL', 'Power BI', 'Geospatial'],
     finding: 'Analysts cost 48% less in Yakima than in Seattle — but Seattle employs 125× as many.',
     repoUrl: '#',
-    caseStudyUrl: '#',
+    caseStudyUrl: '/projects/wa-labor-cost',
   },
 ]
