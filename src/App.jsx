@@ -6,6 +6,7 @@ import Stats from './components/Stats';
 import Shell from './components/Shell';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
+import Experience from './components/Experience';
 
 function App() {
   return (
@@ -15,7 +16,6 @@ function App() {
       <Shell className="py-14 sm:py-20"> 
         <Stats />
       </Shell>
-      
 
       <Section id="about">
         <About />
@@ -27,7 +27,7 @@ function App() {
         <Projects />
       </Section>
       <Section id="experience">
-        <p className="font-mono text-sm text-ink">Experience Section</p>
+        <Experience />
       </Section>
       <Section id="contact">
         <p className="font-mono text-sm text-ink">Contact Section</p>
