@@ -1,4 +1,4 @@
-import Shell from './Shell'
+import Shell from './Shell';
 
 export default function Section({ id, children, className = '' }) {
     return (
