@@ -11,7 +11,7 @@ export default function Experience() {
                 {experience.map((job) => (
                     <div
   key={job.role}
-  className={`rounded-xl border p-5 shadow-sm transition hover:-translate-y-1.5 hover:border-primary hover:shadow-lg motion-reduce:transform-none motion-reduce:transition-none sm:grid sm:grid-cols-[9rem_1fr] sm:gap-5 ${
+  className={`rounded-xl border p-5 shadow-sm transition hover:-translate-y-1.5 hover:border-bar hover:shadow-lg motion-reduce:transform-none motion-reduce:transition-none sm:grid sm:grid-cols-[9rem_1fr] sm:gap-5 ${
     job.featured ? 'border-primary bg-primary-tint' : 'border-border bg-card'
   }`}
 >
