@@ -1,22 +1,29 @@
+import Nav from './components/Nav';
+import Hero from './components/Hero';
 import Section from './components/Section';
-import Shell from './components/Shell';
 
 function App() {
   return (
-    <>
-      <Shell className="py-8">
-        <h1 className="text-3xl font-bold text-primary">Joe Park</h1>
-        <p className="text-muted">Data Analyst Portfolio - Building in progress.</p>
-      </Shell>
+    <div id="top">
+      <Nav />
+      <Hero />
 
-      <Section>
-        <p className="font-mono text-sm text-ink">Section two test</p>
+      <Section id="about">
+        <p className="font-mono text-sm text-ink">About Section</p>
       </Section>
-
-      <Section>
-        <p className="font-mono text-sm text-ink">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <Section id="skills">
+        <p className="font-mono text-sm text-ink">Skills Section</p>
       </Section>
-    </>
+      <Section id="projects">
+        <p className="font-mono text-sm text-ink">Projects Section</p>
+      </Section>
+      <Section id="experience">
+        <p className="font-mono text-sm text-ink">Experience Section</p>
+      </Section>
+      <Section id="contact">
+        <p className="font-mono text-sm text-ink">Contact Section</p>
+      </Section>
+    </div>
   )
 }
 
