@@ -2,7 +2,7 @@ import Shell from './Shell';
 
 export default function Hero() {
     return (
-        <Shell className="grid gap-10 py-14 sm:py-20 lg:grid-sols-[1fr_440px] lg:items-center lg:py-24">
+        <Shell className="grid gap-10 py-14 sm:py-20 lg:grid-cols-[1fr_440px] lg:items-center lg:py-24">
             <div>
                 <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted">
                     <span className="h-2 w-2 rounded-full bg-success" />
