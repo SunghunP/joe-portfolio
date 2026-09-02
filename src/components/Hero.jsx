@@ -14,7 +14,7 @@ export default function Hero() {
                 </h1>
 
                 <p className="mt-4 max-w-[48ch] text-lg text-muted">
-                    Engineering background, now in analytics. SQL and Power BI for the build — a clear recommendation for the room.
+                    3+ years in data operations and QA, formalized through Google's Data Analytics Certificate. SQL and Power BI for the build — a clear recommendation for the room.
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-3">

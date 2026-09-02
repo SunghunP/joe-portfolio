@@ -1,16 +1,16 @@
 const highlights = [
-    {
-        title: 'Highlight 1',
-        body: 'body text bla bla bla bla',
-    },
-    {
-        title: 'Highlight 2',
-        body: 'body text bla bla bla bla',
-    },
-    {
-        title: 'Highlight 3',
-        body: 'body text bla bla bla bla',
-    },
+  {
+    title: 'Protects data integrity',
+    body: 'Checks for outliers, duplicates, and double-counts before trusting a number — sometimes with a phone call to confirm it.',
+  },
+  {
+    title: 'Partners across teams',
+    body: 'Six teams, three time zones, one SOP: I write process docs and reports the whole group can actually use.',
+  },
+  {
+    title: 'Built for the non-technical',
+    body: 'Dashboards and recommendations aimed at the person making the call, not just other analysts.',
+  },
 ]
 
 export default function About() {
@@ -20,12 +20,14 @@ export default function About() {
                 <p className="text-xs font-bold uppercase tracking-widest text-primary">About</p>
                 <div className="mt-3 space-y-4 text-base text-ink">
                     <p>
-                        I spent about three years as a full-stack developer before moving toward analytics.
-            The engineering habits — version control, reproducibility, thinking in data models — came with me.
+                        Before analytics, I spent three-plus years partnering across departments in Fortune 500 programs — Meta,
+                        Amazon, Google, Microsoft — on data collection, QA, and reporting: writing SOPs, running structured test
+                        plans, chasing down data-integrity issues. The Google Data Analytics Certificate turned that instinct for
+                        "is this number actually right" into formal SQL, Python, and BI training.
                     </p>
                     <p>
-                        I like the problems where the hard part is deciding what to measure. Based in Seattle;
-            open to data-analyst roles.
+                        I like the problems where the hard part is deciding what to measure and trust. Based in Kirkland, WA;
+                        open to data-analyst roles.
                     </p>
                 </div>
             </div>
