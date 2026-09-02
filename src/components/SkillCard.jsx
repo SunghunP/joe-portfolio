@@ -29,7 +29,9 @@ export default function SkillCard({ name, body, chips, size, accent, icon }) {
   const s = SIZE_STYLES[size]
 
   return (
-    <div className={`flex flex-col gap-2 rounded-xl border border-border bg-card ${s.pad} shadow-sm ${s.span}`}>
+    <div
+      className={`flex flex-col gap-2 rounded-xl border border-border bg-card ${s.pad} shadow-sm ${s.span} transition hover:-translate-y-1.5 hover:shadow-lg hover:shadow-primary/20 motion-reduce:transform-none motion-reduce:transition-none` }
+    >
       <div className="flex items-center gap-2">
         {icon && <img src={icon} alt="" className={s.icon} />}
         <h3 className={`${s.title} font-bold text-ink`}>{name}</h3>
