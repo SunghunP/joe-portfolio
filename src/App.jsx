@@ -1,12 +1,18 @@
 import Nav from './components/Nav';
 import Hero from './components/Hero';
 import Section from './components/Section';
+import Stats from './components/Stats';
+import Shell from './components/Shell';
 
 function App() {
   return (
     <div id="top">
       <Nav />
       <Hero />
+      <Shell className="py-14 sm:py-20"> 
+        <Stats />
+      </Shell>
+      
 
       <Section id="about">
         <p className="font-mono text-sm text-ink">About Section</p>
