@@ -13,7 +13,7 @@ export default function Nav() {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
-        <header className='sticky top-0 z-50 border-b border-border bg-bg/90 backdrop-blur'>
+        <header className="sticky top-0 z-50 border-b border-border bg-bg/90 backdrop-blur">
             <Shell className="flex items-center justify-between py-3">
                 <a href="#top" className="text-sm font-extrabold text-ink">
                     Joe Park
