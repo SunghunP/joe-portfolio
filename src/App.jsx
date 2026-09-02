@@ -1,8 +1,10 @@
 import Nav from './components/Nav';
 import Hero from './components/Hero';
 import Section from './components/Section';
+import About from './components/About';
 import Stats from './components/Stats';
 import Shell from './components/Shell';
+
 
 function App() {
   return (
@@ -15,7 +17,7 @@ function App() {
       
 
       <Section id="about">
-        <p className="font-mono text-sm text-ink">About Section</p>
+        <About />
       </Section>
       <Section id="skills">
         <p className="font-mono text-sm text-ink">Skills Section</p>
