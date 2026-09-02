@@ -7,13 +7,14 @@ import Shell from './components/Shell';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Experience from './components/Experience';
+import Contact from './components/Contact';
 
 function App() {
   return (
     <div id="top">
       <Nav />
       <Hero />
-      <Shell className="py-14 sm:py-20"> 
+      <Shell className="py-14 sm:py-20">
         <Stats />
       </Shell>
 
@@ -29,8 +30,8 @@ function App() {
       <Section id="experience">
         <Experience />
       </Section>
-      <Section id="contact">
-        <p className="font-mono text-sm text-ink">Contact Section</p>
+      <Section id="contact" tinted>
+        <Contact />
       </Section>
     </div>
   )
