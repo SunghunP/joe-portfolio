@@ -2,6 +2,7 @@ export const skills = [
   {
     name: 'SQL',
     size: 'lg',
+    accent: true,
     body: 'Cleaning, joining, and aggregating at the source. Self-joins for imputation, weighted aggregates, and previewing every UPDATE as a SELECT before running it.',
     chips: ['Joins', 'Window fns', 'CTEs', 'Data QA'],
   },
@@ -15,30 +16,35 @@ export const skills = [
   {
     name: 'Python',
     size: 'md',
+    accent: true,
     body: 'pandas for wrangling and quick analysis outside the database.',
     chips: ['pandas', 'Jupyter'],
   },
   {
     name: 'SQL Server / SSMS',
     size: 'md',
+    accent: true,
     body: 'Importing, staging, and querying — always on a copy, so the raw data stays clean.',
     chips: ['Import', 'Staging'],
   },
   {
     name: 'Excel',
     size: 'sm',
+    accent: true,
     body: 'Fast checks, pivots, and stakeholder-ready tables.',
     chips: [],
   },
   {
     name: 'Git & GitHub',
     size: 'sm',
+    accent: true,
     body: 'Versioned queries and notebooks.',
     chips: [],
   },
   {
     name: 'Geospatial',
     size: 'md',
+    accent: true,
     body: 'Census TIGER boundary files reshaped in mapshaper — filter, group, dissolve, merge — into custom map regions.',
     chips: ['mapshaper', 'Census TIGER', 'GeoJSON'],
   },
