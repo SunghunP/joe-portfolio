@@ -1,3 +1,5 @@
+import Kicker from './Kicker';
+
 const highlights = [
   {
     title: 'Protects data integrity',
@@ -17,7 +19,7 @@ export default function About() {
     return (
         <div className="grid gap-10 md:grid-cols-2">
             <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-primary">About</p>
+                <Kicker>About</Kicker>
                 <div className="mt-3 space-y-4 text-base text-ink">
                     <p>
                         Before analytics, I spent three-plus years partnering across departments in Fortune 500 programs — Meta,
@@ -26,7 +28,7 @@ export default function About() {
                         "is this number actually right" into formal SQL, Python, and BI training.
                     </p>
                     <p>
-                        I like the problems where the hard part is deciding what to measure and trust. Based in Kirkland, WA;
+                        I like the problems where the hard part is deciding what to measure and trust. Based in Seattle, WA;
                         open to data-analyst roles.
                     </p>
                 </div>

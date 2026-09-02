@@ -5,6 +5,7 @@ import About from './components/About';
 import Stats from './components/Stats';
 import Shell from './components/Shell';
 import Skills from './components/Skills';
+import Projects from './components/Projects';
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         <Skills />
       </Section>
       <Section id="projects">
-        <p className="font-mono text-sm text-ink">Projects Section</p>
+        <Projects />
       </Section>
       <Section id="experience">
         <p className="font-mono text-sm text-ink">Experience Section</p>

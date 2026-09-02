@@ -1,10 +1,11 @@
 import SkillCard from "./SkillCard";
+import Kicker from './Kicker';
 import { skills } from "../data/skills";
 
 export default function Skills() {
     return (
         <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-primary">Skills</p>
+            <Kicker>Skills</Kicker>
             <h2 className="mt-2 text-2xl font-extra-bold tracking-tight text-ink sm:text-3xl">Tools I build with</h2>
             <p className="mt-2 max-w-[60ch] text-muted">
               Comfortable across the stack — from the raw government file to a shipped report.
