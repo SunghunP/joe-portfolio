@@ -12,8 +12,11 @@ export default function Hero() {
         </span>
 
         <h1 className="mt-4 max-w-[18ch] text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">
-          A data analyst who takes the question all the way to the answer.
+          Joe Park
         </h1>
+        <p className="mt-2 text-lg text-muted">
+          SQL | Power BI | Analytics 
+        </p>
 
         <p className="mt-4 max-w-[48ch] text-lg text-muted">
           3+ years in data operations and QA, formalized through Google's Data Analytics Certificate. SQL and Power BI for the build — a clear recommendation for the room.
