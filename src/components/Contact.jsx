@@ -15,7 +15,7 @@ export default function Contact() {
 
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
         <a
-          href="/Joe_Park_Resume.pdf"
+          href={`${import.meta.env.BASE_URL}Joe_Park_Resume.pdf`}
           className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-strong"
         >
           Download Résumé
