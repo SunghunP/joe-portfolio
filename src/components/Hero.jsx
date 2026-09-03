@@ -8,7 +8,7 @@ export default function Hero() {
       <div>
         <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted">
           <span className="h-2 w-2 rounded-full bg-success" />
-          Open to analyst roles | Kirkland, WA &amp; Remote
+          Open to analyst roles | Seattle, WA &amp; Remote
         </span>
 
         <h1 className="mt-4 max-w-[18ch] text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">
