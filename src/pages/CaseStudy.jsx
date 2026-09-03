@@ -1,8 +1,8 @@
 import { useParams, Link } from 'react-router-dom';
 import Shell from '../components/Shell';
 import WageBarChart from '../components/WageBarChart';
-import WageScatterChart from '../components/WageScatterChart';
 import shapeMapImage from '../assets/images/shapemap_average_cost_of_analyst.png';
+import scatterImage from '../assets/images/scatter_plot_analyst_cost_vs_talent_pool.png';
 import { projects } from '../data/projects';
 import { wageData } from '../data/wageData';
 
@@ -319,12 +319,18 @@ export default function CaseStudy() {
       </div>
 
       <p className="mt-8 font-mono text-xs uppercase tracking-wide text-muted">Visualization: cost vs. talent pool size</p>
-      <div className="mt-2 rounded-xl border border-border bg-card p-4 shadow-sm">
-        <WageScatterChart />
-        <p className="mt-3 font-mono text-xs text-muted">
-          Figure 3. Weighted average annual wage vs. total analyst employment on a log scale, by area.
-        </p>
-      </div>
+      <figure className="mt-2 overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+        <img
+          src={scatterImage}
+          alt="Bubble chart of average annual analyst wage versus total analysts employed by Washington labor market area, with bubble size representing total employment on a log scale"
+          className="w-full"
+        />
+        <figcaption className="border-t border-border px-4 py-2 font-mono text-xs text-muted">
+          Figure 3. Weighted average annual wage vs. total analyst employment on a log scale, by area. Bubble size reflects
+          total employment.
+        </figcaption>
+      </figure>
+
 
       <h2 className="mt-12 text-xl font-bold text-ink">Key findings</h2>
       <ul className="mt-3 flex flex-col gap-3">
