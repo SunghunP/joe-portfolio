@@ -3,8 +3,6 @@ import { useLocation } from 'react-router-dom';
 import Hero from '../components/Hero';
 import Section from '../components/Section';
 import About from '../components/About';
-import Stats from '../components/Stats';
-import Shell from '../components/Shell';
 import Skills from '../components/Skills';
 import Projects from '../components/Projects';
 import Experience from '../components/Experience';
@@ -23,9 +21,6 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Shell className="py-14 sm:py-20">
-        <Stats />
-      </Shell>
 
       <Section id="about">
         <Reveal><About /></Reveal>
