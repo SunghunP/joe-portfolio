@@ -9,6 +9,7 @@ import Skills from '../components/Skills';
 import Projects from '../components/Projects';
 import Experience from '../components/Experience';
 import Contact from '../components/Contact';
+import Reveal from '../components/Reveal';
 
 export default function Home() {
   const { hash } = useLocation();
@@ -27,19 +28,19 @@ export default function Home() {
       </Shell>
 
       <Section id="about">
-        <About />
+        <Reveal><About /></Reveal>
       </Section>
       <Section id="skills">
-        <Skills />
+        <Reveal><Skills /></Reveal>
       </Section>
       <Section id="projects">
-        <Projects />
+        <Reveal><Projects /></Reveal>
       </Section>
       <Section id="experience">
-        <Experience />
+        <Reveal><Experience /></Reveal>
       </Section>
       <Section id="contact" tinted>
-        <Contact />
+        <Reveal><Contact /></Reveal>
       </Section>
     </>
   )
