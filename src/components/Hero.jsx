@@ -7,7 +7,7 @@ import { socialLinks, email } from '../data/social';
 
 export default function Hero() {
   return (
-    <div className="border-b border-border bg-primary/5 lg:flex lg:min-h-[90vh] lg:items-center">
+    <div className="border-b border-border bg-primary/5 lg:relative lg:flex lg:min-h-[90vh] lg:items-center">
       <Shell className="w-full py-14 sm:py-20 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-[1fr_440px] lg:items-center">
           <div>
@@ -76,6 +76,21 @@ export default function Hero() {
           <Stats />
         </div>
       </Shell>
+
+      <div className="hidden lg:absolute lg:bottom-6 lg:left-1/2 lg:flex lg:-translate-x-1/2 lg:flex-col lg:items-center lg:gap-1 lg:text-muted">
+        <span className="text-xs font-medium">Scroll</span>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-4 w-4 animate-bounce motion-reduce:animate-none"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </div>
     </div>
   )
 }
