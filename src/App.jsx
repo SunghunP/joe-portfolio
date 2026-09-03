@@ -5,7 +5,7 @@ import CaseStudy from './pages/CaseStudy';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/joe-portfolio">
       <div id="top">
         <Nav />
         <Routes>
