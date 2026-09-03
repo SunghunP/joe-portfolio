@@ -1,4 +1,22 @@
 import Kicker from './Kicker'
+import githubIcon from '../assets/icons/github.svg'
+import linkedinIcon from '../assets/icons/linkedin.svg'
+import mediumIcon from '../assets/icons/medium.svg'
+
+const LINKS = [
+  { href: 'https://github.com/SunghunP', label: 'GitHub', icon: githubIcon },
+  { href: 'https://medium.com/@joeparkda', label: 'Medium', icon: mediumIcon },
+  { href: 'https://www.linkedin.com/in/sunghunp/', label: 'LinkedIn', icon: linkedinIcon },
+]
+
+function EmailIcon({ className }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="m3 7 9 6 9-6" />
+    </svg>
+  )
+}
 
 export default function Contact() {
   return (
@@ -22,28 +40,28 @@ export default function Contact() {
         >
           Download Résumé
         </a>
+
+        {LINKS.map((link) => (
+          <a
+            key={link.label}
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full border border-primary px-5 py-3 text-sm font-semibold text-primary transition hover:bg-primary-tint"
+          >
+            <img src={link.icon} alt="" className="h-4 w-4" />
+            {link.label}
+          </a>
+        ))}
+
         <a
-          href="https://www.linkedin.com/in/sunghunp/"
-          className="rounded-full border border-primary px-6 py-3 text-sm font-semibold text-primary transition hover:bg-primary-tint"
+          href="mailto:joeparkda@gmail.com"
+          className="inline-flex items-center gap-2 rounded-full border border-primary px-5 py-3 text-sm font-semibold text-primary transition hover:bg-primary-tint"
         >
-          LinkedIn
-        </a>
-        <a
-          href="https://github.com/SunghunP"
-          className="rounded-full border border-primary px-6 py-3 text-sm font-semibold text-primary transition hover:bg-primary-tint"
-        >
-          GitHub
+          <EmailIcon className="h-4 w-4" />
+          Email
         </a>
       </div>
-
-      <p className="mt-8">
-        <a
-          href="mailto:sunghun.josephp@gmail.com"
-          className="font-mono text-sm text-primary underline underline-offset-4 hover:text-primary-strong"
-        >
-          joeparkda@gmail.com
-        </a>
-      </p>
     </div>
   )
 }

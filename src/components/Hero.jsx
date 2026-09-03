@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import Shell from './Shell';
 import profilePhoto from '../assets/images/profile.jpg';
+import EmailIcon from './EmailIcon';
+import { socialLinks, email } from '../data/social';
 
 export default function Hero() {
   return (
@@ -24,7 +26,27 @@ export default function Hero() {
         <p className="mt-4 max-w-[48ch] text-lg text-muted">
           3+ years in data operations and QA, formalized through Google's Data Analytics Certificate. SQL and Power BI for the build — a clear recommendation for the room.
         </p>
-
+        <div className="mt-4 flex items-center gap-3">
+          {socialLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={link.label}
+              className="grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-muted transition hover:border-primary hover:text-primary"
+            >
+              <img src={link.icon} alt="" className="h-4 w-4" />
+            </a>
+          ))}
+          <a
+            href={`mailto:${email}`}
+            aria-label="Email"
+            className="grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-muted transition hover:border-primary hover:text-primary"
+          >
+            <EmailIcon className="h-4 w-4" />
+          </a>
+        </div>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link to="/#projects" className="rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white">
             View Projects
@@ -36,6 +58,8 @@ export default function Hero() {
             Resume (PDF)
           </a>
         </div>
+
+
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
