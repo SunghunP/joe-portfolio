@@ -23,7 +23,10 @@ export default function Hero() {
           <Link to="/#projects" className="rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white">
             View Projects
           </Link>
-          <a href={`${import.meta.env.BASE_URL}Joe_Park_Resume.pdf`} className="rounded-full border border-primary px-5 py-3 text-sm font-semibold text-primary">
+          <a href={`${import.meta.env.BASE_URL}Joe_Park_Resume.pdf`}
+            target="_blank"
+            rel="noopener noreferrer" 
+            className="rounded-full border border-primary px-5 py-3 text-sm font-semibold text-primary">
             Resume (PDF)
           </a>
         </div>

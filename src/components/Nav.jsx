@@ -16,7 +16,7 @@ export default function Nav() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-bg/90 backdrop-blur">
       <Shell className="flex items-center justify-between py-3">
-        <Link to="/" className="text-sm font-extrabold text-ink">
+        <Link to="/" onClick={() => window.scrollTo(0, 0)} className="text-sm font-extrabold text-ink">
           Joe Park
         </Link>
 
@@ -27,7 +27,12 @@ export default function Nav() {
               {link.label}
             </Link>
           ))}
-          <a href={`${import.meta.env.BASE_URL}Joe_Park_Resume.pdf`} className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white">
+          <a
+            href={`${import.meta.env.BASE_URL}Joe_Park_Resume.pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white"
+          >
             Resume
           </a>
         </nav>
@@ -59,7 +64,9 @@ export default function Nav() {
           ))}
           <a
             href={`${import.meta.env.BASE_URL}Joe_Park_Resume.pdf`}
-            className="mt-1 inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white"
           >
             Resume
           </a>
