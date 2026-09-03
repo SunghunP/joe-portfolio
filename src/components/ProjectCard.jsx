@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 export default function ProjectCard({ title, description, tags, finding, repoUrl, caseStudyUrl, media }) {
   return (
     <article className="grid gap-6 rounded-xl border border-border bg-card p-6 shadow-sm sm:grid-cols-2 sm:items-center">
-      <div className="flex items-center justify-center rounded-lg bg-surface p-4">
+      <div className="flex min-w-0 items-center justify-center overflow-x-auto rounded-lg bg-surface p-4">
         {media}
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="flex min-w-0 flex-col gap-3">
         <div className="flex flex-wrap gap-1.5">
           {tags.map((tag) => (
             <span key={tag} className="rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted">

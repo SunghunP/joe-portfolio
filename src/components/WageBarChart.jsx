@@ -22,7 +22,7 @@ export default function WageBarChart({ compact = false }) {
       role="img"
       aria-label="Bar chart: weighted mean analyst wage by Washington labor-market area"
       className="w-full font-mono"
-      style={{ minWidth: compact ? 300 : 420 }}
+      style={{ minWidth: compact ? 300 : 340 }}
     >
       {ticks.map((tick) => (
         <g key={tick}>
