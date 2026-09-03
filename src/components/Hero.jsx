@@ -6,8 +6,8 @@ import { socialLinks, email } from '../data/social';
 
 export default function Hero() {
   return (
-    <div className="border-b border-border bg-primary/5">
-    <Shell className="grid gap-10 py-14 sm:py-20 lg:grid-cols-[1fr_440px] lg:items-center lg:py-24">
+    <div className="border-b border-border bg-primary/5 lg:flex lg:min-h-[90vh] lg:items-center">
+    <Shell className="grid w-full gap-10 py-14 sm:py-20 lg:grid-cols-[1fr_440px] lg:items-center lg:py-24">
       <div>
         <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted">
           <span className="relative flex h-2 w-2">
