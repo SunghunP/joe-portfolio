@@ -27,7 +27,7 @@ export default function Nav() {
                             {link.label}
                         </Link>
                     ))}
-                    <a href="/resume.pdf" className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white">
+                    <a href="/Joe_Park_Resume.pdf" className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white">
                       Resume
                     </a>
                 </nav>
@@ -58,7 +58,7 @@ export default function Nav() {
                         </Link>
                     ))}
                     <a
-                        href="/resume.pdf"
+                        href="/Joe_Park_Resume.pdf"
                         className="mt-1 inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white"
                     >
                         Resume

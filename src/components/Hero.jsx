@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Shell from './Shell';
 import WageBarChart from './WageBarChart';
 
@@ -7,7 +8,7 @@ export default function Hero() {
             <div>
                 <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted">
                     <span className="h-2 w-2 rounded-full bg-success" />
-                    Open to analyst roles | Seattle &amp; Remote
+                    Open to analyst roles | Kirkland, WA &amp; Remote
                 </span>
 
                 <h1 className="mt-4 max-w-[18ch] text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">
@@ -19,10 +20,10 @@ export default function Hero() {
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-3">
-                    <a href="#projects" className="rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white">
+                    <Link to="/#projects" className="rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white">
                         View Projects
-                    </a>
-                    <a href="/resume.pdf" className="rounded-full border border-primary px-5 py-3 text-sm font-semibold text-primary">
+                    </Link>
+                    <a href="/Joe_Park_Resume.pdf" className="rounded-full border border-primary px-5 py-3 text-sm font-semibold text-primary">
                         Resume (PDF)
                     </a>
                 </div>
@@ -30,7 +31,7 @@ export default function Hero() {
 
             <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
                 <div className="flex items-center justify-center rounded-lg bg-surface p-3">
-                    <WageBarChart compact />
+                    <WageBarChart size="compact" />
                 </div>
             </div>
 

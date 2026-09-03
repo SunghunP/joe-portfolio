@@ -389,7 +389,7 @@ export default function CaseStudy() {
 
       <div className="mt-10 flex flex-wrap gap-5 border-t border-border pt-6 font-mono text-sm">
         <a href={project.repoUrl} className="text-primary hover:underline">Full write-up &amp; SQL on GitHub →</a>
-        <a href="#" className="text-primary hover:underline">Power BI report →</a>
+        <a href="https://medium.com/@joeparkda/where-should-a-company-hire-data-analysts-in-washington-state-i-let-the-wage-data-decide-f3dbf8e12d52?postPublishedType=initial" className="text-primary hover:underline">Medium Article →</a>
       </div>
     </Shell>
   )

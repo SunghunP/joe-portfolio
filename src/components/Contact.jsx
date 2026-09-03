@@ -15,7 +15,7 @@ export default function Contact() {
 
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
         <a
-          href="/resume.pdf"
+          href="/Joe_Park_Resume.pdf"
           className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-strong"
         >
           Download Résumé
@@ -39,11 +39,8 @@ export default function Contact() {
           href="mailto:sunghun.josephp@gmail.com"
           className="font-mono text-sm text-primary underline underline-offset-4 hover:text-primary-strong"
         >
-          sunghun.josephp@gmail.com
+          joeparkda@gmail.com
         </a>
-      </p>
-      <p className="mt-2 font-mono text-xs text-muted">
-        <a href="tel:+12063937479" className="hover:text-ink">206-393-7479</a>
       </p>
     </div>
   )
