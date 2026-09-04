@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { wageData } from '../data/wageData';
 
 export default function WageBarChart({ compact = false }) {
+  const [hovered, setHovered] = useState(null);
   const data = compact ? wageData.filter((d) => d.heroFeatured) : wageData
 
   const labelWidth = compact ? 90 : 150
@@ -50,9 +52,16 @@ export default function WageBarChart({ compact = false }) {
         const rowCenter = top + i * rowHeight + rowHeight / 2
         const barEnd = scaleX(area.wage)
         const isHighlighted = area.highlight === 'low' || area.highlight === 'high'
+        const isDimmed = hovered !== null && hovered !== area.name
 
         return (
-          <g key={area.name}>
+          <g
+            key={area.name}
+            opacity={isDimmed ? 0.35 : 1}
+            className="transition-opacity duration-150"
+            onMouseEnter={() => setHovered(area.name)}
+            onMouseLeave={() => setHovered(null)}
+          >
             <text x={labelWidth} y={rowCenter + 3} textAnchor="end" fontSize={labelFontSize} className="fill-muted">
               {area.name}
             </text>
