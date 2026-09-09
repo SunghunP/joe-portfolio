@@ -35,7 +35,7 @@ export const skills = [
     size: 'sm',
     accent: true,
     icon: googleSheetsIcon,
-    body: 'Fast checks, pivots, and stakeholder-ready tables.',
+    body: 'Fast checks, pivots, and tables I can hand straight to a non-technical teammate.',
     chips: [],
   },
   {
@@ -51,7 +51,7 @@ export const skills = [
     size: 'sm',
     accent: true,
     icon: mapSearchIcon,
-    body: 'Census TIGER boundary files reshaped in mapshaper — filter, group, dissolve, merge — into custom map regions.',
+    body: 'Census TIGER boundary files reshaped in mapshaper: filtered, grouped, dissolved, and merged into custom map regions.',
     chips: ['mapshaper', 'Census TIGER', 'GeoJSON'],
   },
 ]

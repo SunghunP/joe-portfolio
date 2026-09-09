@@ -11,7 +11,7 @@ const highlights = [
   },
   {
     title: 'Built for the non-technical',
-    body: 'Dashboards and recommendations aimed at the person making the call, not just other analysts.',
+    body: 'Power BI reports a non-technical stakeholder can read and act on without me walking them through it.',
   },
 ]
 

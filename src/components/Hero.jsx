@@ -26,7 +26,7 @@ export default function Hero() {
             </p>
 
             <p className="mt-4 max-w-[48ch] text-lg text-muted">
-              3+ years in data operations and QA, paired with SQL and Power BI skills built through Google's Data Analytics Certificate and my own project work. I turn raw data into a clear recommendation for the room.
+              3+ years in data operations and QA, paired with SQL and Power BI skills built through Google's Data Analytics Certificate and my own project work. I clean messy data and turn it into analysis people can actually act on.
             </p>
             <div className="mt-4 flex items-center gap-3">
               {socialLinks.map((link) => (
