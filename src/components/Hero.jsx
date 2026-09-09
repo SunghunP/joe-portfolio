@@ -2,8 +2,7 @@ import { Link } from 'react-router-dom';
 import Shell from './Shell';
 import Stats from './Stats';
 import profilePhoto from '../assets/images/profile.jpg';
-import EmailIcon from './EmailIcon';
-import { socialLinks, email } from '../data/social';
+import { socialLinks } from '../data/social';
 
 export default function Hero() {
   return (
@@ -42,13 +41,6 @@ export default function Hero() {
                   <img src={link.icon} alt="" className="h-4 w-4" />
                 </a>
               ))}
-              <a
-                href={`mailto:${email}`}
-                aria-label="Email"
-                className="grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-muted transition hover:border-primary hover:text-primary"
-              >
-                <EmailIcon className="h-4 w-4" />
-              </a>
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link to="/#projects" className="rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white">

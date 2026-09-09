@@ -27,10 +27,6 @@ export default function About() {
             plans, chasing down data-integrity issues. The Google Data Analytics Certificate turned that instinct for
             "is this number actually right" into formal SQL, Python, and BI training.
           </p>
-          <p>
-            I like the problems where the hard part is deciding what to measure and trust. Based in Seattle, WA;
-            open to data-analyst roles.
-          </p>
         </div>
       </div>
 
