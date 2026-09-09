@@ -4,7 +4,7 @@ import linkedinIcon from '../assets/icons/linkedin.svg'
 import mediumIcon from '../assets/icons/medium.svg'
 
 const LINKS = [
-  { href: 'https://github.com/SunghunP', label: 'GitHub', icon: githubIcon },
+  { href: 'https://github.com/SunghunP?tab=repositories', label: 'GitHub', icon: githubIcon },
   { href: 'https://medium.com/@joeparkda', label: 'Medium', icon: mediumIcon },
   { href: 'https://www.linkedin.com/in/sunghunp/', label: 'LinkedIn', icon: linkedinIcon },
 ]
