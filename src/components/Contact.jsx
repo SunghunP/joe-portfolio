@@ -18,7 +18,16 @@ export default function Contact() {
         Let's talk.
       </h2>
 
-      <p className="mx-auto mt-4 max-w-[48ch] text-lg text-muted">
+      <div className="mt-4 flex flex-col items-center gap-1 font-mono text-xl text-muted sm:text-2xl">
+        <a href="mailto:joeparkda@gmail.com" className="hover:text-primary">
+          joeparkda@gmail.com
+        </a>
+        <a href="tel:+12063937479" className="hover:text-primary">
+          206-393-7479
+        </a>
+      </div>
+
+      <p className="mx-auto mt-6 max-w-[48ch] text-lg text-muted">
         Open to data-analyst roles in Seattle, WA or remote. Email is the fastest way to reach me.
       </p>
 
