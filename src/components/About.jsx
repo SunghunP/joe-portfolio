@@ -3,7 +3,7 @@ import Kicker from './Kicker';
 const highlights = [
   {
     title: 'Protects data integrity',
-    body: 'Checks for outliers, duplicates, and double-counts before trusting a number — sometimes with a phone call to confirm it.',
+    body: 'Checks for outliers, duplicates, and double-counts before trusting a number, sometimes with a phone call to confirm it.',
   },
   {
     title: 'Partners across teams',
@@ -22,10 +22,11 @@ export default function About() {
         <Kicker>About</Kicker>
         <div className="mt-3 space-y-4 text-base text-ink">
           <p>
-            Before analytics, I spent three-plus years partnering across departments in Fortune 500 programs — Meta,
-            Amazon, Google, Microsoft — on data collection, QA, and reporting: writing SOPs, running structured test
-            plans, chasing down data-integrity issues. The Google Data Analytics Certificate turned that instinct for
-            "is this number actually right" into formal SQL, Python, and BI training.
+            Before analytics, I spent three-plus years in data operations and QA on Fortune 500 programs at Meta,
+            writing SOPs, running structured test plans, and chasing down data-integrity issues before anyone trusted
+            a number. That's the same question data analysis runs on: is this number actually right, and what does
+            it mean. The Google Data Analytics Certificate gave that instinct a formal toolkit: SQL, Python, and
+            Power BI.
           </p>
         </div>
       </div>

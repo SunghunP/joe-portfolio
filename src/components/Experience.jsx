@@ -5,7 +5,7 @@ export default function Experience() {
   return (
     <div>
       <Kicker>Experience</Kicker>
-      <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Path here</h2>
+      <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">From QA to data analytics</h2>
 
       <div className="mt-8 flex flex-col gap-4">
         {experience.map((job) => (

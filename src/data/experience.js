@@ -4,20 +4,20 @@ export const experience = [
     company: 'Applause · Bellevue, WA',
     period: 'May 2026 – Jul 2026',
     description:
-      'Built a web automation tool that cut per-collection time from 30 minutes to 2 minutes across 24 daily collections — about 56 hours saved a week.',
+      'Identified a repetitive bottleneck across 24 daily data collections and automated it, cutting per-collection time from 30 minutes to 2 minutes, about 56 hours saved a week.',
   },
   {
     role: 'Data Technician II',
     company: 'Meta (via Qualitest) · Redmond, WA',
     period: 'Apr 2024 – Mar 2026',
     description:
-      'Wrote a shell script that cut data-collection setup time from five minutes to about five seconds, and co-ran the QA plan behind a 99% accuracy rating.',
+      'Diagnosed a slow, error-prone setup step and scripted it down from five minutes to about five seconds, then co-ran the QA plan that measured and held a 99% accuracy rating.',
   },
   {
     role: 'Graduate Engineer',
     company: 'Qualitest · Kirkland, WA',
     period: 'Apr 2023 – Apr 2024',
-    description: 'Led QA review across 5+ large-scale projects, cutting costs 50% through cleaner data-collection practices.',
+    description: 'Analyzed data-collection practices across 5+ large-scale projects, leading the QA review that traced and cut out the sources of rework, a 50% cost reduction.',
   },
 ]
 

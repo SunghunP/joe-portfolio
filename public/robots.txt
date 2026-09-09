@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sunghunp.github.io/joe-portfolio/sitemap.xml
