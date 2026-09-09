@@ -65,8 +65,7 @@ export default function Nav() {
           ))}
           <a
             href={`${import.meta.env.BASE_URL}Joe_Park_Resume.pdf`}
-            target="_blank"
-            rel="noopener noreferrer"
+            download="Joe_Park_Resume.pdf"
             className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white"
           >
             Resume
@@ -100,8 +99,7 @@ export default function Nav() {
           ))}
           <a
             href={`${import.meta.env.BASE_URL}Joe_Park_Resume.pdf`}
-            target="_blank"
-            rel="noopener noreferrer"
+            download="Joe_Park_Resume.pdf"
             className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white"
           >
             Resume
