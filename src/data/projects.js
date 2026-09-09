@@ -1,11 +1,11 @@
 export const projects = [
   {
     slug: 'wa-labor-cost',
-    title: 'Where Should a Company Hire Data Analysts in Washington State?',
+    title: 'DSA: Data Analysts in This WA City Earn 48% More Than Everywhere Else',
     description:
-      "A labor cost case study using SQL and Power BI: comparing what analyst talent costs across all 15 Washington labor market areas using the state's 2025 wage survey, 7,494 rows, cleaned and weighted by employment.",
+      "A weighted average wage analysis across all 15 Washington labor market areas: what data analysts actually earn depending on where they work, and how deep the job market is in each one. 7,494 rows, cleaned in SQL Server and visualized in Power BI.",
     tags: ['SQL', 'Power BI', 'Geospatial'],
-    finding: 'Analysts cost 48% less in Yakima than in Seattle, but Seattle employs 125 times as many.',
+    finding: 'Analysts earn 48% more in Seattle-Tacoma-Bellevue than in Yakima, but Seattle also has 125 times as many analyst jobs.',
     repoUrl: 'https://github.com/SunghunP/wa-analyst-wage-case-study',
     caseStudyUrl: '/projects/wa-labor-cost',
   },
