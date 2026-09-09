@@ -11,10 +11,7 @@ export default function Projects() {
   return (
     <div>
       <Kicker>Projects</Kicker>
-      <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Selected work</h2>
-      <p className="mt-2 max-w-[60ch] text-muted">
-        One flagship analysis, worked end to end. More in progress.
-      </p>
+      <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Most Recent Project</h2>
 
       <div className="mt-8 flex flex-col gap-4">
         {projects.map((project) => (
