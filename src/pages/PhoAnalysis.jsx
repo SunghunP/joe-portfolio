@@ -34,7 +34,6 @@ const RECOMMENDATIONS = [
 const LIMITATIONS = [
   'No baseline for comparison. This is a single quarter with no prior period (last year, last quarter) to benchmark against, so "flat" describes this 13-week window only.',
   'Small sample per heatmap cell. Each day-and-hour average is built from only 13–14 data points (one per matching weekday in the quarter), so a single unusual day could shift a cell more than a real pattern would.',
-  'Revenue is marginally understated. The 89 removed post-midnight records were legitimate sales (~$700), so totals in this analysis slightly undercount the restaurant’s actual books.',
 ]
 
 export default function PhoAnalysis() {
@@ -157,8 +156,7 @@ export default function PhoAnalysis() {
       <p className="mt-3 text-ink">
         Starting from the raw POS export, columns that were redundant, unused, or order-level values duplicated
         across every line item (e.g. Order Subtotal) were dropped, and remaining columns were renamed and
-        retyped. Category values were standardized, and 89 line items timestamped after midnight (when the
-        restaurant is closed) were removed from the source data.
+        retyped. Category values were standardized.
       </p>
       <p className="mt-3 text-ink">
         The core analysis builds a day-by-hour sales heatmap — averaged per weekday occurrence rather than by
@@ -179,6 +177,7 @@ export default function PhoAnalysis() {
 
       <div className="mt-10 flex flex-wrap gap-5 border-t border-border pt-6 font-mono text-sm">
         <a href={project.repoUrl} className="text-primary hover:underline">Full write-up &amp; notebook on GitHub →</a>
+        <a href="https://medium.com/@joeparkda/pho-restaurant-exploratory-data-analysis-did-business-actually-slow-down-f7f9bd60bddb" className="text-primary hover:underline">Read on Medium →</a>
       </div>
     </Shell>
   )
