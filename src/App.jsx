@@ -3,6 +3,7 @@ import Nav from './components/Nav';
 import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import CaseStudy from './pages/CaseStudy';
+import PhoAnalysis from './pages/PhoAnalysis';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/projects/pho-restaurant-analysis" element={<PhoAnalysis />} />
           <Route path="/projects/:slug" element={<CaseStudy />} />
         </Routes>
       </div>
