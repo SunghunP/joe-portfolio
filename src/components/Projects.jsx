@@ -32,7 +32,7 @@ export default function Projects() {
           <ProjectCard key={project.slug} {...project} media={MEDIA[project.slug]} />
         ))}
 
-        <div className="flex items-center justify-center rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted">
+        <div className="flex items-center justify-center rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted sm:col-span-2">
           More case studies in progress.
         </div>
       </div>
