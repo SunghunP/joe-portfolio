@@ -34,5 +34,5 @@ export const experience = [
 
 export const education = [
   { credential: 'Google Data Analytics Professional Certificate', detail: 'SQL, Python, Tableau, Power BI', period: 'Aug 2026' },
-  { credential: 'Associate of Science, Computer Science', detail: 'Highline College', period: 'Mar 2020' },
+  { credential: 'Associate of Science, Computer Science', detail: 'Highline College', period: 'Graduated' },
 ]
