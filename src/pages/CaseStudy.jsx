@@ -205,7 +205,14 @@ export default function CaseStudy() {
         ))}
       </div>
 
-      <p className="mt-8 text-ink">
+      <p className="mt-6 text-ink">
+        Seattle-Tacoma-Bellevue is the strongest move if you want the highest ceiling and the deepest job market.
+        Yakima is the strongest move if you're prioritizing cost of living over pay. Mid-tier areas like
+        Spokane-Spokane Valley and Bellingham split the difference. See the{' '}
+        <a href="#area-breakdown" className="text-primary hover:underline">full area-by-area breakdown</a> below.
+      </p>
+
+      <p id="area-breakdown" className="mt-10 text-ink">
         Results across all 15 Washington labor market areas, ranked from lowest to highest weighted average analyst
         wage:
       </p>
