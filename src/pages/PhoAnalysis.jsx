@@ -4,6 +4,7 @@ import heatmapImage from '../assets/images/pho/sales_heatmap.png';
 import revenueTrendImage from '../assets/images/pho/weekly_revenue_trend.png';
 import orderTypeHeatmapImage from '../assets/images/pho/sales_heatmap_by_order_type.png';
 import topItemsImage from '../assets/images/pho/top15_items_revenue.png';
+import baselineActualImage from '../assets/images/pho/weekly_revenue_baseline_actual.png';
 import { projects } from '../data/projects';
 
 const META = [
@@ -26,14 +27,15 @@ const FINDINGS = [
 ]
 
 const RECOMMENDATIONS = [
-  'Run a targeted special/happy hour during 1PM–4PM, the slowest window of the day.',
-  'Run a Tuesday-specific promotion, since it’s consistently the slowest day.',
-  'Since the 5PM and 9PM peaks are mostly to-go orders, focus extra staffing there on packing to-go orders rather than table service.',
+  '1PM–4PM is where a lot of the dead time occurs. We should run a targeted special sale/happy hour to drive more traffic to the store.',
+  'Tuesday specifically is the slowest day. A special promotion to get customers in on Tuesdays should help.',
+  'Since the peaks are mostly to-go orders, extra help at 5PM and 9PM should focus on packing to-go orders instead of table service.',
 ]
 
 const LIMITATIONS = [
   'No baseline for comparison. This is a single quarter with no prior period (last year, last quarter) to benchmark against, so "flat" describes this 13-week window only.',
   'Small sample per heatmap cell. Each day-and-hour average is built from only 13–14 data points (one per matching weekday in the quarter), so a single unusual day could shift a cell more than a real pattern would.',
+  'Forecast check is one data point. The Naive and 3-Week MA baselines were checked against a single new week, so it’s too early to treat this as validation of either baseline or of the recommendations’ impact.',
 ]
 
 export default function PhoAnalysis() {
@@ -72,7 +74,7 @@ export default function PhoAnalysis() {
         </figcaption>
       </figure>
 
-      <h2 className="mt-12 text-xl font-bold text-ink">The Question</h2>
+      <h2 className="mt-12 text-xl font-bold text-ink">The Business Question</h2>
       <p className="mt-3 text-ink">
         My parents felt like business had been slowing down and wanted a specific number they could see, rather
         than just a feeling from being there every day. This analysis was meant to check that feeling against the
@@ -91,15 +93,37 @@ export default function PhoAnalysis() {
 
       <div className="mt-4 rounded-lg bg-primary-tint p-5">
         <p className="text-xl font-bold text-ink sm:text-2xl">
-          Revenue stayed flat at roughly $26,000 per week.
+          Revenue stayed flat across the quarter at roughly $26,000 per week.
         </p>
         <p className="mt-2 text-ink">
-          That contradicts what my parents assumed going in. The conversation changes from "how do we stop the
-          decline" to "how do we grow from a stable baseline."
+          This contradicts what my parents assumed going in. The data doesn't support "business is slowing down."
+          That changes the conversation from "how do we stop the decline" to "how do we grow from a stable
+          baseline."
         </p>
       </div>
 
-      <figure className="mt-6 overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+      <h3 className="mt-10 font-semibold text-ink">Business recommendations</h3>
+      <ul className="mt-3 flex flex-col gap-3">
+        {RECOMMENDATIONS.map((item) => (
+          <li key={item} className="flex gap-3 text-ink">
+            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bar" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+
+      <h3 className="mt-10 font-semibold text-ink">Further Analysis</h3>
+      <p className="mt-3 text-ink">
+        I also was able to obtain the sales data for a week after the promotion had started and found that the
+        revenue decreased by 1.6% week over week. Although it is a very small decrease, since it has only been
+        one week it is hard to tell if the promotion had any effect. See{' '}
+        <a href="#checking-the-recommendations-against-real-data" className="text-primary hover:underline">
+          Checking the Recommendations Against Real Data
+        </a>{' '}
+        below for the fuller comparison against baseline forecasts.
+      </p>
+
+      <figure className="mt-10 overflow-hidden rounded-xl border border-border bg-card shadow-sm">
         <img
           src={revenueTrendImage}
           alt="Weekly revenue trend showing a flat line around $26,000 per week across the quarter"
@@ -142,16 +166,6 @@ export default function PhoAnalysis() {
         </figcaption>
       </figure>
 
-      <h3 className="mt-10 font-semibold text-ink">Business recommendations</h3>
-      <ul className="mt-3 flex flex-col gap-3">
-        {RECOMMENDATIONS.map((item) => (
-          <li key={item} className="flex gap-3 text-ink">
-            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bar" />
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-
       <h2 className="mt-12 text-xl font-bold text-ink">The Methodology</h2>
       <p className="mt-3 text-ink">
         Starting from the raw POS export, columns that were redundant, unused, or order-level values duplicated
@@ -163,6 +177,49 @@ export default function PhoAnalysis() {
         item count, so it reflects how busy the restaurant actually is rather than the average price of items
         sold — then splits it by dine-in vs. to-go, ranks menu items by both units sold and revenue, and tracks
         total revenue week over week.
+      </p>
+
+      <h2 id="checking-the-recommendations-against-real-data" className="mt-12 text-xl font-bold text-ink">
+        Checking the Recommendations Against Real Data
+      </h2>
+      <p className="mt-3 text-ink">
+        To see whether the recommendations actually moved revenue once real data came in, rather than just
+        assuming they worked, I built two simple baselines on top of the weekly revenue series: a{' '}
+        <span className="font-semibold">Naive forecast</span> (next week = this week) and a{' '}
+        <span className="font-semibold">3-Week Moving Average</span>. Neither is meant to be a sophisticated
+        forecast — they're a floor to check any real business change against. If a recommendation doesn't move
+        revenue past what these simple baselines already expect, it isn't showing a measurable effect yet.
+      </p>
+      <p className="mt-3 text-ink">
+        I projected both baselines one week forward (week ending Sep 6), then checked that projection against a
+        new week of real POS data (Sep 3–9) that picks up right where the original data cuts off. That new data
+        also includes a new Combo item the restaurant started testing based on one of the recommendations above.
+      </p>
+
+      <figure className="mt-6 overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+        <img
+          src={baselineActualImage}
+          alt="Baseline forecast vs. actual revenue for the week ending Sep 6"
+          className="w-full"
+        />
+        <figcaption className="border-t border-border px-4 py-2 font-mono text-xs text-muted">
+          Actual revenue for the week ending Sep 6 against both baselines.
+        </figcaption>
+      </figure>
+
+      <div className="mt-4 rounded-lg bg-primary-tint p-5">
+        <span className="text-xs font-bold uppercase tracking-wide text-primary">Result</span>
+        <p className="mt-2 text-sm text-ink">
+          Actual revenue for the week ending Sep 6 came in at $26,356. Naive was about 1.7% off and the 3-Week MA
+          about 3.0% off — both landed a bit high, meaning actual revenue came in below what either baseline
+          expected.
+        </p>
+      </div>
+
+      <p className="mt-4 text-ink">
+        That's only one week of data with the new Combo item in it, so it's too early to say the changes made a
+        real difference either way. If anything, this week doesn't show a lift yet. I want to keep comparing
+        actual revenue against these baselines over the next several weeks to see if a clearer pattern shows up.
       </p>
 
       <h2 className="mt-12 text-xl font-bold text-ink">Limitations</h2>
