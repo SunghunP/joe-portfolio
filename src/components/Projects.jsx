@@ -1,21 +1,21 @@
 import Kicker from './Kicker';
 import ProjectCard from './ProjectCard';
-import shapeMapImage from '../assets/images/wa/shapemap_cropped.png';
-import heatmapImage from '../assets/images/pho/sales_heatmap.png';
+import wageChartsImage from '../assets/images/wa/wa-analyst-wage-charts.png';
+import dashboardImage from '../assets/images/pho/sales_dashboard.png';
 import { projects } from '../data/projects';
 
 const MEDIA = {
   'wa-labor-cost': (
     <img
-      src={shapeMapImage}
-      alt="Power BI Shape Map of Washington labor market areas shaded by average analyst pay"
+      src={wageChartsImage}
+      alt="Power BI dashboard with a Washington wage map, annual analyst wage by area, and analyst cost vs. talent pool size"
       className="h-full w-full object-cover"
     />
   ),
   'pho-restaurant-analysis': (
     <img
-      src={heatmapImage}
-      alt="Average sales by day of week and hour for the pho restaurant analysis"
+      src={dashboardImage}
+      alt="Pho restaurant sales dashboard with a day-by-hour sales heatmap and the top and bottom selling items"
       className="h-full w-full object-cover"
     />
   ),
