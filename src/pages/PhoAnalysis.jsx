@@ -4,12 +4,11 @@ import heatmapImage from '../assets/images/pho/sales_heatmap.png';
 import revenueTrendImage from '../assets/images/pho/weekly_revenue_trend.png';
 import orderTypeHeatmapImage from '../assets/images/pho/sales_heatmap_by_order_type.png';
 import topItemsImage from '../assets/images/pho/top15_items_revenue.png';
-import baselineActualImage from '../assets/images/pho/weekly_revenue_baseline_actual.png';
 import { projects } from '../data/projects';
 
 const META = [
   { label: 'Prepared by', value: 'Joe Park' },
-  { label: 'Tools', value: 'Python, Pandas, Seaborn, Matplotlib' },
+  { label: 'Tools', value: 'SQL Server (SSMS), Pandas, Seaborn, Matplotlib' },
   { label: 'Data', value: '~3 months of POS exports, 38,293 line items' },
   { label: 'Scope', value: "Parents' restaurant, June 3 – Sept 2, 2026" },
 ]
@@ -35,7 +34,6 @@ const RECOMMENDATIONS = [
 const LIMITATIONS = [
   'No baseline for comparison. This is a single quarter with no prior period (last year, last quarter) to benchmark against, so "flat" describes this 13-week window only.',
   'Small sample per heatmap cell. Each day-and-hour average is built from only 13–14 data points (one per matching weekday in the quarter), so a single unusual day could shift a cell more than a real pattern would.',
-  'Forecast check is one data point. The Naive and 3-Week MA baselines were checked against a single new week, so it’s too early to treat this as validation of either baseline or of the recommendations’ impact.',
 ]
 
 export default function PhoAnalysis() {
@@ -48,10 +46,10 @@ export default function PhoAnalysis() {
       </Link>
 
       <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-        Pho Restaurant Sales Analysis
+        Pho Restaurant Exploratory Data Analysis: Did Business Actually Slow Down?
       </h1>
       <p className="mt-2 font-mono text-sm italic text-muted">
-        Checking whether "business feels slower" actually shows up in the sales data
+        An Exploratory Data Analysis of a Family Restaurant's Sales Data (SQL Server + Python)
       </p>
 
       <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-4">
@@ -112,17 +110,6 @@ export default function PhoAnalysis() {
         ))}
       </ul>
 
-      <h3 className="mt-10 font-semibold text-ink">Further Analysis</h3>
-      <p className="mt-3 text-ink">
-        I also was able to obtain the sales data for a week after the promotion had started and found that the
-        revenue decreased by 1.6% week over week. Although it is a very small decrease, since it has only been
-        one week it is hard to tell if the promotion had any effect. See{' '}
-        <a href="#checking-the-recommendations-against-real-data" className="text-primary hover:underline">
-          Checking the Recommendations Against Real Data
-        </a>{' '}
-        below for the fuller comparison against baseline forecasts.
-      </p>
-
       <figure className="mt-10 overflow-hidden rounded-xl border border-border bg-card shadow-sm">
         <img
           src={revenueTrendImage}
@@ -168,58 +155,26 @@ export default function PhoAnalysis() {
 
       <h2 className="mt-12 text-xl font-bold text-ink">The Methodology</h2>
       <p className="mt-3 text-ink">
-        Starting from the raw POS export, columns that were redundant, unused, or order-level values duplicated
-        across every line item (e.g. Order Subtotal) were dropped, and remaining columns were renamed and
-        retyped. Category values were standardized.
+        I imported the raw POS export into a local SQL Server Express database and did all of the cleaning in
+        SSMS on a copy of the table, so the raw data stayed untouched (both tables have 38,293 rows). Columns
+        that were redundant, constant, or order-level totals repeated on every line item (e.g. Order Subtotal,
+        which would double-count revenue) were dropped. Table and Invoice were renamed with{' '}
+        <code className="font-mono text-sm">sp_rename</code>, Invoice_Number was converted to text since it's an
+        identifier, and checks confirmed there were no zero/negative prices or stray whitespace.
+      </p>
+      <p className="mt-3 text-ink">
+        Inconsistent category names (<code className="font-mono text-sm">pho</code>,{' '}
+        <code className="font-mono text-sm">Noodle Salad|Bowl</code>) were standardized, Day_Of_Week and
+        Order_Hour were rebuilt as computed columns from Order_Date so they can never drift out of sync, and
+        QUICK ORDER was merged into TO GO since they're the same thing operationally. The cleaned table was then
+        exported and loaded into pandas.
       </p>
       <p className="mt-3 text-ink">
         The core analysis builds a day-by-hour sales heatmap — averaged per weekday occurrence rather than by
         item count, so it reflects how busy the restaurant actually is rather than the average price of items
-        sold — then splits it by dine-in vs. to-go, ranks menu items by both units sold and revenue, and tracks
-        total revenue week over week.
-      </p>
-
-      <h2 id="checking-the-recommendations-against-real-data" className="mt-12 text-xl font-bold text-ink">
-        Checking the Recommendations Against Real Data
-      </h2>
-      <p className="mt-3 text-ink">
-        To see whether the recommendations actually moved revenue once real data came in, rather than just
-        assuming they worked, I built two simple baselines on top of the weekly revenue series: a{' '}
-        <span className="font-semibold">Naive forecast</span> (next week = this week) and a{' '}
-        <span className="font-semibold">3-Week Moving Average</span>. Neither is meant to be a sophisticated
-        forecast — they're a floor to check any real business change against. If a recommendation doesn't move
-        revenue past what these simple baselines already expect, it isn't showing a measurable effect yet.
-      </p>
-      <p className="mt-3 text-ink">
-        I projected both baselines one week forward (week ending Sep 6), then checked that projection against a
-        new week of real POS data (Sep 3–9) that picks up right where the original data cuts off. That new data
-        also includes a new Combo item the restaurant started testing based on one of the recommendations above.
-      </p>
-
-      <figure className="mt-6 overflow-hidden rounded-xl border border-border bg-card shadow-sm">
-        <img
-          src={baselineActualImage}
-          alt="Baseline forecast vs. actual revenue for the week ending Sep 6"
-          className="w-full"
-        />
-        <figcaption className="border-t border-border px-4 py-2 font-mono text-xs text-muted">
-          Actual revenue for the week ending Sep 6 against both baselines.
-        </figcaption>
-      </figure>
-
-      <div className="mt-4 rounded-lg bg-primary-tint p-5">
-        <span className="text-xs font-bold uppercase tracking-wide text-primary">Result</span>
-        <p className="mt-2 text-sm text-ink">
-          Actual revenue for the week ending Sep 6 came in at $26,356. Naive was about 1.7% off and the 3-Week MA
-          about 3.0% off — both landed a bit high, meaning actual revenue came in below what either baseline
-          expected.
-        </p>
-      </div>
-
-      <p className="mt-4 text-ink">
-        That's only one week of data with the new Combo item in it, so it's too early to say the changes made a
-        real difference either way. If anything, this week doesn't show a lift yet. I want to keep comparing
-        actual revenue against these baselines over the next several weeks to see if a clearer pattern shows up.
+        sold — then splits it by dine-in vs. to-go, ranks menu items by both units sold and revenue (excluding
+        the $0.50 to-go bag fee and side orders), and tracks total revenue week over week, trimming the partial
+        first and last weeks.
       </p>
 
       <h2 className="mt-12 text-xl font-bold text-ink">Limitations</h2>

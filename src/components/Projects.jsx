@@ -1,6 +1,6 @@
 import Kicker from './Kicker';
 import ProjectCard from './ProjectCard';
-import shapeMapImage from '../assets/images/shapemap_cropped.png';
+import shapeMapImage from '../assets/images/wa/shapemap_cropped.png';
 import heatmapImage from '../assets/images/pho/sales_heatmap.png';
 import { projects } from '../data/projects';
 

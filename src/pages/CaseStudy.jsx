@@ -1,8 +1,8 @@
 import { useParams, Link } from 'react-router-dom';
 import Shell from '../components/Shell';
 import WageBarChart from '../components/WageBarChart';
-import chartsImage from '../assets/images/wa-analyst-wage-charts.png';
-import shapeMapImage from '../assets/images/shapemap_average_cost_of_analyst.png';
+import chartsImage from '../assets/images/wa/wa-analyst-wage-charts.png';
+import shapeMapImage from '../assets/images/wa/shapemap_average_cost_of_analyst.png';
 import { projects } from '../data/projects';
 import { wageData } from '../data/wageData';
 

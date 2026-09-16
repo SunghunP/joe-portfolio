@@ -3,8 +3,8 @@ export const projects = [
     slug: 'pho-restaurant-analysis',
     title: 'Pho Restaurant Sales Analysis',
     description:
-      "Three months of point-of-sale data (38,293 line items) from my parents' pho restaurant, checked against their gut feeling that sales were declining. Cleaned and analyzed in Python/Pandas, visualized with Seaborn and Matplotlib.",
-    tags: ['Python', 'Pandas', 'Seaborn'],
+      "Three months of point-of-sale data (38,293 line items) from my parents' pho restaurant, checked against their gut feeling that sales were declining. Cleaned in SQL Server, analyzed in Pandas, and visualized with Seaborn and Matplotlib.",
+    tags: ['SQL', 'Python', 'Pandas'],
     finding: 'Weekly revenue held flat at roughly $26,000 across the quarter — the data did not support the assumption that business was slowing down.',
     repoUrl: 'https://github.com/SunghunP/pho-restaurant-analysis',
     caseStudyUrl: '/projects/pho-restaurant-analysis',
