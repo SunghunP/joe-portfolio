@@ -15,7 +15,7 @@ export default function Contact() {
       <Kicker>Contact</Kicker>
 
       <h2 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-ink sm:text-6xl">
-        Let's talk.
+        Let's Connect
       </h2>
 
       <div className="mt-4 flex flex-col items-center gap-1 font-mono text-xl text-muted sm:text-2xl">
