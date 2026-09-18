@@ -25,7 +25,7 @@ export default function Projects() {
   return (
     <div>
       <Kicker>Projects</Kicker>
-      <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Most Recent Project</h2>
+      <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Most Recent Projects</h2>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
         {projects.map((project) => (
