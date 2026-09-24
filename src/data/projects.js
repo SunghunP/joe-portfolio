@@ -23,8 +23,7 @@ export const projects = [
 
 export const practice = {
   title: 'Daily SQL Practice',
-  description:
-    'An ongoing log of T-SQL exercises in SQL Server, worked against a seeded shop database of about 1,000 orders. Organized by topic, from fundamentals and joins through window functions, CTEs, date math, and query tuning, plus mixed challenge problems.',
+  description: 'Daily log of SQL practice questions and challenges.',
   tags: ['SQL', 'T-SQL', 'SSMS'],
   focusAreas: ['Window functions', 'CTEs', 'Joins', 'Aggregations'],
   repoUrl: 'https://github.com/SunghunP/sql-practice',

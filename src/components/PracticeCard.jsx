@@ -1,12 +1,25 @@
+import githubIcon from '../assets/icons/github.svg';
+
 export default function PracticeCard({ title, description, tags, focusAreas, repoUrl }) {
   return (
     <article className="flex h-full flex-col gap-3 rounded-xl border border-border bg-card p-6 shadow-sm">
-      <div className="flex flex-wrap gap-1.5">
-        {tags.map((tag) => (
-          <span key={tag} className="rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted">
-            {tag}
-          </span>
-        ))}
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex flex-wrap gap-1.5">
+          {tags.map((tag) => (
+            <span key={tag} className="rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted">
+              {tag}
+            </span>
+          ))}
+        </div>
+        <a
+          href={repoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${title} on GitHub`}
+          className="shrink-0 rounded-full p-1 opacity-70 transition-opacity hover:opacity-100"
+        >
+          <img src={githubIcon} alt="" className="icon-mono h-5 w-5" />
+        </a>
       </div>
 
       <h3 className="text-lg font-bold text-ink">{title}</h3>
