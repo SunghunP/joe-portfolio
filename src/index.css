@@ -12,14 +12,39 @@
   --color-primary-tint: #DCE8F4;
   --color-bar: #AEC6DF;
   --color-success: #4E9A67;
+  --color-on-primary: #FFFFFF;
 
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+/* Dark palette: soft slate instead of pure black, off-white text, and a
+   desaturated blue accent to keep contrast comfortable without glare. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #15191F;
+  --color-surface: #1F2630;
+  --color-card: #1C222B;
+  --color-border: #2E3845;
+  --color-ink: #E2E7ED;
+  --color-muted: #9BA7B5;
+  --color-primary: #86A9D2;
+  --color-primary-strong: #A4C0E2;
+  --color-primary-tint: #1F2C3B;
+  --color-bar: #3F5770;
+  --color-success: #6DB987;
+  --color-on-primary: #11161C;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Only animate colors when the user flips the toggle, not on first paint */
+  html.theme-transition,
+  html.theme-transition * {
+    transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease, fill 200ms ease !important;
   }
 
   body {
@@ -29,5 +54,16 @@
 
   [id] {
     scroll-margin-top: 5rem;
+  }
+
+  /* Black single-color icons would disappear on a dark background */
+  [data-theme="dark"] .icon-mono {
+    filter: invert(1) brightness(0.9);
+  }
+
+  /* Tone down bright white screenshots and photos in dark mode */
+  [data-theme="dark"] figure img,
+  [data-theme="dark"] .dim-in-dark {
+    filter: brightness(0.88);
   }
 }

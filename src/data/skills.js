@@ -19,6 +19,7 @@ export const skills = [
     size: 'lg',
     accent: true,
     icon: powerbiIcon,
+    iconColor: true,
     body: 'Interactive reports non-analysts can drive themselves. Shape Map on custom boundaries, slicers wired across every page, companion tables where visuals fall short.',
     chips: ['Shape Map', 'Slicers', 'DAX (basic)', 'TopoJSON'],
   },

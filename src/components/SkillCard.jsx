@@ -25,7 +25,7 @@ const SIZE_STYLES = {
   },
 }
 
-export default function SkillCard({ name, body, chips, size, accent, icon }) {
+export default function SkillCard({ name, body, chips, size, accent, icon, iconColor }) {
   const s = SIZE_STYLES[size]
 
   return (
@@ -34,7 +34,7 @@ export default function SkillCard({ name, body, chips, size, accent, icon }) {
     >
 
       <div className="flex items-center gap-2">
-        {icon && <img src={icon} alt="" className={s.icon} />}
+        {icon && <img src={icon} alt="" className={`${s.icon} ${iconColor ? '' : 'icon-mono'}`} />}
         <h3 className={`${s.title} font-bold text-ink`}>{name}</h3>
       </div>
 

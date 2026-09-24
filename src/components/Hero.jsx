@@ -38,12 +38,12 @@ export default function Hero() {
                   aria-label={link.label}
                   className="grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-muted transition hover:border-primary hover:text-primary"
                 >
-                  <img src={link.icon} alt="" className="h-4 w-4" />
+                  <img src={link.icon} alt="" className="icon-mono h-4 w-4" />
                 </a>
               ))}
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link to="/#projects" className="rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white">
+              <Link to="/#projects" className="rounded-full bg-primary px-5 py-3 text-sm font-semibold text-on-primary">
                 View Projects
               </Link>
               <a href={`${import.meta.env.BASE_URL}Joe_Park_Resume.pdf`}
@@ -58,7 +58,7 @@ export default function Hero() {
             <img
               src={profilePhoto}
               alt="Portrait of Joe Park"
-              className="aspect-square w-full object-cover"
+              className="dim-in-dark aspect-square w-full object-cover"
             />
           </div>
         </div>

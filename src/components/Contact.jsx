@@ -35,7 +35,7 @@ export default function Contact() {
         <a
           href={`${import.meta.env.BASE_URL}Joe_Park_Resume.pdf`}
           download="Joe_Park_Resume.pdf"
-          className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-strong"
+          className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-on-primary transition hover:bg-primary-strong"
         >
           Download Résumé
         </a>
@@ -48,7 +48,7 @@ export default function Contact() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full border border-primary px-5 py-3 text-sm font-semibold text-primary transition hover:bg-primary-tint"
           >
-            <img src={link.icon} alt="" className="h-4 w-4" />
+            <img src={link.icon} alt="" className="icon-mono h-4 w-4" />
             {link.label}
           </a>
         ))}

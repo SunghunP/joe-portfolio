@@ -5,6 +5,18 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <script>
+    // Apply the saved (or system) theme before first paint to avoid a light flash
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem('theme'); } catch (e) {}
+      if (theme !== 'light' && theme !== 'dark') {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
   <title>Joe Park | Data Analyst in Seattle, WA</title>
   <meta name="description"
     content="Joe Park is a data analyst based in Seattle, WA, specializing in SQL and Power BI. Explore his portfolio and see his resume, skills, and projects." />
