@@ -24,7 +24,7 @@ export const projects = [
 export const practice = {
   title: 'Daily SQL Practice',
   description: 'Daily log of SQL practice questions and challenges.',
-  tags: ['SQL', 'T-SQL', 'SSMS'],
+  tags: ['SQL', 'StrataScratch'],
   focusAreas: ['Window functions', 'CTEs', 'Joins', 'Aggregations'],
   repoUrl: 'https://github.com/SunghunP/sql-practice',
 }
