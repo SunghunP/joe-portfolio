@@ -404,6 +404,10 @@ export default function CaseStudy() {
         <a href={project.repoUrl} className="text-primary hover:underline">Full write-up &amp; SQL on GitHub →</a>
         <a href="https://medium.com/@joeparkda" className="text-primary hover:underline">Read on Medium →</a>
       </div>
+
+      <Link to="/#projects" className="mt-6 inline-block font-mono text-sm text-primary hover:underline">
+        Back to Projects →
+      </Link>
     </Shell>
   )
 }
