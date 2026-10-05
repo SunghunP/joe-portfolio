@@ -31,6 +31,25 @@ export const projects = [
   },
 ]
 
+export const featuredVideo = {
+  youtubeId: 'AzUwYfJZ0jY',
+  title: 'Restaurant EDA Analysis',
+  highlights: [
+    {
+      label: 'Full analysis workflow',
+      text: 'Cleaned 38,293 point-of-sale line items in SQL Server, then analyzed and visualized them with Pandas, Seaborn, and Matplotlib.',
+    },
+    {
+      label: 'Revenue held flat at ~$26,000 a week',
+      text: 'The data did not support the assumption that business was slowing down.',
+    },
+    {
+      label: 'Recommendations',
+      text: 'Proposed a 1PM–4PM special, a Tuesday promotion, and extra to-go help at the 5PM and 9PM peaks.',
+    },
+  ],
+}
+
 export const practice = {
   title: 'Daily SQL Practice',
   description: 'Daily log of SQL practice questions and challenges.',

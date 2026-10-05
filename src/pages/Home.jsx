@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Hero from '../components/Hero';
 import Section from '../components/Section';
+import FeaturedVideo from '../components/FeaturedVideo';
 import About from '../components/About';
 import Skills from '../components/Skills';
 import Projects from '../components/Projects';
@@ -22,6 +23,9 @@ export default function Home() {
     <>
       <Hero />
 
+      <Section id="featured">
+        <Reveal><FeaturedVideo /></Reveal>
+      </Section>
       <Section id="about">
         <Reveal><About /></Reveal>
       </Section>
