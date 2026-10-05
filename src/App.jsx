@@ -4,6 +4,7 @@ import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import CaseStudy from './pages/CaseStudy';
 import PhoAnalysis from './pages/PhoAnalysis';
+import CoffeeAnalysis from './pages/CoffeeAnalysis';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects/pho-restaurant-analysis" element={<PhoAnalysis />} />
+          <Route path="/projects/coffee-shop-sales-analysis" element={<CoffeeAnalysis />} />
           <Route path="/projects/:slug" element={<CaseStudy />} />
         </Routes>
       </div>

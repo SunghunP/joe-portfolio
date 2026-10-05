@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import Shell from '../components/Shell';
+import CodeBlock from '../components/CodeBlock';
 import WageBarChart from '../components/WageBarChart';
 import chartsImage from '../assets/images/wa/wa-analyst-wage-charts.png';
 import shapeMapImage from '../assets/images/wa/shapemap_average_cost_of_analyst.png';
@@ -89,17 +90,6 @@ WHERE   Washington_statewide_occupational_title LIKE '%Analyst%'
         != 'News Analysts, Reporters, and Journalists'
   AND   Area_Name != 'Washington'
 GROUP BY Area_Name;`
-
-function CodeBlock({ caption, code }) {
-  return (
-    <div className="mt-4 overflow-hidden rounded-lg border border-border bg-surface">
-      <div className="border-b border-border px-4 py-2 font-mono text-xs uppercase tracking-wide text-muted">
-        {caption}
-      </div>
-      <pre className="overflow-x-auto p-4 font-mono text-sm text-ink">{code}</pre>
-    </div>
-  )
-}
 
 export default function CaseStudy() {
   const { slug } = useParams();

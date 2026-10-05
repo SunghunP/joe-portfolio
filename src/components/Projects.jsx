@@ -3,6 +3,7 @@ import ProjectCard from './ProjectCard';
 import PracticeCard from './PracticeCard';
 import wageChartsImage from '../assets/images/wa/wa-analyst-wage-charts.png';
 import dashboardImage from '../assets/images/pho/sales_dashboard.png';
+import coffeeDashboardImage from '../assets/images/coffee/coffee_shop_dashboard.png';
 import { projects, practice } from '../data/projects';
 
 const MEDIA = {
@@ -17,6 +18,13 @@ const MEDIA = {
     <img
       src={dashboardImage}
       alt="Pho restaurant sales dashboard with a day-by-hour sales heatmap and the top and bottom selling items"
+      className="dim-in-dark h-full w-full object-cover"
+    />
+  ),
+  'coffee-shop-sales-analysis': (
+    <img
+      src={coffeeDashboardImage}
+      alt="Excel dashboard with coffee shop net sales by day, net sales by hour, total revenue by item, and percent of revenue by category"
       className="dim-in-dark h-full w-full object-cover"
     />
   ),
@@ -35,7 +43,7 @@ export default function Projects() {
 
         <PracticeCard {...practice} />
 
-        <div className="flex items-center justify-center rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted">
+        <div className="sm:col-span-2 flex items-center justify-center rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted">
           More case studies in progress.
         </div>
       </div>

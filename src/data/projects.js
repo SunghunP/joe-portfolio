@@ -19,6 +19,16 @@ export const projects = [
     repoUrl: 'https://github.com/SunghunP/wa-analyst-wage-case-study',
     caseStudyUrl: '/projects/wa-labor-cost',
   },
+  {
+    slug: 'coffee-shop-sales-analysis',
+    title: 'Coffee Shop Sales Analysis',
+    description:
+      'Four weeks of coffee shop sales data, analyzed with Excel PivotTables and recreated in SQL.',
+    tags: ['Excel', 'SQL', 'PivotTables'],
+    finding: 'The Latte was the top-selling item at $2,924 in sales.',
+    repoUrl: 'https://github.com/SunghunP/coffee_business_analysis',
+    caseStudyUrl: '/projects/coffee-shop-sales-analysis',
+  },
 ]
 
 export const practice = {
