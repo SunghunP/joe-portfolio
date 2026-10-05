@@ -8,7 +8,7 @@ export default function FeaturedVideo() {
       <Kicker>Featured</Kicker>
       <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Watch me present my work</h2>
 
-      <div className="mx-auto mt-8 max-w-[860px]">
+      <div className="mt-8">
         <div className="aspect-video w-full overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${featuredVideo.youtubeId}`}
