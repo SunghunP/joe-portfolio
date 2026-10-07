@@ -1,17 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect x="1.5" y="1.5" width="29" height="29" rx="7" fill="#416C9B" stroke="#FFFFFF" stroke-width="1.5" />
-  <text
-    x="16"
-    y="12"
-    text-anchor="middle"
-    dominant-baseline="central"
-    font-family="system-ui, -apple-system, 'Segoe UI', Arial, sans-serif"
-    font-weight="700"
-    font-size="11"
-    letter-spacing="-0.3"
-    fill="#FFFFFF"
-  >JP</text>
-  <rect x="11.4" y="23" width="2.4" height="3" rx="0.6" fill="#FFFFFF" />
-  <rect x="14.8" y="20.5" width="2.4" height="5.5" rx="0.6" fill="#FFFFFF" />
-  <rect x="18.2" y="18" width="2.4" height="8" rx="0.6" fill="#FFFFFF" />
+  <g fill="none" stroke-width="3">
+    <path d="M11.5 14V21.5a2.75 2.75 0 0 1-5.5 0" stroke="#FFFFFF" />
+    <path d="M16 10V25.75" stroke="#AEC6DF" />
+    <path d="M20.5 6V25.75M20.5 7.5H22.5a3.5 3.5 0 0 1 0 7H20.5" stroke="#FFFFFF" />
+  </g>
 </svg>
