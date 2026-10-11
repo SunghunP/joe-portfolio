@@ -33,7 +33,7 @@ export default function About() {
 
       <div className=" flex flex-col gap-3">
         {highlights.map((item) => (
-          <div key={item.title} className="rounded-xl border border-border bg-card p-4 shadow-sm">
+          <div key={item.title} className="rounded-xl border border-border bg-card p-4 shadow-sm transition hover:-translate-y-1.5 hover:border-bar hover:shadow-lg hover:shadow-primary/20 motion-reduce:transform-none motion-reduce:transition-none">
             <b className="block text-sm font-bold text-ink">{item.title}</b>
             <span className="mt-1 block text-sm text-muted">{item.body}</span>
           </div>

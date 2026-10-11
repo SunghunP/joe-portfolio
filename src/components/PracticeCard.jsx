@@ -2,7 +2,7 @@ import githubIcon from '../assets/icons/github.svg';
 
 export default function PracticeCard({ title, description, tags, focusAreas, repoUrl }) {
   return (
-    <article className="flex h-full flex-col gap-3 rounded-xl border border-border bg-card p-6 shadow-sm">
+    <article className="flex h-full flex-col gap-3 rounded-xl border border-border bg-card p-6 shadow-sm transition hover:border-primary hover:shadow-lg hover:shadow-primary/20 motion-reduce:transition-none">
       <div className="flex items-start justify-between gap-3">
         <div className="flex flex-wrap gap-1.5">
           {tags.map((tag) => (

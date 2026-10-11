@@ -50,7 +50,7 @@ export default function StatCard({ number, label }) {
   }, [number]);
 
   return (
-    <div ref={ref} className="rounded-xl border border-border bg-card p-5 shadow-sm">
+    <div ref={ref} className="rounded-xl border border-border bg-card p-5 shadow-sm transition hover:-translate-y-1.5 hover:border-bar hover:shadow-lg hover:shadow-primary/20 motion-reduce:transform-none motion-reduce:transition-none">
       <div className="inline-block border-b-2 border-primary pb-1 font-mono text-3xl font-bold tracking-tight tabular-nums text-ink">
         {display}
       </div>
