@@ -32,7 +32,7 @@ export const projects = [
 ]
 
 export const featuredVideo = {
-  youtubeId: 'AzUwYfJZ0jY',
+  youtubeId: 'ssW6SEwQqqU',
   title: 'Restaurant EDA Analysis',
   highlights: [
     {
