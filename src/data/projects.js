@@ -45,7 +45,7 @@ export const featuredVideo = {
     },
     {
       label: 'Recommendations',
-      text: 'Proposed a 1PM–4PM special, a Tuesday promotion, and extra to-go help at the 5PM and 9PM peaks.',
+      text: 'Proposed a 1PM–4PM special, a Tuesday promotion, and extra to-go help at the 5PM and 9PM peaks. The owners launched the afternoon promotion, lifting revenue in those slow hours by 10%.',
     },
   ],
 }
