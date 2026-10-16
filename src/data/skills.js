@@ -1,9 +1,9 @@
 import databaseIcon from '../assets/icons/database.svg'
 import githubIcon from '../assets/icons/github.svg'
 import googleSheetsIcon from '../assets/icons/googlesheets.svg'
-import mapSearchIcon from '../assets/icons/map_search.svg'
 import powerbiIcon from '../assets/icons/powerbi.svg'
 import pythonIcon from '../assets/icons/python.svg'
+import tableIcon from '../assets/icons/table.svg'
 
 export const skills = [
   {
@@ -28,8 +28,8 @@ export const skills = [
     size: 'sm',
     accent: true,
     icon: pythonIcon,
-    body: 'pandas for wrangling and quick analysis outside the database.',
-    chips: ['pandas', 'Jupyter'],
+    body: 'pandas for wrangling and quick analysis outside the database, seaborn for visual reports.',
+    chips: ['pandas', 'seaborn', 'Jupyter'],
   },
   {
     name: 'Google Sheets',
@@ -40,19 +40,19 @@ export const skills = [
     chips: [],
   },
   {
+    name: 'Excel',
+    size: 'sm',
+    accent: true,
+    icon: tableIcon,
+    body: 'PivotTables, charts, and dashboards, cross-checked against SQL so the numbers match.',
+    chips: ['PivotTables', 'Charts'],
+  },
+  {
     name: 'Git & GitHub',
     size: 'sm',
     accent: true,
     icon: githubIcon,
     body: 'Versioned queries and notebooks.',
     chips: [],
-  },
-  {
-    name: 'Geospatial',
-    size: 'sm',
-    accent: true,
-    icon: mapSearchIcon,
-    body: 'Census TIGER boundary files reshaped in mapshaper: filtered, grouped, dissolved, and merged into custom map regions.',
-    chips: ['mapshaper', 'Census TIGER', 'GeoJSON'],
   },
 ]
