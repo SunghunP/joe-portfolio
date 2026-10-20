@@ -2,15 +2,15 @@
 
 @theme {
   --color-bg: #FCFCFD;
-  --color-surface: #E1EBF5;
-  --color-card: #EDF3FA;
-  --color-border: #CFDDEC;
+  --color-surface: #E2F2EC;
+  --color-card: #F0F9F5;
+  --color-border: #C7E4D8;
   --color-ink: #1A1E24;
   --color-muted: #586472;
-  --color-primary: #416C9B;
-  --color-primary-strong: #345680;
-  --color-primary-tint: #DCE8F4;
-  --color-bar: #AEC6DF;
+  --color-primary: #047857;
+  --color-primary-strong: #065F46;
+  --color-primary-tint: #D3F0E5;
+  --color-bar: #8FD1B7;
   --color-success: #4E9A67;
   --color-on-primary: #FFFFFF;
 
@@ -19,21 +19,21 @@
 }
 
 /* Dark palette: soft slate instead of pure black, off-white text, and a
-   desaturated blue accent to keep contrast comfortable without glare. */
+   softened emerald accent to keep contrast comfortable without glare. */
 :root[data-theme="dark"] {
   color-scheme: dark;
   --color-bg: #15191F;
-  --color-surface: #1F2630;
-  --color-card: #1C222B;
-  --color-border: #2E3845;
+  --color-surface: #1B2622;
+  --color-card: #19221F;
+  --color-border: #2B3A35;
   --color-ink: #E2E7ED;
   --color-muted: #9BA7B5;
-  --color-primary: #86A9D2;
-  --color-primary-strong: #A4C0E2;
-  --color-primary-tint: #1F2C3B;
-  --color-bar: #3F5770;
+  --color-primary: #5BC49F;
+  --color-primary-strong: #7FD4B5;
+  --color-primary-tint: #173029;
+  --color-bar: #2F5E4F;
   --color-success: #6DB987;
-  --color-on-primary: #11161C;
+  --color-on-primary: #0F1A16;
 }
 
 @layer base {
@@ -77,6 +77,22 @@
     outline: 2px solid var(--color-primary);
     outline-offset: 3px;
     border-radius: 4px;
+  }
+
+  /* Hero background: corner glows (emerald top-left, teal bottom-right) that
+     fade out before the text so the middle stays clean and readable */
+  .hero-gradient {
+    background:
+      radial-gradient(ellipse 45% 60% at 0% 0%, #CDEEDF 0%, transparent 100%),
+      radial-gradient(ellipse 45% 60% at 100% 100%, #D0EBEF 0%, transparent 100%),
+      linear-gradient(135deg, #EEF8F3 0%, var(--color-bg) 45%, var(--color-bg) 60%, #EEF6F7 100%);
+  }
+
+  [data-theme="dark"] .hero-gradient {
+    background:
+      radial-gradient(ellipse 45% 60% at 0% 0%, #1B3D31 0%, transparent 100%),
+      radial-gradient(ellipse 45% 60% at 100% 100%, #18343B 0%, transparent 100%),
+      linear-gradient(135deg, #172420 0%, var(--color-bg) 45%, var(--color-bg) 60%, #15232A 100%);
   }
 
   /* Soft rings and glow radiating out from the hero photo */

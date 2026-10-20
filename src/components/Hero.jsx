@@ -6,7 +6,7 @@ import { socialLinks } from '../data/social';
 
 export default function Hero() {
   return (
-    <div className="border-b border-border bg-primary/5 lg:relative lg:flex lg:min-h-[80vh] lg:items-center">
+    <div className="hero-gradient border-b border-border lg:relative lg:flex lg:min-h-[80vh] lg:items-center">
       <Shell className="w-full py-14 sm:py-20 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-[1fr_440px] lg:items-center">
           <div className="text-center lg:text-left">
