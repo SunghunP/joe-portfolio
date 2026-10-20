@@ -51,8 +51,8 @@ export const featuredVideo = {
 }
 
 export const practice = {
-  title: 'Daily SQL Practice',
-  description: 'Daily log of SQL practice questions and challenges.',
+  title: 'SQL Practice',
+  description: 'A log of SQL practice questions and challenges.',
   tags: ['SQL', 'StrataScratch'],
   focusAreas: ['Window functions', 'CTEs', 'Joins', 'Aggregations'],
   repoUrl: 'https://github.com/SunghunP/sql-practice',
