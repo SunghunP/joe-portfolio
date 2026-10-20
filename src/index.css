@@ -66,4 +66,12 @@
   [data-theme="dark"] .dim-in-dark {
     filter: brightness(0.88);
   }
+
+  /* Soft rings and glow radiating out from the hero photo */
+  .photo-aura {
+    box-shadow:
+      0 0 0 8px color-mix(in srgb, var(--color-primary) 4.5%, transparent),
+      0 0 0 18px color-mix(in srgb, var(--color-primary) 2%, transparent),
+      0 0 60px 20px color-mix(in srgb, var(--color-primary) 5.5%, transparent);
+  }
 }

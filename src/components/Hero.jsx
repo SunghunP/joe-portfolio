@@ -9,7 +9,7 @@ export default function Hero() {
     <div className="border-b border-border bg-primary/5 lg:relative lg:flex lg:min-h-[90vh] lg:items-center">
       <Shell className="w-full py-14 sm:py-20 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-[1fr_440px] lg:items-center">
-          <div>
+          <div className="text-center lg:text-left">
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75 motion-reduce:animate-none" />
@@ -18,17 +18,17 @@ export default function Hero() {
               Open to analyst roles | Seattle, WA &amp; Remote
             </span>
 
-            <h1 className="mt-4 max-w-[18ch] text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">
+            <h1 className="mx-auto mt-4 max-w-[18ch] text-4xl font-extrabold tracking-tight text-ink sm:text-5xl lg:mx-0">
               Joe Park
             </h1>
             <p className="mt-2 text-lg text-muted">
               SQL | Power BI | Analytics
             </p>
 
-            <p className="mt-4 max-w-[48ch] text-lg text-muted">
+            <p className="mx-auto mt-4 max-w-[48ch] text-lg text-muted lg:mx-0">
               3+ years in data operations and QA, paired with SQL and Power BI skills built through Google's Data Analytics Certificate and my own project work.
             </p>
-            <div className="mt-4 flex items-center gap-3">
+            <div className="mt-4 flex items-center justify-center gap-3 lg:justify-start">
               {socialLinks.map((link) => (
                 <a
                   key={link.label}
@@ -42,7 +42,7 @@ export default function Hero() {
                 </a>
               ))}
             </div>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap justify-center gap-3 lg:justify-start">
               <Link to="/#projects" className="rounded-full bg-primary px-5 py-3 text-sm font-semibold text-on-primary">
                 View Projects
               </Link>
@@ -54,7 +54,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+          <div className="order-first mx-auto w-full max-w-sm overflow-hidden rounded-[3rem] border border-border bg-card photo-aura lg:order-none lg:max-w-none">
             <img
               src={profilePhoto}
               alt="Portrait of Joe Park"
