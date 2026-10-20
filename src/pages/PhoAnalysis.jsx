@@ -10,7 +10,7 @@ const META = [
   { label: 'Prepared by', value: 'Joe Park' },
   { label: 'Tools', value: 'SQL Server (SSMS), Pandas, Seaborn, Matplotlib' },
   { label: 'Data', value: '~3 months of POS exports, 38,293 line items' },
-  { label: 'Scope', value: "Parents' restaurant, June 3 – Sept 2, 2026" },
+  { label: 'Scope', value: "Local pho restaurant, June 3 – Sept 2, 2026" },
 ]
 
 const QUESTIONS = [
@@ -49,7 +49,7 @@ export default function PhoAnalysis() {
         Pho Restaurant Exploratory Data Analysis: Did Business Actually Slow Down?
       </h1>
       <p className="mt-2 font-mono text-sm italic text-muted">
-        An Exploratory Data Analysis of a Family Restaurant's Sales Data (SQL Server + Python)
+        An Exploratory Data Analysis of a Pho Restaurant's Sales Data (SQL Server + Python)
       </p>
 
       <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-4">
@@ -74,7 +74,7 @@ export default function PhoAnalysis() {
 
       <h2 className="mt-12 text-xl font-bold text-ink">The Business Question</h2>
       <p className="mt-3 text-ink">
-        My parents felt like business had been slowing down and wanted a specific number they could see, rather
+        The owners felt like business had been slowing down and wanted a specific number they could see, rather
         than just a feeling from being there every day. This analysis was meant to check that feeling against the
         actual data, along with:
       </p>
@@ -94,7 +94,7 @@ export default function PhoAnalysis() {
           Revenue stayed flat across the quarter at roughly $26,000 per week.
         </p>
         <p className="mt-2 text-ink">
-          This contradicts what my parents assumed going in. The data doesn't support "business is slowing down."
+          This contradicts what the owners assumed going in. The data doesn't support "business is slowing down."
           That changes the conversation from "how do we stop the decline" to "how do we grow from a stable
           baseline."
         </p>

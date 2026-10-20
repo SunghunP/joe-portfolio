@@ -3,7 +3,7 @@ export const projects = [
     slug: 'pho-restaurant-analysis',
     title: 'Pho Restaurant Sales Analysis',
     description:
-      "A quarter of point-of-sale data (38,293 rows) from my parents' pho restaurant, checked against the owners' belief that sales were slipping. Cleaned in SQL Server (data types, date and hour fields rebuilt from a single timestamp, duplicate order types merged), then reported in Python with Pandas and seaborn.",
+      "A quarter of point-of-sale data (38,293 rows) from a pho restaurant, checked against the owners' belief that sales were slipping. Cleaned in SQL Server (data types, date and hour fields rebuilt from a single timestamp, duplicate order types merged), then reported in Python with Pandas and seaborn.",
     tags: ['SQL', 'Python', 'Pandas'],
     finding: 'Revenue held steady at about $26K a week, and a 1–4 PM lull on the day-by-hour heatmap led to a targeted promotion that raised slow-hour revenue 10%.',
     repoUrl: 'https://github.com/SunghunP/pho-restaurant-analysis',
