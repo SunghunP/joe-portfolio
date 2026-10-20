@@ -4,9 +4,10 @@ export const experience = [
     company: 'Applause · Bellevue, WA',
     period: 'May 2026 – Jul 2026',
     bullets: [
-      'Owned upstream data quality on an enterprise client engagement where roughly 50% of submitted data was rejected on arrival; audited the intake process and set corrected acceptance standards, cutting rejections to 30% in three months even as the client kept raising its bar.',
+      'Owned upstream data quality for an enterprise client, cutting rejections from about 50% to 30% in three months by auditing intake and setting corrected acceptance standards as the client kept raising its bar.',
       'Reduced each data collection from 15 minutes to 2 by building a web-based tool, saving about 31 hours of manual work per week across 6 teams.',
       'Tracked delivery KPIs in Excel for a 12-person team covering 108 venues, with weekly reports that let leadership make scheduling calls on time.',
+      'Synced two tracking spreadsheets with VLOOKUP so data stayed consistent across both.',
     ],
   },
   {

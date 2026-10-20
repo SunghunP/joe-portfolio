@@ -12,7 +12,7 @@ export const skills = [
     accent: true,
     icon: databaseIcon,
     body: 'Cleaning, joining, and aggregating at the source. Self-joins for imputation, weighted aggregates, and previewing every UPDATE as a SELECT before running it.',
-    chips: ['Joins', 'Window fns', 'CTEs', 'Data QA'],
+    chips: ['Joins', 'Window fns', 'CTEs', 'Aggregations', 'Views', 'Data QA'],
   },
   {
     name: 'Power BI',
@@ -45,7 +45,7 @@ export const skills = [
     accent: true,
     icon: tableIcon,
     body: 'PivotTables, charts, and dashboards, cross-checked against SQL so the numbers match.',
-    chips: ['PivotTables', 'Charts'],
+    chips: ['PivotTables', 'VLOOKUP', 'Charts'],
   },
   {
     name: 'Git & GitHub',

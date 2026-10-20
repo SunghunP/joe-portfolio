@@ -3,7 +3,7 @@ export const projects = [
     slug: 'pho-restaurant-analysis',
     title: 'Pho Restaurant Sales Analysis',
     description:
-      "A quarter of point-of-sale data (38,293 rows) from a pho restaurant, checked against the owners' belief that sales were slipping. Cleaned in SQL Server (data types, date and hour fields rebuilt from a single timestamp, duplicate order types merged), then reported in Python with Pandas and seaborn.",
+      "A quarter of point-of-sale data (38,293 rows) from a pho restaurant, checked against the owners' belief that sales were slipping. Cleaned in SQL Server (data types, date and hour fields rebuilt from a single timestamp, duplicate order types merged, negative values and inconsistent categories checked), then reported in Python with Pandas and seaborn.",
     tags: ['SQL', 'Python', 'Pandas'],
     finding: 'Revenue held steady at about $26K a week, and a 1–4 PM lull on the day-by-hour heatmap led to a targeted promotion that raised slow-hour revenue 10%.',
     repoUrl: 'https://github.com/SunghunP/pho-restaurant-analysis',
@@ -13,7 +13,7 @@ export const projects = [
     slug: 'wa-labor-cost',
     title: 'WA Analyst Wages: One City Pays 48% More',
     description:
-      'Where should a company open an analyst office? 7,494 rows of Washington State wage data across 15 labor market areas, analyzed in SQL Server with imputed missing wages and employment-weighted averages (self-joins, GROUP BY, views), then presented in a Power BI dashboard for a non-technical decision maker.',
+      'Where should a company open an analyst office? 7,494 rows of Washington State wage data across 15 labor market areas, analyzed in SQL Server with imputed missing wages, outlier and duplicate checks, and employment-weighted averages (self-joins, GROUP BY, views), then presented in a Power BI dashboard with a custom shape map from Census Bureau shapefiles for a non-technical decision maker.',
     tags: ['SQL', 'Power BI', 'Geospatial'],
     finding: 'Seattle-Tacoma-Bellevue analysts earn 48% more than Yakima ($130.4K vs. $87.9K), with a talent pool 124 times larger (72,210 vs. 580).',
     repoUrl: 'https://github.com/SunghunP/wa-analyst-wage-case-study',
