@@ -62,9 +62,21 @@
   }
 
   /* Tone down bright white screenshots and photos in dark mode */
-  [data-theme="dark"] figure img,
   [data-theme="dark"] .dim-in-dark {
     filter: brightness(0.88);
+  }
+
+  /* Charts are mostly white background, so they get a stronger dim than photos */
+  [data-theme="dark"] figure img,
+  [data-theme="dark"] .dim-chart {
+    filter: brightness(0.78);
+  }
+
+  /* Visible keyboard focus everywhere; mouse clicks don't trigger it */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 
   /* Soft rings and glow radiating out from the hero photo */

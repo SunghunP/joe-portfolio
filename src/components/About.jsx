@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import Kicker from './Kicker';
 import pomPhoto from '../assets/images/pomeranian.jpg';
 
 const strengths = [
@@ -21,10 +20,7 @@ export default function About() {
   return (
     <div className="grid gap-10 md:grid-cols-[1.15fr_1fr] md:gap-14">
       <div>
-        <Kicker>About</Kicker>
-        <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
-          Is this number actually right?
-        </h2>
+        <h2 className="text-2xl font-extrabold tracking-tight text-primary sm:text-3xl">About</h2>
 
         <div className="mt-5 space-y-4 text-base leading-relaxed text-muted">
           <p>

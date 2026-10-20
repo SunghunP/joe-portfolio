@@ -6,7 +6,7 @@ import { socialLinks } from '../data/social';
 
 export default function Hero() {
   return (
-    <div className="border-b border-border bg-primary/5 lg:relative lg:flex lg:min-h-[90vh] lg:items-center">
+    <div className="border-b border-border bg-primary/5 lg:relative lg:flex lg:min-h-[80vh] lg:items-center">
       <Shell className="w-full py-14 sm:py-20 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-[1fr_440px] lg:items-center">
           <div className="text-center lg:text-left">
@@ -36,7 +36,7 @@ export default function Hero() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={link.label}
-                  className="grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-muted transition hover:border-primary hover:text-primary"
+                  className="grid h-11 w-11 place-items-center rounded-full sm:h-9 sm:w-9 border border-border bg-card text-muted transition hover:border-primary hover:text-primary"
                 >
                   <img src={link.icon} alt="" className="icon-mono h-4 w-4" />
                 </a>
@@ -54,7 +54,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="order-first mx-auto w-full max-w-sm overflow-hidden rounded-[3rem] border border-border bg-card photo-aura lg:order-none lg:max-w-none">
+          <div className="order-first mx-auto w-full max-w-[15rem] overflow-hidden rounded-[2.5rem] border border-border bg-card photo-aura sm:max-w-sm sm:rounded-[3rem] lg:order-none lg:max-w-none">
             <img
               src={profilePhoto}
               alt="Portrait of Joe Park"

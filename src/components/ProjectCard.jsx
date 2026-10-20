@@ -1,45 +1,39 @@
 import { Link } from 'react-router-dom';
-import githubIcon from '../assets/icons/github.svg';
 
-export default function ProjectCard({ title, description, tags, finding, repoUrl, caseStudyUrl, media }) {
+// The featured (latest) project spans the full row, with the image beside the text on large screens
+export default function ProjectCard({ title, description, tags, finding, repoUrl, caseStudyUrl, media, featured = false }) {
   return (
-    <article className="flex h-full flex-col gap-4 rounded-xl border border-border bg-card p-6 shadow-sm transition hover:border-primary hover:shadow-lg hover:shadow-primary/20 motion-reduce:transition-none">
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex flex-wrap gap-1.5">
-          {tags.map((tag) => (
-            <span key={tag} className="rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted">
-              {tag}
-            </span>
-          ))}
-        </div>
-        <a
-          href={repoUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${title} on GitHub`}
-          className="shrink-0 rounded-full p-1 opacity-70 transition-opacity hover:opacity-100"
-        >
-          <img src={githubIcon} alt="" className="icon-mono h-5 w-5" />
-        </a>
+    <article className={`group relative flex h-full flex-col gap-4 rounded-xl ${featured ? 'sm:col-span-2 lg:grid lg:grid-cols-[1.3fr_1fr] lg:grid-rows-[auto_1fr] lg:gap-x-8 lg:p-8 ' : ''} border border-border bg-card p-6 shadow-sm transition hover:border-primary hover:shadow-lg hover:shadow-primary/20 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary motion-reduce:transition-none`}>
+      <div className={`flex flex-wrap items-start gap-1.5 ${featured ? 'lg:col-start-2 lg:row-start-1' : ''}`}>
+        {tags.map((tag) => (
+          <span key={tag} className="rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted">
+            {tag}
+          </span>
+        ))}
       </div>
 
-      <div className="aspect-[16/10] w-full overflow-hidden rounded-lg bg-surface">
+      <div className={`aspect-[16/10] w-full overflow-hidden ${featured ? 'lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:aspect-auto lg:h-full' : ''} rounded-lg bg-surface [&>img]:transition-transform [&>img]:duration-300 group-hover:[&>img]:scale-[1.02] motion-reduce:[&>img]:transition-none`}>
         {media}
       </div>
 
-      <div className="flex min-w-0 flex-1 flex-col gap-3">
-        <h3 className="text-lg font-bold text-ink">{title}</h3>
+      <div className={`flex min-w-0 flex-1 flex-col gap-3 ${featured ? 'lg:col-start-2' : ''}`}>
+        <h3 className={`font-bold text-ink group-hover:text-primary ${featured ? 'text-xl sm:text-2xl' : 'text-lg'}`}>{title}</h3>
         <p className="text-sm text-muted">{description}</p>
 
         <div className="mt-auto flex flex-col gap-3">
-          <div className="flex gap-2 rounded-lg bg-primary-tint p-3">
+          <div className={`flex flex-col gap-1 rounded-lg bg-primary-tint p-3 ${featured ? 'lg:flex-row lg:gap-2' : ''}`}>
             <span className="shrink-0 text-xs font-bold uppercase tracking-wide text-primary">Key finding</span>
             <span className="text-sm text-ink">{finding}</span>
           </div>
 
-          <div className="flex gap-5 font-mono text-sm">
-            <a href={repoUrl} className="text-primary hover:underline">GitHub →</a>
-            <Link to={caseStudyUrl} className="text-primary hover:underline">Read the analysis →</Link>
+          <div className="flex gap-5 text-sm font-semibold">
+            {/* Stretched link: the whole card opens the case study */}
+            <Link to={caseStudyUrl} className="text-primary after:absolute after:inset-0 after:rounded-xl hover:underline">
+              Read the analysis →
+            </Link>
+            <a href={repoUrl} target="_blank" rel="noopener noreferrer" className="relative z-10 text-muted hover:text-primary hover:underline">
+              GitHub →
+            </a>
           </div>
         </div>
       </div>

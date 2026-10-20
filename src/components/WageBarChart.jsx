@@ -74,7 +74,7 @@ export default function WageBarChart({ compact = false }) {
               rx={2}
               className={isHighlighted ? 'fill-primary' : 'fill-bar'}
             >
-              <title>{`${area.name} — $${area.wage.toLocaleString()} · ${area.emp.toLocaleString()} analysts`}</title>
+              <title>{`${area.name}: $${area.wage.toLocaleString()} · ${area.emp.toLocaleString()} analysts`}</title>
             </rect>
 
             {(!compact || isHighlighted) && (

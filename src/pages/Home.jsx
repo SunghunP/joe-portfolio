@@ -23,16 +23,16 @@ export default function Home() {
     <>
       <Hero />
 
-      <Section id="featured">
-        <Reveal><FeaturedVideo /></Reveal>
-      </Section>
       <Section id="about">
         <Reveal><About /></Reveal>
       </Section>
-      <Section id="skills">
+      <Section id="skills" tinted>
         <Reveal><Skills /></Reveal>
       </Section>
-      <Section id="projects">
+      <Section id="featured">
+        <Reveal><FeaturedVideo /></Reveal>
+      </Section>
+      <Section id="projects" tinted>
         <Reveal><Projects /></Reveal>
       </Section>
       <Section id="experience">

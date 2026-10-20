@@ -1,4 +1,3 @@
-import Kicker from './Kicker'
 import githubIcon from '../assets/icons/github.svg'
 import linkedinIcon from '../assets/icons/linkedin.svg'
 import mediumIcon from '../assets/icons/medium.svg'
@@ -12,13 +11,9 @@ const LINKS = [
 export default function Contact() {
   return (
     <div className="text-center">
-      <Kicker>Contact</Kicker>
+      <h2 className="text-2xl font-extrabold tracking-tight text-primary sm:text-3xl">Contact</h2>
 
-      <h2 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-ink sm:text-6xl">
-        Let's Connect
-      </h2>
-
-      <div className="mt-4 flex flex-col items-center gap-1 font-mono text-xl text-muted sm:text-2xl">
+      <div className="mt-4 flex flex-col items-center gap-1 text-xl font-semibold text-muted sm:text-2xl">
         <a href="mailto:joeparkda@gmail.com" className="hover:text-primary">
           joeparkda@gmail.com
         </a>
@@ -37,7 +32,7 @@ export default function Contact() {
           download="Joe_Park_Resume.pdf"
           className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-on-primary transition hover:bg-primary-strong"
         >
-          Download Résumé
+          Download Resume
         </a>
 
         {LINKS.map((link) => (
