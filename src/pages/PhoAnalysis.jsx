@@ -47,7 +47,7 @@ export default function PhoAnalysis() {
   const project = projects.find((p) => p.slug === 'pho-restaurant-analysis');
 
   return (
-    <Shell className="py-14 sm:py-20">
+    <Shell className="py-14 sm:py-20 project-theme">
       <div className="mx-auto max-w-4xl">
         <Link to="/" className="text-sm font-semibold text-primary hover:underline">
           ← Back to portfolio
@@ -116,7 +116,7 @@ export default function PhoAnalysis() {
         <ul className="mt-3 flex flex-col gap-3">
           {RECOMMENDATIONS.map((item) => (
             <li key={item} className="flex gap-3 text-ink">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bar" />
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full accent-dot" />
               <span>{item}</span>
             </li>
           ))}
@@ -128,7 +128,7 @@ export default function PhoAnalysis() {
         <ul className="mt-3 flex flex-col gap-3">
           {FINDINGS.map((item) => (
             <li key={item} className="flex gap-3 text-ink">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full accent-dot" />
               <span>{item}</span>
             </li>
           ))}
@@ -151,7 +151,7 @@ export default function PhoAnalysis() {
         <ul className="mt-4 flex flex-col gap-2">
           {QUESTIONS.map((q) => (
             <li key={q} className="flex gap-3 text-sm text-ink">
-              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full accent-dot" />
               <span>{q}</span>
             </li>
           ))}
@@ -187,7 +187,7 @@ export default function PhoAnalysis() {
         <ul className="mt-3 flex flex-col gap-3">
           {LIMITATIONS.map((item) => (
             <li key={item} className="flex gap-3 text-ink">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full accent-dot" />
               <span>{item}</span>
             </li>
           ))}

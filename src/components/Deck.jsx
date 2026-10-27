@@ -5,8 +5,8 @@ const DeckContext = createContext('')
 // Slim page heading: just the project title
 export function Cover({ title }) {
   return (
-    <header className="mt-3 border-b-4 border-primary pb-3">
-      <h1 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">{title}</h1>
+    <header className="project-hero accent-rule mt-3 rounded-t-lg px-5 pb-4 pt-5 sm:px-8 sm:pt-7">
+      <h1 className="project-hero-title text-2xl font-extrabold tracking-tight sm:text-3xl">{title}</h1>
     </header>
   )
 }
@@ -31,7 +31,7 @@ export function Slide({ title, number, total, appendix, children }) {
 
   return (
     <section className="overflow-hidden rounded-lg border border-border bg-bg shadow-md">
-      <div className="flex items-center justify-between gap-4 border-b-4 border-primary px-6 py-4 sm:px-10">
+      <div className="flex items-center justify-between gap-4 accent-rule px-6 py-4 sm:px-10">
         <h2 className="text-xl font-extrabold tracking-tight text-ink sm:text-2xl">{title}</h2>
         {appendix && <span className="text-xs font-bold uppercase tracking-widest text-muted">Appendix</span>}
       </div>
