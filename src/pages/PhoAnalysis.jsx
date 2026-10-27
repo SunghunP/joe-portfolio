@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Shell from '../components/Shell';
 import ShortAnswer from '../components/ShortAnswer';
 import Details from '../components/Details';
-import { Cover, Deck, Slide } from '../components/Deck';
+import { Cover, Deck, MetaStrip, Slide } from '../components/Deck';
 import NextCaseStudy from '../components/NextCaseStudy';
 import { BiDashboard, ChartCard, Columns, DashboardFrame, HBar, Heatmap, Legend, TrendLine } from '../components/Charts';
 import dashboardImage from '../assets/images/pho/sales_dashboard.png';
@@ -53,27 +53,10 @@ export default function PhoAnalysis() {
           ← Back to portfolio
         </Link>
 
-        <Cover title="Pho Restaurant Exploratory Data Analysis: Did Business Actually Slow Down?" subtitle="An Exploratory Data Analysis of a Pho Restaurant's Sales Data (SQL Server + Python)" meta={META} />
+        <Cover title="Pho Restaurant Exploratory Data Analysis: Did Business Actually Slow Down?" />
 
         <Deck project={project.title}>
-        <Slide title="The Conclusion">
-        <ShortAnswer finding={project.finding} />
-
-        <div className="mt-6 rounded-lg bg-primary-tint p-5">
-          <p className="text-xl font-bold text-ink sm:text-2xl">
-            Revenue stayed flat across the quarter at roughly $26,000 per week.
-          </p>
-          <p className="mt-2 text-ink">
-            This contradicts what the owners assumed going in. The data doesn't support "business is slowing down."
-            That changes the conversation from "how do we stop the decline" to "how do we grow from a stable
-            baseline."
-          </p>
-        </div>
-
-        </Slide>
-
-        <Slide title="Dashboard">
-          <BiDashboard title={project.title} subtitle={META.find((m) => m.label === 'Scope').value} kpis={[
+        <BiDashboard kpis={[
             { label: 'Avg weekly revenue', value: money(weeklyAverage) },
             { label: 'Line items analyzed', value: '38,293' },
             { label: 'Slow-hour revenue lift', value: '+10%', sub: 'after a targeted promotion' },
@@ -112,6 +95,21 @@ export default function PhoAnalysis() {
             />
           </ChartCard>
           </BiDashboard>
+
+        <Slide title="The Conclusion">
+        <ShortAnswer finding={project.finding} />
+
+        <div className="mt-6 rounded-lg bg-primary-tint p-5">
+          <p className="text-xl font-bold text-ink sm:text-2xl">
+            Revenue stayed flat across the quarter at roughly $26,000 per week.
+          </p>
+          <p className="mt-2 text-ink">
+            This contradicts what the owners assumed going in. The data doesn't support "business is slowing down."
+            That changes the conversation from "how do we stop the decline" to "how do we grow from a stable
+            baseline."
+          </p>
+        </div>
+
         </Slide>
 
         <Slide title="Business recommendations">
@@ -144,6 +142,7 @@ export default function PhoAnalysis() {
         </Slide>
 
         <Slide title="The Business Question" appendix>
+        <MetaStrip meta={META} />
         <p className="mt-3 text-ink">
           The owners felt like business had been slowing down and wanted a specific number they could see, rather
           than just a feeling from being there every day. This analysis was meant to check that feeling against the

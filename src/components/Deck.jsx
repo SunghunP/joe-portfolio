@@ -2,21 +2,26 @@ import { Children, cloneElement, createContext, isValidElement, useContext } fro
 
 const DeckContext = createContext('')
 
-// Cover slide: project title plus the Tools / Data / Scope strip
-export function Cover({ title, subtitle, meta }) {
+// Slim page heading: just the project title
+export function Cover({ title }) {
   return (
-    <header className="mt-6 rounded-lg bg-primary px-6 py-10 text-on-primary shadow-md sm:px-12 sm:py-14">
-      <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">{title}</h1>
-      <p className="mt-3 text-base opacity-90">{subtitle}</p>
-      <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-on-primary/30 pt-6 sm:grid-cols-4">
-        {meta.map((item) => (
-          <div key={item.label}>
-            <dt className="text-[0.65rem] font-bold uppercase tracking-widest opacity-80">{item.label}</dt>
-            <dd className="mt-1 text-sm">{item.value}</dd>
-          </div>
-        ))}
-      </dl>
+    <header className="mt-3 border-b-4 border-primary pb-3">
+      <h1 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">{title}</h1>
     </header>
+  )
+}
+
+// Tools / Data / Scope strip, kept for the appendix
+export function MetaStrip({ meta }) {
+  return (
+    <dl className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
+      {meta.map((item) => (
+        <div key={item.label}>
+          <dt className="text-[0.65rem] font-bold uppercase tracking-widest text-muted">{item.label}</dt>
+          <dd className="mt-1 text-sm text-ink">{item.value}</dd>
+        </div>
+      ))}
+    </dl>
   )
 }
 

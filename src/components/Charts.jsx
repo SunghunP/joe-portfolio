@@ -264,7 +264,7 @@ export function Heatmap({ rows, cols, values, format = money, mark, ariaLabel })
 export function TrendLine({ data, valueKey, labelKey, format = money, average, ariaLabel }) {
   const { ref, show, hide, element } = useTooltip()
   const W = 640
-  const H = 240
+  const H = 200
   const pad = { l: 48, r: 16, t: 24, b: 32 }
   const yMax = 30000
   const x = (i) => pad.l + (i / (data.length - 1)) * (W - pad.l - pad.r)
@@ -387,13 +387,10 @@ export function DashboardFrame({ src, alt, caption }) {
 
 // A report canvas in the style of a BI tool: light gray page, white tiles, KPI cards on top.
 // It scopes its own palette (see .bi in index.css), so it looks the same in light and dark mode.
-export function BiDashboard({ title, subtitle, kpis, children }) {
+export function BiDashboard({ subtitle, kpis, children }) {
   return (
     <div className="bi overflow-hidden rounded-md border border-border bg-bg p-3 shadow-lg sm:p-4">
-      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4">
-        <h3 className="text-base font-semibold text-ink sm:text-lg">{title}</h3>
-        {subtitle && <span className="text-xs text-muted">{subtitle}</span>}
-      </div>
+      {subtitle && <p className="mb-2 text-xs text-muted">{subtitle}</p>}
       <div className={`grid grid-cols-2 gap-3 ${kpis.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-4'}`}>
         {kpis.map((k) => (
           <div key={k.label} className="rounded-sm border border-border bg-card px-4 py-3 shadow-sm">

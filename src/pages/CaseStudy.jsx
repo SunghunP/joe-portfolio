@@ -2,7 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import Shell from '../components/Shell';
 import ShortAnswer from '../components/ShortAnswer';
 import Details from '../components/Details';
-import { Cover, Deck, Slide } from '../components/Deck';
+import { Cover, Deck, MetaStrip, Slide } from '../components/Deck';
 import NextCaseStudy from '../components/NextCaseStudy';
 import CodeBlock from '../components/CodeBlock';
 import WageBarChart from '../components/WageBarChart';
@@ -126,9 +126,23 @@ export default function CaseStudy() {
           ← Back to portfolio
         </Link>
 
-        <Cover title={project.title} subtitle="A Descriptive Statistics Analysis of Data Analyst Wages Across Washington State" meta={META} />
+        <Cover title={project.title} />
 
         <Deck project={project.title}>
+        <BiDashboard kpis={[
+            { label: 'Highest average wage', value: '$130.4K', sub: 'Seattle-Tacoma-Bellevue' },
+            { label: 'Lowest average wage', value: '$87.9K', sub: 'Yakima' },
+            { label: 'Pay difference', value: '48%' },
+            { label: 'Talent pool', value: '124x', sub: '72,210 vs. 580 analysts' },
+          ]}>
+          <ChartCard className="lg:col-span-2" label="Average data analyst wage by labor market area" caption="Weighted average annual wage across all 15 Washington labor market areas.">
+            <HBar data={barData} highlight={(d) => d.highlight} labelWidth="11rem" ariaLabel="Weighted average analyst wage by Washington labor market area, highest in Seattle-Tacoma-Bellevue and lowest in Yakima" />
+          </ChartCard>
+          <ChartCard className="lg:col-span-2" label="Pay vs. job market size" caption="The pay-vs-job-market tradeoff across all 15 areas.">
+            <Scatter data={scatterData} labeled={['Portland–Vancouver, OR–WA', 'Olympia–Lacey', 'Spokane']} ariaLabel="Analyst pay against number of analyst jobs by area, with Seattle highest on both and Yakima lowest on both" />
+          </ChartCard>
+          </BiDashboard>
+
         <Slide title="The Answer">
         <ShortAnswer finding={project.finding} />
 
@@ -155,22 +169,6 @@ export default function CaseStudy() {
         </p>
         </Slide>
 
-        <Slide title="Dashboard">
-          <BiDashboard title={project.title} subtitle={META.find((m) => m.label === 'Scope').value} kpis={[
-            { label: 'Highest average wage', value: '$130.4K', sub: 'Seattle-Tacoma-Bellevue' },
-            { label: 'Lowest average wage', value: '$87.9K', sub: 'Yakima' },
-            { label: 'Pay difference', value: '48%' },
-            { label: 'Talent pool', value: '124x', sub: '72,210 vs. 580 analysts' },
-          ]}>
-          <ChartCard className="lg:col-span-2" label="Average data analyst wage by labor market area" caption="Weighted average annual wage across all 15 Washington labor market areas.">
-            <HBar data={barData} highlight={(d) => d.highlight} labelWidth="11rem" ariaLabel="Weighted average analyst wage by Washington labor market area, highest in Seattle-Tacoma-Bellevue and lowest in Yakima" />
-          </ChartCard>
-          <ChartCard className="lg:col-span-2" label="Pay vs. job market size" caption="The pay-vs-job-market tradeoff across all 15 areas.">
-            <Scatter data={scatterData} labeled={['Portland–Vancouver, OR–WA', 'Olympia–Lacey', 'Spokane']} ariaLabel="Analyst pay against number of analyst jobs by area, with Seattle highest on both and Yakima lowest on both" />
-          </ChartCard>
-          </BiDashboard>
-        </Slide>
-
         <Slide title="Key findings">
         <ul className="mt-3 flex flex-col gap-3">
           {FINDINGS.filter((_, i) => i !== 2 && i !== 3).map((item) => (
@@ -195,6 +193,7 @@ export default function CaseStudy() {
         </Slide>
 
         <Slide title="The Problem" appendix>
+        <MetaStrip meta={META} />
         <p className="mt-3 text-ink">
           If you're a data analyst in Washington State, does it matter which city you work in? And if it does, how
           much money are you actually leaving on the table by staying in the wrong one?

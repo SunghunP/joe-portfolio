@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Shell from '../components/Shell';
 import ShortAnswer from '../components/ShortAnswer';
 import Details from '../components/Details';
-import { Cover, Deck, Slide } from '../components/Deck';
+import { Cover, Deck, MetaStrip, Slide } from '../components/Deck';
 import NextCaseStudy from '../components/NextCaseStudy';
 import CodeBlock from '../components/CodeBlock';
 import { BiDashboard, ChartCard, Columns, DashboardFrame, HBar } from '../components/Charts';
@@ -80,34 +80,10 @@ export default function CoffeeAnalysis() {
           ← Back to portfolio
         </Link>
 
-        <Cover title="Half of This Coffee Shop's Customers Only Buy One Thing. Here's How I'd Fix That." subtitle="A Sales Analysis of Coffee Shop POS Data (Excel PivotTables + T-SQL)" meta={META} />
+        <Cover title="Half of This Coffee Shop's Customers Only Buy One Thing. Here's How I'd Fix That." />
 
         <Deck project={project.title}>
-        <Slide title="The Conclusion">
-        <ShortAnswer finding={project.finding} />
-
-        <div className="mt-6 rounded-lg bg-primary-tint p-5">
-          <p className="text-xl font-bold text-ink sm:text-2xl">
-            Mornings and weekdays drive the business.
-          </p>
-          <p className="mt-2 text-ink">
-            Sales peak at 8 AM, Wednesday is the busiest day, and coffee brings in 47% of revenue. The SQL queries
-            matched the pivots.
-          </p>
-        </div>
-
-        <div className="mt-6 grid gap-4 sm:grid-cols-3">
-          {STATS.map((stat) => (
-            <div key={stat.label} className="rounded-xl border border-border bg-card p-5 shadow-sm">
-              <span className="border-b-2 border-primary pb-1 font-mono text-2xl font-bold text-ink">{stat.number}</span>
-              <p className="mt-3 text-sm text-muted">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-        </Slide>
-
-        <Slide title="Dashboard">
-          <BiDashboard title={project.title} subtitle={META.find((m) => m.label === 'Scope').value} kpis={[
+        <BiDashboard kpis={[
             { label: 'Net sales', value: '$19,936' },
             { label: 'Transactions', value: '2,418' },
             { label: 'Average ticket', value: '$8.24' },
@@ -145,6 +121,28 @@ export default function CoffeeAnalysis() {
             />
           </ChartCard>
           </BiDashboard>
+
+        <Slide title="The Conclusion">
+        <ShortAnswer finding={project.finding} />
+
+        <div className="mt-6 rounded-lg bg-primary-tint p-5">
+          <p className="text-xl font-bold text-ink sm:text-2xl">
+            Mornings and weekdays drive the business.
+          </p>
+          <p className="mt-2 text-ink">
+            Sales peak at 8 AM, Wednesday is the busiest day, and coffee brings in 47% of revenue. The SQL queries
+            matched the pivots.
+          </p>
+        </div>
+
+        <div className="mt-6 grid gap-4 sm:grid-cols-3">
+          {STATS.map((stat) => (
+            <div key={stat.label} className="rounded-xl border border-border bg-card p-5 shadow-sm">
+              <span className="border-b-2 border-primary pb-1 font-mono text-2xl font-bold text-ink">{stat.number}</span>
+              <p className="mt-3 text-sm text-muted">{stat.label}</p>
+            </div>
+          ))}
+        </div>
         </Slide>
 
         <Slide title="Business recommendation">
@@ -181,6 +179,7 @@ export default function CoffeeAnalysis() {
         </Slide>
 
         <Slide title="The Business Question" appendix>
+        <MetaStrip meta={META} />
         <p className="mt-3 text-ink">
           I analyzed four weeks of sales from a coffee shop to practice pivot tables and SQL. The data is a practice
           dataset modeled on a Square POS export, not a real business. I focused on three questions:
