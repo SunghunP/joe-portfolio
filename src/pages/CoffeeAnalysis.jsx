@@ -1,10 +1,16 @@
 import { Link } from 'react-router-dom';
 import Shell from '../components/Shell';
 import ShortAnswer from '../components/ShortAnswer';
+import Details from '../components/Details';
+import { Cover, Deck, Slide } from '../components/Deck';
 import NextCaseStudy from '../components/NextCaseStudy';
 import CodeBlock from '../components/CodeBlock';
+import { BiDashboard, ChartCard, Columns, DashboardFrame, HBar } from '../components/Charts';
+import { coffeeByCategory, coffeeByDay, coffeeByHour, coffeeByItem } from '../data/coffeeData';
 import dashboardImage from '../assets/images/coffee/coffee_shop_dashboard.png';
 import { projects } from '../data/projects';
+
+const hourLabel = (h) => (h === 12 ? '12p' : h > 12 ? `${h - 12}p` : `${h}a`)
 
 const META = [
   { label: 'Prepared by', value: 'Joe Park' },
@@ -69,47 +75,18 @@ export default function CoffeeAnalysis() {
 
   return (
     <Shell className="py-14 sm:py-20">
-      {/* Text column capped near 70 characters; figures break out a little wider on large screens */}
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-4xl">
         <Link to="/" className="text-sm font-semibold text-primary hover:underline">
           ← Back to portfolio
         </Link>
 
-        <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-          Half of This Coffee Shop's Customers Only Buy One Thing. Here's How I'd Fix That.
-        </h1>
-        <p className="mt-3 text-base text-muted">
-          A Sales Analysis of Coffee Shop POS Data (Excel PivotTables + T-SQL)
-        </p>
+        <Cover title="Half of This Coffee Shop's Customers Only Buy One Thing. Here's How I'd Fix That." subtitle="A Sales Analysis of Coffee Shop POS Data (Excel PivotTables + T-SQL)" meta={META} />
 
-        <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-4">
-          {META.map((item) => (
-            <div key={item.label} className="bg-card p-3">
-              <div className="text-[0.65rem] font-bold uppercase tracking-wide text-muted">{item.label}</div>
-              <div className="mt-1 text-sm text-ink">{item.value}</div>
-            </div>
-          ))}
-        </div>
-
-        <h2 className="mt-12 text-2xl font-bold tracking-tight text-ink">The Business Question</h2>
-        <p className="mt-3 text-ink">
-          I analyzed four weeks of sales from a coffee shop to practice pivot tables and SQL. The data is a practice
-          dataset modeled on a Square POS export, not a real business. I focused on three questions:
-        </p>
-        <ul className="mt-4 flex flex-col gap-2">
-          {QUESTIONS.map((q) => (
-            <li key={q} className="flex gap-3 text-sm text-ink">
-              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-              <span>{q}</span>
-            </li>
-          ))}
-        </ul>
-
+        <Deck project={project.title}>
+        <Slide title="The Conclusion">
         <ShortAnswer finding={project.finding} />
 
-        <h2 className="mt-12 text-2xl font-bold tracking-tight text-ink">The Conclusion</h2>
-
-        <div className="mt-4 rounded-lg bg-primary-tint p-5">
+        <div className="mt-6 rounded-lg bg-primary-tint p-5">
           <p className="text-xl font-bold text-ink sm:text-2xl">
             Mornings and weekdays drive the business.
           </p>
@@ -127,8 +104,50 @@ export default function CoffeeAnalysis() {
             </div>
           ))}
         </div>
+        </Slide>
 
-        <h3 className="mt-10 text-lg font-semibold text-ink">Business recommendation</h3>
+        <Slide title="Dashboard">
+          <BiDashboard title={project.title} subtitle={META.find((m) => m.label === 'Scope').value} kpis={[
+            { label: 'Net sales', value: '$19,936' },
+            { label: 'Transactions', value: '2,418' },
+            { label: 'Average ticket', value: '$8.24' },
+            { label: 'Items per order', value: '1.74' },
+          ]}>
+          <ChartCard label="Net sales by hour" caption="Sales peak at 8 AM. 7–9 AM is about 46% of sales, and after 3 PM is only about 11%.">
+            <Columns
+              labels={coffeeByHour.map((d) => hourLabel(d.label))}
+              series={[{ name: 'Net sales', values: coffeeByHour.map((d) => d.value) }]}
+              highlight={(i) => coffeeByHour[i].label >= 7 && coffeeByHour[i].label <= 9}
+              height={170}
+              valueLabel={(n) => `$${(n / 1000).toFixed(1)}K`}
+              ariaLabel="Net sales by hour, peaking at 8 AM"
+            />
+          </ChartCard>
+          <ChartCard label="Net sales by day" caption="Wednesday is the busiest day, and a weekday brings in about 1.7 times the sales of a weekend day.">
+            <Columns
+              labels={coffeeByDay.map((d) => d.label)}
+              series={[{ name: 'Net sales', values: coffeeByDay.map((d) => d.value) }]}
+              highlight={(i) => coffeeByDay[i].label === 'Wed'}
+              height={170}
+              valueLabel={(n) => `$${(n / 1000).toFixed(1)}K`}
+              ariaLabel="Net sales by day of week, with Wednesday highest"
+            />
+          </ChartCard>
+          <ChartCard label="Total revenue by item" caption="Top 10 items. The Latte is the top seller at $2,924.">
+            <HBar data={coffeeByItem} highlight={(_, i) => i === 0} labelWidth="8rem" ariaLabel="Top 10 items by revenue, led by the Latte" />
+          </ChartCard>
+          <ChartCard label="Percent of revenue by category" caption="Coffee brings in 47% of revenue.">
+            <HBar
+              data={coffeeByCategory.map((d) => ({ ...d, display: `${d.share}%`, note: `$${d.value.toLocaleString()}` }))}
+              highlight={(_, i) => i === 0}
+              labelWidth="5rem"
+              ariaLabel="Share of revenue by category, with Coffee at 47%"
+            />
+          </ChartCard>
+          </BiDashboard>
+        </Slide>
+
+        <Slide title="Business recommendation">
         <ul className="mt-3 flex flex-col gap-3">
           <li className="flex gap-3 text-ink">
             <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bar" />
@@ -138,8 +157,9 @@ export default function CoffeeAnalysis() {
             </span>
           </li>
         </ul>
+        </Slide>
 
-        <h3 className="mt-10 text-lg font-semibold text-ink">Key findings</h3>
+        <Slide title="Key findings">
         <ul className="mt-3 flex flex-col gap-3">
           {FINDINGS.map((item) => (
             <li key={item} className="flex gap-3 text-ink">
@@ -149,19 +169,33 @@ export default function CoffeeAnalysis() {
           ))}
         </ul>
 
-        <figure className="mt-12 overflow-hidden rounded-xl border border-border bg-card shadow-sm lg:-mx-16">
-          <img
+        </Slide>
+
+        <Details>
+        <Slide title="Dashboard in Excel" appendix>
+          <DashboardFrame
             src={dashboardImage}
             alt="Dashboard of four charts: net sales by day, net sales by hour, total revenue by item, and percent of revenue by category"
-            className="w-full"
+            caption="Dashboard built from the PivotTables."
           />
-          <figcaption className="border-t border-border px-4 py-2 text-xs text-muted">
-            Dashboard built from the PivotTables.
-          </figcaption>
-        </figure>
+        </Slide>
 
-        <h2 className="mt-10 text-2xl font-bold tracking-tight text-ink">The Methodology</h2>
+        <Slide title="The Business Question" appendix>
+        <p className="mt-3 text-ink">
+          I analyzed four weeks of sales from a coffee shop to practice pivot tables and SQL. The data is a practice
+          dataset modeled on a Square POS export, not a real business. I focused on three questions:
+        </p>
+        <ul className="mt-4 flex flex-col gap-2">
+          {QUESTIONS.map((q) => (
+            <li key={q} className="flex gap-3 text-sm text-ink">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+              <span>{q}</span>
+            </li>
+          ))}
+        </ul>
+        </Slide>
 
+        <Slide title="The Methodology" appendix>
         <h3 className="mt-6 text-lg font-semibold text-ink">Pivot tables</h3>
         <p className="mt-2 text-ink">
           Each row in the data is one item, not one order, so I added a helper column to count real transactions.
@@ -189,6 +223,9 @@ export default function CoffeeAnalysis() {
           <code className="font-mono text-sm">OVER ()</code> treats all the categories as one window.
         </p>
         <CodeBlock caption="T-SQL: percent of revenue by category" code={SQL_CATEGORY_SHARE} />
+        </Slide>
+        </Details>
+        </Deck>
 
         <div className="mt-10 flex flex-wrap gap-5 border-t border-border pt-6 text-sm font-semibold">
           <a href={project.repoUrl} className="text-primary hover:underline">Full write-up &amp; workbook on GitHub →</a>

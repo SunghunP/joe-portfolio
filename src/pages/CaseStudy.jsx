@@ -1,13 +1,24 @@
 import { useParams, Link } from 'react-router-dom';
 import Shell from '../components/Shell';
 import ShortAnswer from '../components/ShortAnswer';
+import Details from '../components/Details';
+import { Cover, Deck, Slide } from '../components/Deck';
 import NextCaseStudy from '../components/NextCaseStudy';
 import CodeBlock from '../components/CodeBlock';
 import WageBarChart from '../components/WageBarChart';
 import chartsImage from '../assets/images/wa/wa-analyst-wage-charts.png';
 import shapeMapImage from '../assets/images/wa/shapemap_average_cost_of_analyst.png';
+import { BiDashboard, ChartCard, DashboardFrame, HBar, Scatter } from '../components/Charts';
 import { projects } from '../data/projects';
 import { wageData } from '../data/wageData';
+
+const SHORT_NAMES = {
+  'Seattle–Tacoma–Bellevue': 'Seattle',
+  'Portland–Vancouver, OR–WA': 'Portland',
+  'Olympia–Lacey': 'Olympia',
+}
+const scatterData = wageData.map((d) => ({ ...d, short: SHORT_NAMES[d.name] }))
+const barData = [...wageData].reverse().map((d) => ({ label: d.name, value: d.wage, note: `${d.emp.toLocaleString()} analysts`, display: `$${(d.wage / 1000).toFixed(1)}K`, highlight: d.highlight }))
 
 const META = [
   { label: 'Prepared by', value: 'Joe Park, Google Data Analytics Certificate Capstone' },
@@ -110,27 +121,80 @@ export default function CaseStudy() {
 
   return (
     <Shell className="py-14 sm:py-20">
-      {/* Text column capped near 70 characters; figures break out a little wider on large screens */}
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-4xl">
         <Link to="/" className="text-sm font-semibold text-primary hover:underline">
           ← Back to portfolio
         </Link>
 
-        <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">{project.title}</h1>
-        <p className="mt-3 text-base text-muted">
-          A Descriptive Statistics Analysis of Data Analyst Wages Across Washington State
-        </p>
+        <Cover title={project.title} subtitle="A Descriptive Statistics Analysis of Data Analyst Wages Across Washington State" meta={META} />
 
-        <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-4">
-          {META.map((item) => (
-            <div key={item.label} className="bg-card p-3">
-              <div className="text-[0.65rem] font-bold uppercase tracking-wide text-muted">{item.label}</div>
-              <div className="mt-1 text-sm text-ink">{item.value}</div>
+        <Deck project={project.title}>
+        <Slide title="The Answer">
+        <ShortAnswer finding={project.finding} />
+
+        <div className="mt-6 rounded-lg bg-primary-tint p-5">
+          <p className="text-xl font-bold text-ink sm:text-2xl">
+            $87,900 in Yakima. $130,400 in Seattle-Tacoma-Bellevue.
+          </p>
+          <p className="mt-2 text-ink">Same job title. Same state. A $40K+ swing depending on where you work.</p>
+        </div>
+
+        <div className="mt-6 grid gap-4 sm:grid-cols-3">
+          {STATS.map((stat) => (
+            <div key={stat.label} className="rounded-xl border border-border bg-card p-5 shadow-sm">
+              <span className="border-b-2 border-primary pb-1 font-mono text-2xl font-bold text-ink">{stat.number}</span>
+              <p className="mt-3 text-sm text-muted">{stat.label}</p>
             </div>
           ))}
         </div>
 
-        <h2 className="mt-12 text-2xl font-bold tracking-tight text-ink">The Problem</h2>
+        <p className="mt-6 text-ink">
+          Seattle-Tacoma-Bellevue is the strongest move if you want the highest ceiling and the deepest job market.
+          Yakima is the strongest move if you're prioritizing cost of living over pay. Mid-tier areas like
+          Spokane-Spokane Valley and Bellingham split the difference.
+        </p>
+        </Slide>
+
+        <Slide title="Dashboard">
+          <BiDashboard title={project.title} subtitle={META.find((m) => m.label === 'Scope').value} kpis={[
+            { label: 'Highest average wage', value: '$130.4K', sub: 'Seattle-Tacoma-Bellevue' },
+            { label: 'Lowest average wage', value: '$87.9K', sub: 'Yakima' },
+            { label: 'Pay difference', value: '48%' },
+            { label: 'Talent pool', value: '124x', sub: '72,210 vs. 580 analysts' },
+          ]}>
+          <ChartCard className="lg:col-span-2" label="Average data analyst wage by labor market area" caption="Weighted average annual wage across all 15 Washington labor market areas.">
+            <HBar data={barData} highlight={(d) => d.highlight} labelWidth="11rem" ariaLabel="Weighted average analyst wage by Washington labor market area, highest in Seattle-Tacoma-Bellevue and lowest in Yakima" />
+          </ChartCard>
+          <ChartCard className="lg:col-span-2" label="Pay vs. job market size" caption="The pay-vs-job-market tradeoff across all 15 areas.">
+            <Scatter data={scatterData} labeled={['Portland–Vancouver, OR–WA', 'Olympia–Lacey', 'Spokane']} ariaLabel="Analyst pay against number of analyst jobs by area, with Seattle highest on both and Yakima lowest on both" />
+          </ChartCard>
+          </BiDashboard>
+        </Slide>
+
+        <Slide title="Key findings">
+        <ul className="mt-3 flex flex-col gap-3">
+          {FINDINGS.filter((_, i) => i !== 2 && i !== 3).map((item) => (
+            <li key={item} className="flex gap-3 text-ink">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-6 flex flex-col gap-4">
+        </div>
+        </Slide>
+
+        <Details>
+        <Slide title="Dashboard in Power BI" appendix>
+          <DashboardFrame
+            src={chartsImage}
+            alt="Washington labor market area map, annual wage by area bar chart, and analyst pay vs. job market size scatter plot"
+            caption="Average data analyst wage by Washington labor market area, and the pay-vs-job-market tradeoff across all 15 areas."
+          />
+        </Slide>
+
+        <Slide title="The Problem" appendix>
         <p className="mt-3 text-ink">
           If you're a data analyst in Washington State, does it matter which city you work in? And if it does, how
           much money are you actually leaving on the table by staying in the wrong one?
@@ -163,41 +227,16 @@ export default function CaseStudy() {
           ))}
         </ul>
 
-        <ShortAnswer finding={project.finding} />
-
-        <h2 className="mt-12 text-2xl font-bold tracking-tight text-ink">The Answer</h2>
-
-        <div className="mt-4 rounded-lg bg-primary-tint p-5">
-          <p className="text-xl font-bold text-ink sm:text-2xl">
-            $87,900 in Yakima. $130,400 in Seattle-Tacoma-Bellevue.
-          </p>
-          <p className="mt-2 text-ink">Same job title. Same state. A $40K+ swing depending on where you work.</p>
-        </div>
-
         <p className="mt-4 text-ink">
           But the highest paying market isn't automatically the best move for every analyst. Seattle-Tacoma-Bellevue
           pays the most and has over 72,000 analyst roles, the deepest job market in the state by far, meaning more
           openings, more employers, and more room to negotiate or switch jobs. Yakima pays the least, with only about
           580 analyst roles total: fewer jobs to apply to and less leverage.
         </p>
+        </Slide>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-3">
-          {STATS.map((stat) => (
-            <div key={stat.label} className="rounded-xl border border-border bg-card p-5 shadow-sm">
-              <span className="border-b-2 border-primary pb-1 font-mono text-2xl font-bold text-ink">{stat.number}</span>
-              <p className="mt-3 text-sm text-muted">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-
-        <p className="mt-6 text-ink">
-          Seattle-Tacoma-Bellevue is the strongest move if you want the highest ceiling and the deepest job market.
-          Yakima is the strongest move if you're prioritizing cost of living over pay. Mid-tier areas like
-          Spokane-Spokane Valley and Bellingham split the difference. See the{' '}
-          <a href="#area-breakdown" className="text-primary hover:underline">full area-by-area breakdown</a> below.
-        </p>
-
-        <p id="area-breakdown" className="mt-10 text-ink">
+        <Slide title="Wage distribution across all areas" appendix>
+        <p className="mt-8 text-ink">
           Results across all 15 Washington labor market areas, ranked from lowest to highest weighted average analyst
           wage:
         </p>
@@ -222,22 +261,13 @@ export default function CaseStudy() {
           </table>
         </div>
 
-        <p className="mt-6 text-xs font-bold uppercase tracking-wide text-muted">Visualization: wage distribution across all areas</p>
-        <div className="mt-2 rounded-xl border border-border bg-card p-4 shadow-sm lg:-mx-16">
+        <div className="mt-2 rounded-xl border border-border bg-card p-4 shadow-sm">
           <WageBarChart />
           <p className="mt-3 text-xs text-muted">Weighted average analyst wage by Washington labor market area.</p>
         </div>
+        </Slide>
 
-        <h3 className="mt-10 text-lg font-semibold text-ink">Key findings</h3>
-        <ul className="mt-3 flex flex-col gap-3">
-          {FINDINGS.map((item) => (
-            <li key={item} className="flex gap-3 text-ink">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-
+        <Slide title="Worth keeping in mind" appendix>
         <p className="mt-6 text-ink">
           There's no single "best" city in this dataset, and I don't think there should be. Yakima is the strongest
           option if you're prioritizing cost of living or want less competition for fewer roles. Seattle-Tacoma-Bellevue
@@ -246,29 +276,26 @@ export default function CaseStudy() {
           middle ground worth a closer look if you're trying to balance both.
         </p>
 
-        <div className="mt-4 rounded-lg bg-primary-tint p-5">
-          <span className="text-xs font-bold uppercase tracking-wide text-primary">Worth keeping in mind</span>
-          <p className="mt-2 text-sm text-ink">
+        <ul className="mt-6 flex flex-col gap-3">
+          {FINDINGS.filter((_, i) => i === 2 || i === 3).map((item) => (
+            <li key={item} className="flex gap-3 text-ink">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-6 rounded-lg bg-primary-tint p-5">
+          <p className="text-sm text-ink">
             Olympia's employment count likely overstates the private sector job market there, since public sector
             analyst roles tied to the state capital are folded into the same figure. And this dataset covers wages
             only, not cost of living, so a $130,400 salary in Seattle and an $87,900 salary in Yakima don't buy the
             same lifestyle.
           </p>
         </div>
+        </Slide>
 
-        <figure className="mt-12 overflow-hidden rounded-xl border border-border bg-card shadow-sm lg:-mx-16">
-          <img
-            src={chartsImage}
-            alt="Washington labor market area map, annual wage by area bar chart, and analyst pay vs. job market size scatter plot"
-            className="w-full"
-          />
-          <figcaption className="border-t border-border px-4 py-2 text-xs text-muted">
-            Average data analyst wage by Washington labor market area, and the pay-vs-job-market tradeoff across all 15 areas.
-          </figcaption>
-        </figure>
-
-        <h2 className="mt-10 text-2xl font-bold tracking-tight text-ink">The Methodology</h2>
-
+        <Slide title="The Methodology" appendix>
         <h3 className="mt-6 text-lg font-semibold text-ink">Cleaning the data</h3>
         <p className="mt-2 text-ink">
           Before any analysis could begin, I had to fight the raw dataset into shape. After pulling the raw file into
@@ -355,7 +382,7 @@ export default function CaseStudy() {
           tradeoff shows up in one glance instead of needing two visuals side by side.
         </p>
 
-        <figure className="mt-4 overflow-hidden rounded-xl border border-border bg-card shadow-sm lg:-mx-16">
+        <figure className="mt-4 overflow-hidden rounded-xl border border-border bg-card shadow-sm">
           <img
             src={shapeMapImage}
             alt="Power BI Shape Map of Washington labor market areas shaded by average analyst pay, paired with a detail table listing each area's employment and weighted average wage"
@@ -365,8 +392,9 @@ export default function CaseStudy() {
             Shape Map of average analyst pay by labor market area, with paired detail table.
           </figcaption>
         </figure>
+        </Slide>
 
-        <h2 className="mt-12 text-2xl font-bold tracking-tight text-ink">Limitations</h2>
+        <Slide title="Limitations" appendix>
         <ul className="mt-3 flex flex-col gap-3">
           {LIMITATIONS.map((item) => (
             <li key={item} className="flex gap-3 text-ink">
@@ -375,8 +403,9 @@ export default function CaseStudy() {
             </li>
           ))}
         </ul>
+        </Slide>
 
-        <h2 className="mt-12 text-2xl font-bold tracking-tight text-ink">Next steps</h2>
+        <Slide title="Next steps" appendix>
         <p className="mt-3 text-ink">Two items remain open from this analysis and are documented here rather than silently resolved:</p>
         <ul className="mt-3 flex flex-col gap-3">
           {NEXT_STEPS.map((item) => (
@@ -395,6 +424,9 @@ export default function CaseStudy() {
             </li>
           ))}
         </ul>
+        </Slide>
+        </Details>
+        </Deck>
 
         <div className="mt-10 flex flex-wrap gap-5 border-t border-border pt-6 text-sm font-semibold">
           <a href={project.repoUrl} className="text-primary hover:underline">Full write-up &amp; SQL on GitHub →</a>

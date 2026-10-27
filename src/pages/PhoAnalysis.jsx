@@ -1,12 +1,17 @@
 import { Link } from 'react-router-dom';
 import Shell from '../components/Shell';
 import ShortAnswer from '../components/ShortAnswer';
+import Details from '../components/Details';
+import { Cover, Deck, Slide } from '../components/Deck';
 import NextCaseStudy from '../components/NextCaseStudy';
-import heatmapImage from '../assets/images/pho/sales_heatmap.png';
-import revenueTrendImage from '../assets/images/pho/weekly_revenue_trend.png';
-import orderTypeHeatmapImage from '../assets/images/pho/sales_heatmap_by_order_type.png';
-import topItemsImage from '../assets/images/pho/top15_items_revenue.png';
+import { BiDashboard, ChartCard, Columns, DashboardFrame, HBar, Heatmap, Legend, TrendLine } from '../components/Charts';
+import dashboardImage from '../assets/images/pho/sales_dashboard.png';
 import { projects } from '../data/projects';
+import { phoByOrderType, phoDays, phoHeatmap, phoHours, phoTopItems, phoWeekly } from '../data/phoData';
+
+const money = (n) => `$${(n / 1000).toFixed(1)}K`
+const hourLabel = (h) => (h === 12 ? '12p' : h > 12 ? `${h - 12}p` : `${h}a`)
+const weeklyAverage = phoWeekly.reduce((sum, w) => sum + w.revenue, 0) / phoWeekly.length
 
 const META = [
   { label: 'Prepared by', value: 'Joe Park' },
@@ -43,29 +48,102 @@ export default function PhoAnalysis() {
 
   return (
     <Shell className="py-14 sm:py-20">
-      {/* Text column capped near 70 characters; figures break out a little wider on large screens */}
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-4xl">
         <Link to="/" className="text-sm font-semibold text-primary hover:underline">
           ← Back to portfolio
         </Link>
 
-        <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-          Pho Restaurant Exploratory Data Analysis: Did Business Actually Slow Down?
-        </h1>
-        <p className="mt-3 text-base text-muted">
-          An Exploratory Data Analysis of a Pho Restaurant's Sales Data (SQL Server + Python)
-        </p>
+        <Cover title="Pho Restaurant Exploratory Data Analysis: Did Business Actually Slow Down?" subtitle="An Exploratory Data Analysis of a Pho Restaurant's Sales Data (SQL Server + Python)" meta={META} />
 
-        <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-4">
-          {META.map((item) => (
-            <div key={item.label} className="bg-card p-3">
-              <div className="text-[0.65rem] font-bold uppercase tracking-wide text-muted">{item.label}</div>
-              <div className="mt-1 text-sm text-ink">{item.value}</div>
-            </div>
-          ))}
+        <Deck project={project.title}>
+        <Slide title="The Conclusion">
+        <ShortAnswer finding={project.finding} />
+
+        <div className="mt-6 rounded-lg bg-primary-tint p-5">
+          <p className="text-xl font-bold text-ink sm:text-2xl">
+            Revenue stayed flat across the quarter at roughly $26,000 per week.
+          </p>
+          <p className="mt-2 text-ink">
+            This contradicts what the owners assumed going in. The data doesn't support "business is slowing down."
+            That changes the conversation from "how do we stop the decline" to "how do we grow from a stable
+            baseline."
+          </p>
         </div>
 
-        <h2 className="mt-12 text-2xl font-bold tracking-tight text-ink">The Business Question</h2>
+        </Slide>
+
+        <Slide title="Dashboard">
+          <BiDashboard title={project.title} subtitle={META.find((m) => m.label === 'Scope').value} kpis={[
+            { label: 'Avg weekly revenue', value: money(weeklyAverage) },
+            { label: 'Line items analyzed', value: '38,293' },
+            { label: 'Slow-hour revenue lift', value: '+10%', sub: 'after a targeted promotion' },
+          ]}>
+        <ChartCard className="lg:col-span-2" label="Weekly revenue" caption="Weekly revenue, holding steady across the quarter rather than trending up or down.">
+          <TrendLine data={phoWeekly} valueKey="revenue" labelKey="week" average={weeklyAverage} ariaLabel="Weekly revenue trend showing a flat line around $26,000 per week across the quarter" />
+        </ChartCard>
+        <ChartCard className="lg:col-span-2" label="Average sales by day and hour" caption="Average sales by day and hour across the quarter. Darker blue marks the busiest slots.">
+          <Heatmap
+            rows={phoDays}
+            cols={phoHours.map((h) => ({ key: h, label: hourLabel(h) }))}
+            values={phoHeatmap}
+            mark={{ from: phoHours.indexOf(13), to: phoHours.indexOf(16), label: '1–4 PM' }}
+            ariaLabel="Average sales by day of week and hour, showing peaks at lunch, early dinner, and late night"
+          />
+        </ChartCard>
+          <ChartCard label="Dine-in vs. to-go" caption="Average sales per day by hour, split by dine-in vs. to-go. To-go consistently outpaces dine-in at the peak hours.">
+            <Legend items={[{ name: 'To-go', className: 'bg-primary' }, { name: 'Dine-in', className: 'bg-bar' }]} />
+            <Columns
+              labels={phoHours.map(hourLabel)}
+              series={[
+                { name: 'To-go', values: phoByOrderType.toGo, className: 'bg-primary' },
+                { name: 'Dine-in', values: phoByOrderType.dineIn, className: 'bg-bar' },
+              ]}
+              axisFormat={(n) => `$${Math.round(n)}`}
+              height={190}
+              ariaLabel="Average sales per day by hour, dine-in vs. to-go, showing to-go outpacing dine-in at peak hours"
+            />
+          </ChartCard>
+          <ChartCard label="Top 15 items by revenue" caption="Top 15 items by revenue. Steak (Pho) leads by a wide margin.">
+            <HBar
+              data={phoTopItems.map((d) => ({ ...d, note: d.category, display: `$${(d.value / 1000).toFixed(1)}K` }))}
+              highlight={(_, i) => i === 0}
+              labelWidth="9rem"
+              ariaLabel="Top 15 items by revenue, led by Steak (Pho)"
+            />
+          </ChartCard>
+          </BiDashboard>
+        </Slide>
+
+        <Slide title="Business recommendations">
+        <ul className="mt-3 flex flex-col gap-3">
+          {RECOMMENDATIONS.map((item) => (
+            <li key={item} className="flex gap-3 text-ink">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bar" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        </Slide>
+
+        <Slide title="Key findings">
+        <ul className="mt-3 flex flex-col gap-3">
+          {FINDINGS.map((item) => (
+            <li key={item} className="flex gap-3 text-ink">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        </Slide>
+
+        <Details>
+        <Slide title="Dashboard in Python" appendix>
+          <DashboardFrame src={dashboardImage} alt="Pho restaurant sales dashboard with a day-by-hour sales heatmap and the top and bottom selling items" />
+        </Slide>
+
+        <Slide title="The Business Question" appendix>
         <p className="mt-3 text-ink">
           The owners felt like business had been slowing down and wanted a specific number they could see, rather
           than just a feeling from being there every day. This analysis was meant to check that feeling against the
@@ -79,87 +157,9 @@ export default function PhoAnalysis() {
             </li>
           ))}
         </ul>
+        </Slide>
 
-        <ShortAnswer finding={project.finding} />
-
-        <h2 className="mt-12 text-2xl font-bold tracking-tight text-ink">The Conclusion</h2>
-
-        <div className="mt-4 rounded-lg bg-primary-tint p-5">
-          <p className="text-xl font-bold text-ink sm:text-2xl">
-            Revenue stayed flat across the quarter at roughly $26,000 per week.
-          </p>
-          <p className="mt-2 text-ink">
-            This contradicts what the owners assumed going in. The data doesn't support "business is slowing down."
-            That changes the conversation from "how do we stop the decline" to "how do we grow from a stable
-            baseline."
-          </p>
-        </div>
-
-        <h3 className="mt-10 text-lg font-semibold text-ink">Business recommendations</h3>
-        <ul className="mt-3 flex flex-col gap-3">
-          {RECOMMENDATIONS.map((item) => (
-            <li key={item} className="flex gap-3 text-ink">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bar" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-
-        <figure className="mt-10 overflow-hidden rounded-xl border border-border bg-card shadow-sm lg:-mx-16">
-          <img
-            src={revenueTrendImage}
-            alt="Weekly revenue trend showing a flat line around $26,000 per week across the quarter"
-            className="w-full"
-          />
-          <figcaption className="border-t border-border px-4 py-2 text-xs text-muted">
-            Weekly revenue, holding steady across the quarter rather than trending up or down.
-          </figcaption>
-        </figure>
-
-        <h3 className="mt-10 text-lg font-semibold text-ink">Key findings</h3>
-        <ul className="mt-3 flex flex-col gap-3">
-          {FINDINGS.map((item) => (
-            <li key={item} className="flex gap-3 text-ink">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-
-        <figure className="mt-6 overflow-hidden rounded-xl border border-border bg-card shadow-sm lg:-mx-16">
-          <img
-            src={orderTypeHeatmapImage}
-            alt="Sales heatmap split into dine-in and to-go, showing to-go outpacing dine-in at peak hours"
-            className="w-full"
-          />
-          <figcaption className="border-t border-border px-4 py-2 text-xs text-muted">
-            Same day/hour breakdown, split by dine-in vs. to-go. To-go consistently outpaces dine-in at the peak hours.
-          </figcaption>
-        </figure>
-
-        <figure className="mt-6 overflow-hidden rounded-xl border border-border bg-card shadow-sm lg:-mx-16">
-          <img
-            src={topItemsImage}
-            alt="Top 15 items by revenue, led by Steak (Pho)"
-            className="w-full"
-          />
-          <figcaption className="border-t border-border px-4 py-2 text-xs text-muted">
-            Top 15 items by revenue. Steak (Pho) leads by a wide margin.
-          </figcaption>
-        </figure>
-
-        <figure className="mt-12 overflow-hidden rounded-xl border border-border bg-card shadow-sm lg:-mx-16">
-          <img
-            src={heatmapImage}
-            alt="Average sales by day of week and hour, showing peaks at lunch, early dinner, and late night"
-            className="w-full"
-          />
-          <figcaption className="border-t border-border px-4 py-2 text-xs text-muted">
-            Average sales by day and hour across the quarter. Darker green marks the busiest slots.
-          </figcaption>
-        </figure>
-
-        <h2 className="mt-10 text-2xl font-bold tracking-tight text-ink">The Methodology</h2>
+        <Slide title="The Methodology" appendix>
         <p className="mt-3 text-ink">
           I imported the raw POS export into a local SQL Server Express database and did all of the cleaning in
           SSMS on a copy of the table, so the raw data stayed untouched (both tables have 38,293 rows). Columns
@@ -182,8 +182,9 @@ export default function PhoAnalysis() {
           the $0.50 to-go bag fee and side orders), and tracks total revenue week over week, trimming the partial
           first and last weeks.
         </p>
+        </Slide>
 
-        <h2 className="mt-12 text-2xl font-bold tracking-tight text-ink">Limitations</h2>
+        <Slide title="Limitations" appendix>
         <ul className="mt-3 flex flex-col gap-3">
           {LIMITATIONS.map((item) => (
             <li key={item} className="flex gap-3 text-ink">
@@ -192,6 +193,9 @@ export default function PhoAnalysis() {
             </li>
           ))}
         </ul>
+        </Slide>
+        </Details>
+        </Deck>
 
         <div className="mt-10 flex flex-wrap gap-5 border-t border-border pt-6 text-sm font-semibold">
           <a href={project.repoUrl} className="text-primary hover:underline">Full write-up &amp; notebook on GitHub →</a>
