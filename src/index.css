@@ -144,33 +144,34 @@
   font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
 }
 
-
-/* Case study pages: plum accent with a harbor-teal-to-mauve gradient, and a plum spot behind the heading */
+/* Case study pages: royal blue accent; gradient lines run dark blue to light blue */
 .project-theme {
-  --color-surface: #F1EEF6;
-  --color-card: #F8F6FB;
-  --color-border: #E6E1EF;
-  --color-primary: #5E40A3;
-  --color-primary-strong: #4B3188;
-  --color-primary-tint: #F3EEF9;
-  --color-bar: #B9A6E0;
-  --pt-1: #6F9CB8;
-  --pt-2: #8A6BC4;
-  --pt-3: #B873B0;
+  --color-surface: #EEF2FA;
+  --color-card: #F6F8FD;
+  --color-border: #DDE5F4;
+  --color-primary: #2A4DB8;
+  --color-primary-strong: #1F3A8F;
+  --color-primary-tint: #EAF0FC;
+  --color-bar: #A9BCEB;
+  --pt-1: #1F3A8F;
+  --pt-2: #4169E1;
+  --pt-3: #9DB4F0;
+  --hero-mix: 34%;
 }
 
 :root[data-theme="dark"] .project-theme {
-  --color-surface: #1F1B2C;
-  --color-card: #1A1724;
-  --color-border: #322C47;
-  --color-primary: #B3A6E4;
-  --color-primary-strong: #CDBDEB;
-  --color-primary-tint: #211B30;
-  --color-bar: #5E4D8A;
-  --color-on-primary: #14101F;
-  --pt-1: #86A9C9;
-  --pt-2: #A996D6;
-  --pt-3: #C894C0;
+  --color-surface: #171C2E;
+  --color-card: #141827;
+  --color-border: #2A3354;
+  --color-primary: #8FA8F2;
+  --color-primary-strong: #B4C5F7;
+  --color-primary-tint: #18203A;
+  --color-bar: #44569B;
+  --color-on-primary: #0E1426;
+  --pt-1: #3A56B8;
+  --pt-2: #6F8BE6;
+  --pt-3: #B6C6F6;
+  --hero-mix: 30%;
 }
 
 .project-theme .accent-rule {
@@ -187,21 +188,9 @@
   background: linear-gradient(135deg, var(--pt-1), var(--pt-2), var(--pt-3));
 }
 
-/* Heading: one strong plum spot in the top-left corner and a softer mauve one bottom-right, fading into the page */
+/* Heading: light blue across the top, settling into a slightly deeper blue along the bottom */
 .project-theme .project-hero {
   background:
-    radial-gradient(ellipse 60% 160% at 0% 0%, color-mix(in srgb, var(--pt-2) 72%, transparent) 0, transparent 100%),
-    radial-gradient(ellipse 45% 140% at 100% 100%, color-mix(in srgb, var(--pt-3) 42%, transparent) 0, transparent 100%),
+    linear-gradient(180deg, color-mix(in srgb, var(--pt-2) 20%, transparent) 0%, color-mix(in srgb, var(--color-primary) var(--hero-mix), transparent) 100%),
     var(--color-bg);
-}
-
-:root[data-theme="dark"] .project-theme .project-hero {
-  background:
-    radial-gradient(ellipse 60% 160% at 0% 0%, color-mix(in srgb, var(--pt-2) 52%, transparent) 0, transparent 100%),
-    radial-gradient(ellipse 45% 140% at 100% 100%, color-mix(in srgb, var(--pt-3) 30%, transparent) 0, transparent 100%),
-    var(--color-bg);
-}
-
-.project-theme .project-hero-title {
-  color: var(--color-ink);
 }

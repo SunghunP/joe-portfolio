@@ -7,3 +7,7 @@ export default function Section({ id, children, className = '', tinted = false }
     </section>
   )
 }
+
+export function SectionTitle({ children }) {
+  return <h2 className="text-2xl font-extrabold tracking-tight text-primary sm:text-3xl">{children}</h2>
+}

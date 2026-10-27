@@ -9,3 +9,5 @@ export const socialLinks = [
 ]
 
 export const email = 'joeparkda@gmail.com'
+
+export const resumeUrl = `${import.meta.env.BASE_URL}Joe_Park_Resume.pdf`

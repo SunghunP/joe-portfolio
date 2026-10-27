@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useInView } from '../hooks/useInView';
 
 function parseStatNumber(raw) {
   const match = raw.match(/[\d,]+/);
@@ -11,43 +12,29 @@ function parseStatNumber(raw) {
 }
 
 export default function StatCard({ number, label }) {
-  const ref = useRef(null);
+  const [ref, seen] = useInView(0.4);
   const [display, setDisplay] = useState(number);
 
+  // Count up from zero the first time the card scrolls into view
   useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-
     const parsed = parseStatNumber(number);
-    if (!parsed) return;
+    if (!seen || !parsed) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        observer.unobserve(node);
+    const duration = 1200;
+    const start = performance.now();
+    let frame;
 
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReducedMotion) return;
+    function tick(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplay(`${parsed.prefix}${Math.round(parsed.target * eased).toLocaleString()}${parsed.suffix}`);
+      if (progress < 1) frame = requestAnimationFrame(tick);
+    }
 
-        const duration = 1200;
-        const start = performance.now();
-
-        function tick(now) {
-          const progress = Math.min((now - start) / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          const current = Math.round(parsed.target * eased);
-          setDisplay(`${parsed.prefix}${current.toLocaleString()}${parsed.suffix}`);
-          if (progress < 1) requestAnimationFrame(tick);
-        }
-
-        requestAnimationFrame(tick);
-      },
-      { threshold: 0.4 }
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [number]);
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [seen, number]);
 
   return (
     <div ref={ref} className="rounded-xl border border-border bg-card p-5 shadow-sm transition hover:-translate-y-1.5 hover:border-bar hover:shadow-lg hover:shadow-primary/20 motion-reduce:transform-none motion-reduce:transition-none">

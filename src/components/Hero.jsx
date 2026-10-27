@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Shell from './Shell';
 import Stats from './Stats';
 import profilePhoto from '../assets/images/profile.jpg';
-import { socialLinks } from '../data/social';
+import { resumeUrl, socialLinks } from '../data/social';
 
 export default function Hero() {
   return (
@@ -46,7 +46,7 @@ export default function Hero() {
               <Link to="/#projects" className="rounded-full bg-primary px-5 py-3 text-sm font-semibold text-on-primary">
                 View Projects
               </Link>
-              <a href={`${import.meta.env.BASE_URL}Joe_Park_Resume.pdf`}
+              <a href={resumeUrl}
                 download="Joe_Park_Resume.pdf"
                 className="rounded-full border border-primary px-5 py-3 text-sm font-semibold text-primary">
                 Resume (PDF)

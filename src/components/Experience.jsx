@@ -1,9 +1,10 @@
 import { experience, education } from '../data/experience'
+import { SectionTitle } from './Section'
 
 export default function Experience() {
   return (
     <div className="mx-auto max-w-4xl">
-      <h2 className="text-2xl font-extrabold tracking-tight text-primary sm:text-3xl">Experience</h2>
+      <SectionTitle>Experience</SectionTitle>
 
       {/* Timeline: a rule down the left with a dot per role, no cards */}
       <ol className="mt-8 border-l-2 border-border">

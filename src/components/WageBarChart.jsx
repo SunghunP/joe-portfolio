@@ -1,20 +1,18 @@
 import { useState } from 'react';
 import { wageData } from '../data/wageData';
 
-export default function WageBarChart({ compact = false }) {
+export default function WageBarChart() {
   const [hovered, setHovered] = useState(null);
-  const data = compact ? wageData.filter((d) => d.heroFeatured) : wageData
 
-  const labelWidth = compact ? 90 : 150
-  const chartRight = compact ? 340 : 460
-  const rowHeight = compact ? 24 : 23
-  const top = compact ? 20 : 24
-  const labelFontSize = compact ? 8.5 : 8
+  const labelWidth = 150
+  const chartRight = 460
+  const rowHeight = 23
+  const top = 24
   const maxWage = 135000
   const chartLeft = labelWidth + 12
-  const width = chartRight + (compact ? 40 : 60)
-  const height = top + data.length * rowHeight + 30
-  const ticks = compact ? [0, 60000, 120000] : [0, 30000, 60000, 90000, 120000]
+  const width = chartRight + 60
+  const height = top + wageData.length * rowHeight + 30
+  const ticks = [0, 30000, 60000, 90000, 120000]
 
   const scaleX = (wage) => chartLeft + (wage / maxWage) * (chartRight - chartLeft)
 
@@ -24,7 +22,7 @@ export default function WageBarChart({ compact = false }) {
       role="img"
       aria-label="Bar chart: weighted mean analyst wage by Washington labor-market area"
       className="w-full font-mono"
-      style={{ minWidth: compact ? 300 : 340 }}
+      style={{ minWidth: 340 }}
     >
       {ticks.map((tick) => (
         <g key={tick}>
@@ -32,13 +30,13 @@ export default function WageBarChart({ compact = false }) {
             x1={scaleX(tick)}
             y1={top - 6}
             x2={scaleX(tick)}
-            y2={top + data.length * rowHeight}
+            y2={top + wageData.length * rowHeight}
             className="stroke-border"
             strokeWidth={1}
           />
           <text
             x={scaleX(tick)}
-            y={top + data.length * rowHeight + 15}
+            y={top + wageData.length * rowHeight + 15}
             textAnchor="middle"
             fontSize={8}
             className="fill-muted"
@@ -48,7 +46,7 @@ export default function WageBarChart({ compact = false }) {
         </g>
       ))}
 
-      {data.map((area, i) => {
+      {wageData.map((area, i) => {
         const rowCenter = top + i * rowHeight + rowHeight / 2
         const barEnd = scaleX(area.wage)
         const isHighlighted = area.highlight === 'low' || area.highlight === 'high'
@@ -62,7 +60,7 @@ export default function WageBarChart({ compact = false }) {
             onMouseEnter={() => setHovered(area.name)}
             onMouseLeave={() => setHovered(null)}
           >
-            <text x={labelWidth} y={rowCenter + 3} textAnchor="end" fontSize={labelFontSize} className="fill-muted">
+            <text x={labelWidth} y={rowCenter + 3} textAnchor="end" fontSize={8} className="fill-muted">
               {area.name}
             </text>
 
@@ -77,17 +75,15 @@ export default function WageBarChart({ compact = false }) {
               <title>{`${area.name}: $${area.wage.toLocaleString()} · ${area.emp.toLocaleString()} analysts`}</title>
             </rect>
 
-            {(!compact || isHighlighted) && (
-              <text
-                x={barEnd + 6}
-                y={rowCenter + 3}
-                fontSize={compact ? 8 : 7.5}
-                fontWeight={isHighlighted ? 600 : 400}
-                className={isHighlighted ? 'fill-primary' : 'fill-muted'}
-              >
-                {`$${area.wage.toLocaleString()}`}
-              </text>
-            )}
+            <text
+              x={barEnd + 6}
+              y={rowCenter + 3}
+              fontSize={7.5}
+              fontWeight={isHighlighted ? 600 : 400}
+              className={isHighlighted ? 'fill-primary' : 'fill-muted'}
+            >
+              {`$${area.wage.toLocaleString()}`}
+            </text>
           </g>
         )
       })}

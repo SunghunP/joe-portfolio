@@ -8,6 +8,8 @@ export const projects = [
     finding: 'Revenue held steady at about $26K a week, and a 1–4 PM lull on the day-by-hour heatmap led to a targeted promotion that raised slow-hour revenue 10%.',
     repoUrl: 'https://github.com/SunghunP/pho-restaurant-analysis',
     caseStudyUrl: '/projects/pho-restaurant-analysis',
+    repoLabel: 'notebook',
+    mediumUrl: 'https://medium.com/@joeparkda/pho-restaurant-exploratory-data-analysis-did-business-actually-slow-down-f7f9bd60bddb',
   },
   {
     slug: 'wa-labor-cost',
@@ -18,6 +20,8 @@ export const projects = [
     finding: 'Seattle-Tacoma-Bellevue analysts earn 48% more than Yakima ($130.4K vs. $87.9K), with a talent pool 124 times larger (72,210 vs. 580).',
     repoUrl: 'https://github.com/SunghunP/wa-analyst-wage-case-study',
     caseStudyUrl: '/projects/wa-labor-cost',
+    repoLabel: 'SQL',
+    mediumUrl: 'https://medium.com/@joeparkda/where-should-a-company-hire-data-analysts-in-washington-state-i-let-the-wage-data-decide-f3dbf8e12d52',
   },
   {
     slug: 'coffee-shop-sales-analysis',
@@ -28,6 +32,8 @@ export const projects = [
     finding: 'Half of orders were a single item ($4.70 vs. $11.80) and after 3 PM drove only 11% of sales; a drink-and-pastry bundle is projected to lift sales about 3%.',
     repoUrl: 'https://github.com/SunghunP/coffee_business_analysis',
     caseStudyUrl: '/projects/coffee-shop-sales-analysis',
+    repoLabel: 'workbook',
+    mediumUrl: 'https://medium.com/@joeparkda/half-of-this-coffee-shops-customers-only-buy-one-thing-here-s-how-i-d-fix-that-ce10ff8468ec',
   },
 ]
 

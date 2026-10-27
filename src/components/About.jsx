@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { SectionTitle } from './Section';
 import pomPhoto from '../assets/images/pomeranian.jpg';
 
 const strengths = [
@@ -20,7 +21,7 @@ export default function About() {
   return (
     <div className="grid gap-10 md:grid-cols-[1.15fr_1fr] md:gap-14">
       <div>
-        <h2 className="text-2xl font-extrabold tracking-tight text-primary sm:text-3xl">About</h2>
+        <SectionTitle>About</SectionTitle>
 
         <div className="mt-5 space-y-4 text-base leading-relaxed text-muted">
           <p>

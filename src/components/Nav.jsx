@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Shell from './Shell';
 import ThemeToggle from './ThemeToggle';
+import { resumeUrl } from '../data/social';
 
 const NAV_LINKS = [
   { id: 'about', label: 'About' },
@@ -10,6 +11,12 @@ const NAV_LINKS = [
   { id: 'experience', label: 'Experience' },
   { id: 'contact', label: 'Contact' },
 ]
+
+const resumeLink = (
+  <a href={resumeUrl} download="Joe_Park_Resume.pdf" className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-on-primary">
+    Resume
+  </a>
+)
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false)
@@ -67,13 +74,7 @@ export default function Nav() {
               {link.label}
             </Link>
           ))}
-          <a
-            href={`${import.meta.env.BASE_URL}Joe_Park_Resume.pdf`}
-            download="Joe_Park_Resume.pdf"
-            className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-on-primary"
-          >
-            Resume
-          </a>
+          {resumeLink}
           <ThemeToggle />
         </nav>
 
@@ -105,13 +106,7 @@ export default function Nav() {
               {link.label}
             </Link>
           ))}
-          <a
-            href={`${import.meta.env.BASE_URL}Joe_Park_Resume.pdf`}
-            download="Joe_Park_Resume.pdf"
-            className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-on-primary"
-          >
-            Resume
-          </a>
+          {resumeLink}
         </nav>
       )}
     </header>

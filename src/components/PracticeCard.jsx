@@ -1,4 +1,5 @@
 import githubIcon from '../assets/icons/github.svg';
+import Chips from './Chips';
 
 export default function PracticeCard({ title, description, tags, focusAreas, repoUrl }) {
   return (
@@ -22,13 +23,7 @@ export default function PracticeCard({ title, description, tags, focusAreas, rep
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-1.5 md:max-w-[50%] md:justify-end">
-        {[...tags, ...focusAreas].map((chip) => (
-          <span key={chip} className="rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted">
-            {chip}
-          </span>
-        ))}
-      </div>
+      <Chips items={[...tags, ...focusAreas]} className="md:max-w-[50%] md:justify-end" />
     </article>
   )
 }

@@ -1,16 +1,11 @@
 import { Link } from 'react-router-dom';
+import Chips from './Chips';
 
 // The featured (latest) project spans the full row, with the image beside the text on large screens
 export default function ProjectCard({ title, description, tags, finding, repoUrl, caseStudyUrl, media, featured = false }) {
   return (
     <article className={`group relative flex h-full flex-col gap-4 rounded-xl ${featured ? 'sm:col-span-2 lg:grid lg:grid-cols-[1.3fr_1fr] lg:grid-rows-[auto_1fr] lg:gap-x-8 lg:p-8 ' : ''} border border-border bg-card p-6 shadow-sm transition hover:border-primary hover:shadow-lg hover:shadow-primary/20 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary motion-reduce:transition-none`}>
-      <div className={`flex flex-wrap items-start gap-1.5 ${featured ? 'lg:col-start-2 lg:row-start-1' : ''}`}>
-        {tags.map((tag) => (
-          <span key={tag} className="rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted">
-            {tag}
-          </span>
-        ))}
-      </div>
+      <Chips items={tags} className={`items-start ${featured ? 'lg:col-start-2 lg:row-start-1' : ''}`} />
 
       <div className={`aspect-[16/10] w-full overflow-hidden ${featured ? 'lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:aspect-auto lg:h-full' : ''} rounded-lg bg-surface [&>img]:transition-transform [&>img]:duration-300 group-hover:[&>img]:scale-[1.02] motion-reduce:[&>img]:transition-none`}>
         {media}

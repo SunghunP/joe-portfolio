@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { featuredVideo } from '../data/projects';
+import { SectionTitle } from './Section';
 
 const YOUTUBE_ORIGIN = 'https://www.youtube-nocookie.com';
 const START_VOLUME = 50;
@@ -31,7 +32,7 @@ export default function FeaturedVideo() {
 
   return (
     <div className="text-center">
-      <h2 className="text-2xl font-extrabold tracking-tight text-primary sm:text-3xl">Watch me present my work</h2>
+      <SectionTitle>Watch me present my work</SectionTitle>
 
       <div className="mx-auto mt-8 max-w-4xl">
         <div className="aspect-video w-full overflow-hidden rounded-xl border border-border bg-card shadow-lg shadow-primary/10">

@@ -1,3 +1,5 @@
+import Chips from './Chips'
+
 const SIZE_STYLES = {
   lg: {
     span: 'sm:col-span-2 sm:row-span-2',
@@ -42,15 +44,7 @@ export default function SkillCard({ name, body, chips, size, accent, icon, iconC
 
       <p className={`${s.body} text-muted`}>{body}</p>
 
-      {chips.length > 0 && (
-        <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
-          {chips.map((chip) => (
-            <span key={chip} className="rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted">
-              {chip}
-            </span>
-          ))}
-        </div>
-      )}
+      {chips.length > 0 && <Chips items={chips} className="mt-auto pt-2" />}
     </div>
   )
 }
