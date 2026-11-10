@@ -34,7 +34,7 @@ export default function FeaturedVideo() {
     <div className="text-center">
       <SectionTitle>Watch me present my work</SectionTitle>
 
-      <div className="mx-auto mt-8 max-w-4xl">
+      <div className="mx-auto mt-8 max-w-6xl">
         <div className="aspect-video w-full overflow-hidden rounded-xl border border-border bg-card shadow-lg shadow-primary/10">
           <iframe
             ref={iframeRef}
