@@ -10,7 +10,7 @@ import { projects, practice } from '../data/projects';
 const MEDIA = {
   'customer-churn-analysis': {
     src: churnDashboardImage,
-    alt: 'Tableau dashboard with expected MRR lost, churn rate by risk score in green, yellow and red tiers, and every active account ranked by expected loss',
+    alt: 'Tableau dashboard: at-risk accounts hold $565K of the $1.58M MRR at risk, churn rate by risk score with at-risk bars above a 25% goal line, and a call list of at-risk accounts ranked by expected loss',
   },
   'wa-labor-cost': {
     src: wageChartsImage,

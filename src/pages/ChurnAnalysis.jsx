@@ -36,7 +36,7 @@ const RECOMMENDATIONS = [
 const CLEANING = [
   '1,137 duplicate rows, all exact copies.',
   <>Inconsistent labels: <code className="font-mono text-sm">Plan</code> had PRO and Pro, <code className="font-mono text-sm">Churned</code> had Yes, Y, TRUE, No, N and FALSE, and <code className="font-mono text-sm">Region</code> had EU and Europe.</>,
-  'Impossible values: NPS scores of -3 and 15 (NPS only goes 0–10), and employee counts of 0, -1 and 99999.',
+  'Impossible values: Net Promoter Score (NPS) survey answers of -3 and 15 (NPS only goes 0–10), and employee counts of 0, -1 and 99999.',
   '614 accounts with more active seats than they bought.',
   'MRR stored as text with $ and commas ("$1,850.40"), plus 768 blanks.',
   'Two date formats in SignupDate (2024-09-18 and 09/18/2024).',
@@ -121,7 +121,7 @@ export default function ChurnAnalysis() {
             format={(n) => `+${n} points`}
             highlight={(_, i) => i === 0}
             labelWidth="12rem"
-            ariaLabel="Risk score points per warning sign: onboarding not completed 4, no training 3, seat use under 60% 3, 31+ days to go live 3, 0 or 1 integrations 2, feature adoption under 50% 2, NPS detractor or no answer 2, escalated ticket 1"
+            ariaLabel="Risk score points per warning sign: onboarding not completed 4, no training 3, seat use under 60% 3, 31+ days to go live 3, 0 or 1 integrations 2, feature adoption under 50% 2, survey score 0–6 or no answer 2, escalated ticket 1"
           />
         </ChartCard>
         <ChartCard
@@ -213,8 +213,8 @@ export default function ChurnAnalysis() {
         <Slide title="Dashboard in Tableau" appendix>
           <DashboardFrame
             src={dashboardImage}
-            alt="Tableau dashboard with expected MRR lost, churn rate by risk score colored green, yellow and red, and every active account ranked by expected loss"
-            caption="The action dashboard: every active account by risk tier, ranked by how much MRR we expect to lose."
+            alt="Tableau dashboard: at-risk accounts hold $565K of the $1.58M MRR at risk, churn rate by risk score with at-risk bars above a 25% goal line, and a call list of at-risk accounts ranked by expected loss"
+            caption="The action dashboard: churn by risk score against the 25% goal, and at-risk accounts ranked by how much MRR we expect to lose."
           />
         </Slide>
 
@@ -293,7 +293,7 @@ export default function ChurnAnalysis() {
 
           <h3 className="mt-8 text-lg font-semibold text-ink">The warning signs</h3>
           <p className="mt-2 text-ink">
-            For each thing the company can influence, I split accounts into "at risk" or not and compared their churn.
+            For each thing the company can influence, I split accounts into those with the sign and those without, and compared their churn.
             The gap is the churn rate with the sign minus without it.
           </p>
           <div className="mt-4 rounded-xl border border-border bg-card p-4 shadow-sm">
@@ -307,7 +307,7 @@ export default function ChurnAnalysis() {
             <p className="mt-3 text-xs text-muted">Churn gap in percentage points for each warning sign. Skipping onboarding is the biggest.</p>
           </div>
           <p className="mt-4 text-ink">
-            Accounts with a CSM churned at 8.2% vs 17.1% without one, but Starter has no CSMs at all and 95% of
+            Accounts with a Customer Success Manager (CSM) churned at 8.2% vs 17.1% without one, but Starter has no CSMs at all and 95% of
             Enterprise accounts have one, so the gap was mostly just plan. Inside Pro it shrinks to 5.4 points.
             Onboarding held up inside every plan: accounts that skipped it churned 3.0x more in Starter, 3.6x in Pro
             and 3.8x in Enterprise.
@@ -329,7 +329,7 @@ export default function ChurnAnalysis() {
           <p className="mt-4 text-ink">
             To set the points, I sorted the signs by gap and split them where the gap jumps. Onboarding gets 4 on its
             own, since the biggest jump in the list is right after it. The three signs around 17 points get 3, the next
-            three get 2, and escalated tickets gets 1. I left out having a Customer Success Manager (CSM), since that
+            three get 2, and escalated tickets gets 1. I left out having a CSM, since that
             mostly just repeats plan.
           </p>
           <CodeBlock caption="T-SQL: risk score" code={SQL_SCORE} />
@@ -346,7 +346,7 @@ export default function ChurnAnalysis() {
             lower-score Enterprise account could put $1,000+ at risk. So inside each tier I ranked accounts by expected
             loss: MRR × churn chance, where the churn chance is last year's churn for accounts with the same plan and
             score. My first version used score only, but Enterprise churns about half as much as the other plans at the
-            same score (28.6% vs 60.7% at score 16), so I was overstating its risk and added plan to the lookup.
+            same score (28.6% vs 60.7% for all plans at score 16), so I was overstating its risk and added plan to the lookup.
           </p>
           <CodeBlock caption="T-SQL: each account's tier and expected loss" code={SQL_TIERS} />
           <DataTable
