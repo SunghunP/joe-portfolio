@@ -1,11 +1,11 @@
 export const projects = [
   {
     slug: 'customer-churn-analysis',
-    title: 'Customer Churn Analysis: Which Customers Should We Save?',
+    title: 'Customer Churn Analysis: Getting At-Risk Accounts Under 25% Churn',
     description:
-      'Rotawise, a fictional B2B SaaS company, expects to lose $1.58M of MRR (monthly recurring revenue) to churn in the next year, but its Customer Success team can only call about 640 of 33,000 accounts. I built a Python pipeline that pulls the raw data from Google Sheets, cleans it and loads it into SQL Server, then used SQL to find who churns, when, and the early warning signs. I turned those signs into a risk score and ranked every account by expected loss.',
+      'Rotawise, a fictional B2B SaaS company, expects to lose $1.58M of MRR (monthly recurring revenue) to churn in the next year across about 33,000 active accounts. I built a Python pipeline that pulls the raw data from Google Sheets, cleans it and loads it into SQL Server, then used SQL to find who churns, when, and the early warning signs. I turned those signs into a 0–20 risk score, ranked every account by expected loss and split them at the score where churn goes over 25%: at-risk (11+) and low-risk (0–10), with an action for each.',
     tags: ['Python', 'SQL', 'Tableau'],
-    finding: 'We expect to lose $1.58M of MRR to churn in the next 12 months. If the Customer Success team calls the 640 accounts with the most expected loss, they can protect up to $414K of it.',
+    finding: 'We expect to lose $1.58M of MRR to churn in the next 12 months. At-risk accounts (risk score 11 or more) are 14% of active accounts but hold $565K (36%) of it.',
     repoUrl: 'https://github.com/SunghunP/rotawise-churn-analysis',
     caseStudyUrl: '/projects/customer-churn-analysis',
     repoLabel: 'code',

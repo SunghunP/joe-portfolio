@@ -10,14 +10,17 @@ function useTooltip() {
 
   const show = (event, content) => {
     const box = ref.current.getBoundingClientRect()
-    setTip({ x: event.clientX - box.left, y: event.clientY - box.top, content })
+    const x = event.clientX - box.left
+    // Slide the tooltip left as the cursor moves right, so it never runs past either edge of the chart
+    const shift = Math.min(Math.max(x / box.width, 0), 1) * 100
+    setTip({ x, y: event.clientY - box.top, shift, content })
   }
   const hide = () => setTip(null)
 
   const element = tip && (
     <div
-      className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-sm bg-ink px-2.5 py-1.5 text-xs font-medium text-bg shadow-lg"
-      style={{ left: tip.x, top: tip.y - 10 }}
+      className="pointer-events-none absolute z-10 w-max max-w-full rounded-sm bg-ink px-2.5 py-1.5 text-xs font-medium text-bg shadow-lg"
+      style={{ left: tip.x, top: tip.y - 10, transform: `translate(-${tip.shift}%, -100%)` }}
     >
       {tip.content}
     </div>
@@ -43,19 +46,27 @@ function useWidth(fallback) {
 }
 
 // The card every chart sits in: label, one-line headline, the chart, and a caption.
-export function ChartCard({ label, headline, caption, children, className = '' }) {
+export function ChartCard({ label, headline, caption, next, children, className = '' }) {
   const [ref, seen] = useInView(0.25)
 
   return (
     <figure
       ref={ref}
       data-in={seen}
-      className={`chart-card min-w-0 rounded-sm border border-border bg-card p-3 shadow-sm sm:p-4 ${className}`}
+      className={`chart-card flex min-w-0 flex-col rounded-sm border border-border bg-card p-3 shadow-sm sm:p-4 ${className}`}
     >
       <p className="text-[13px] font-semibold text-ink">{label}</p>
       {headline && <p className="mt-1 text-lg font-extrabold leading-snug tracking-tight text-ink sm:text-xl">{headline}</p>}
       <div className="mt-3">{children}</div>
       {caption && <figcaption className="mt-2 text-[11px] text-muted">{caption}</figcaption>}
+      {next && (
+        // mt-auto pins the next step to the bottom, so side-by-side cards line up
+        <div className="mt-auto pt-3">
+          <p className="border-t border-border pt-2 text-sm text-ink">
+            <span className="font-semibold text-primary">Next step: </span>{next}
+          </p>
+        </div>
+      )}
     </figure>
   )
 }
@@ -109,7 +120,7 @@ export function HBar({ data, format = money, highlight = () => false, labelWidth
 }
 
 // Vertical columns. One series = highlight picks the dark bars; several series = grouped columns.
-export function Columns({ labels, series, format = money, highlight = () => false, height = 200, axisFormat, valueLabel, ariaLabel }) {
+export function Columns({ labels, series, format = money, highlight = () => false, height = 200, axisFormat, valueLabel, tip, barClass, refLine, ariaLabel }) {
   const { ref, show, hide, element } = useTooltip()
   const max = Math.max(...series.flatMap((s) => s.values))
   const magnitude = 10 ** Math.floor(Math.log10(max))
@@ -137,26 +148,28 @@ export function Columns({ labels, series, format = money, highlight = () => fals
                 key={label}
                 className="flex h-full flex-1 items-end justify-center gap-[2px]"
                 onPointerMove={(e) =>
-                  show(e, series.length === 1
+                  show(e, tip
+                    ? tip(i)
+                    : series.length === 1
                     ? `${label}: ${format(series[0].values[i])}`
                     : `${label} · ${series.map((s) => `${s.name} ${format(s.values[i])}`).join(' · ')}`)
                 }
                 onPointerLeave={hide}
               >
-                {series.map((s) => {
+                {series.map((s, si) => {
                   const on = single ? highlight(i) : true
                   return (
                     <span key={s.name} className="relative block h-full w-full max-w-9">
                       <span
-                        className={`grow-y absolute inset-x-0 bottom-0 block ${single ? (on ? 'bg-primary' : 'bg-bar') : s.className}`}
+                        className={`grow-y absolute inset-x-0 bottom-0 block ${single ? (barClass ? barClass(i) : on ? 'bg-primary' : 'bg-bar') : s.className}`}
                         style={{ height: `${(s.values[i] / niceMax) * 100}%`, '--d': `${i * 40}ms` }}
                       />
-                      {valueLabel && single && (
+                      {valueLabel && (
                         <span
-                          className="fade-up absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[0.6rem] font-semibold text-ink"
+                          className={`fade-up absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[0.6rem] font-semibold tabular-nums text-ink ${labels.length > 12 ? '[writing-mode:vertical-rl] rotate-180' : ''}`}
                           style={{ bottom: `calc(${(s.values[i] / niceMax) * 100}% + 2px)`, '--d': `${400 + i * 40}ms` }}
                         >
-                          {valueLabel(s.values[i])}
+                          {valueLabel(s.values[i], i, si)}
                         </span>
                       )}
                     </span>
@@ -165,6 +178,14 @@ export function Columns({ labels, series, format = money, highlight = () => fals
               </div>
             ))}
           </div>
+          {refLine && (
+            <div
+              className="pointer-events-none absolute inset-x-0 border-t-2 border-dashed border-ink"
+              style={{ bottom: `${(refLine.value / niceMax) * 100}%` }}
+            >
+              <span className="absolute right-0 bottom-0.5 rounded-sm bg-card px-1 text-[0.65rem] font-semibold text-ink">{refLine.label}</span>
+            </div>
+          )}
         </div>
       </div>
       <div className="ml-12 mt-2 flex gap-[3px] sm:gap-1.5">

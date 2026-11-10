@@ -1,13 +1,13 @@
 import CaseStudyPage from '../components/CaseStudyPage';
 import ShortAnswer from '../components/ShortAnswer';
 import Details from '../components/Details';
-import { Bullets, MetaStrip, Slide, StatGrid, Takeaway } from '../components/Deck';
+import { Bullets, MetaStrip, Slide } from '../components/Deck';
 import CodeBlock from '../components/CodeBlock';
 import { BiDashboard, ChartCard, Columns, DashboardFrame, HBar, Legend, TrendLine } from '../components/Charts';
 import dashboardImage from '../assets/images/churn/action_dashboard.png';
 import pipelineImage from '../assets/images/churn/pipeline.png';
 import { projects } from '../data/projects';
-import { callList, churnByPlan, churnByScore, cumulativeLost, onboardingByPlan, warningSigns } from '../data/churnData';
+import { riskTiers, churnByPlan, churnByScore, cumulativeLost, onboardingByPlan, scoreCounts, warningSigns } from '../data/churnData';
 import { money } from '../utils/format';
 
 const pct = (n) => `${n}%`
@@ -24,26 +24,13 @@ const QUESTIONS = [
   'How bad is churn, and who is churning?',
   'What are the early warning signs?',
   'When does churn happen?',
-  'Which 640 accounts should the CSMs call first?',
-]
-
-const STATS = [
-  { number: '15.3%', label: 'Annual churn by accounts. Only 9.6% by revenue, since the accounts that leave pay less than average.' },
-  { number: '3–4x', label: 'How much more accounts that skip onboarding churn, on every plan' },
-  { number: '18%', label: 'Share of monthly accounts gone by month 6' },
+  'Which accounts churn above 25%, and how do we get them under it?',
 ]
 
 const RECOMMENDATIONS = [
-  <><span className="font-semibold">Enterprise + riskiest Pro:</span> CSMs call the 640 accounts on the list within 30 days, highest expected loss first.</>,
-  <><span className="font-semibold">Rest of Pro:</span> Pro has the most money at risk overall, but it's spread over 15,000+ accounts. Group training sessions and webinars reach more of them than one-on-one calls.</>,
-  <><span className="font-semibold">Starter:</span> build onboarding into account setup with automatic reminder emails. Starter accounts are worth too little to use CSM time, but onboarding can be fixed for all of them at once.</>,
-]
-
-const FINDINGS = [
-  "Last year, Starter was 61% of churned accounts but only 18% of lost MRR. Pro was 37% of churned accounts but 55% of lost MRR. Starter churns the most, but it's the smallest problem by money.",
-  'Skipping onboarding is the strongest warning sign. Accounts that skip it churn about 3 to 4x more, and that holds inside every plan.',
-  'Churn happens early. 18% of monthly accounts are gone by month 6, and month 1 has the highest churn rate of any month.',
-  'High-risk accounts (risk score 16–20) churn at 61–73%, compared with 15% or less for low-risk accounts (0–8).',
+  <><span className="font-semibold">At risk (score 11+), 4,576 accounts:</span> call the ones with the most money at risk within 30 days. Training and reminder emails for the rest.</>,
+  <><span className="font-semibold">Start with onboarding:</span> it's the biggest warning sign, worth 4 points.</>,
+  <><span className="font-semibold">Low risk (score 0–10), 29,012 accounts:</span> rescore every month.</>,
 ]
 
 const CLEANING = [
@@ -57,7 +44,6 @@ const CLEANING = [
 
 const LIMITATIONS = [
   'The score only uses things the company can change. It leaves out company size and industry, which also affect churn.',
-  "The 640-account limit (8 CSMs × 80 accounts) is an assumption. The data shows whether an account has a CSM, but not which one, so I can't check real CSM workloads.",
   'Correlation, not cause. Skipping onboarding is linked to churn in every plan, but accounts that skip onboarding probably skip training too, and I only controlled for plan.',
   "One year of history. Multi-year contracts look safe partly because they can't churn inside a one-year window.",
 ]
@@ -83,45 +69,87 @@ const SQL_SCORE = `CASE WHEN OnboardingCompleted = 0 THEN 4 ELSE 0 END
 + CASE WHEN (NPS <= 6 OR NPS IS NULL) THEN 2 ELSE 0 END
 + CASE WHEN EscalatedTickets90d >= 1 THEN 1 ELSE 0 END AS RiskScore`
 
-const SQL_CALL_LIST = `SELECT TOP 640
+const SQL_TIERS = `SELECT
   AccountID,
-  a.[Plan],
   MRR,
-  a.RiskScore,
-  ChurnChance,
+  CASE
+    WHEN a.RiskScore >= 11 THEN 'At risk'
+    ELSE 'Low risk'
+  END AS Tier,
   (MRR * ChurnChance) AS ExpectedLoss
 FROM Active a
 INNER JOIN Lookup l
   ON a.RiskScore = l.RiskScore
-  AND a.[Plan] = l.[Plan]
-ORDER BY ExpectedLoss DESC`
+  AND a.[Plan] = l.[Plan]`
 
-const callListTotal = callList.reduce((sum, p) => sum + p.expectedLoss, 0)
+// Highest score first, so the riskiest accounts read first
+const scoresDesc = churnByScore.map((rate, score) => ({ score, rate, ...scoreCounts[score] })).reverse()
+const num = (n) => n.toLocaleString()
+
+// Risk tier colors, same as the Tableau dashboard
+const RED = 'bg-[#E15759]'
+const GREEN = 'bg-[#59A14F]'
+
+const tierAccounts = riskTiers.reduce((sum, t) => sum + t.accounts, 0)
+const tierTotal = riskTiers.reduce((sum, t) => sum + t.expectedLoss, 0)
 
 export default function ChurnAnalysis() {
   const project = projects.find((p) => p.slug === 'customer-churn-analysis');
 
   return (
     <CaseStudyPage project={project}>
+      <Slide title="The Business Question">
+        <p className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">How do we get churn for our riskiest accounts down to 25%?</p>
+        <p className="mt-3 text-muted">
+          Accounts with a risk score of 11 or more churned at 44% last year. Every score of 10 or under stayed under 25%.
+        </p>
+      </Slide>
+
       <BiDashboard kpis={[
-        { label: 'Expected MRR lost', value: '$1.58M', sub: 'next 12 months' },
-        { label: 'Call list can protect', value: '$414K', sub: 'top 640 accounts' },
-        { label: 'Annual churn', value: '15.3%', sub: '9.6% of revenue' },
-        { label: 'Active accounts scored', value: '33,588' },
+        { label: 'Monthly revenue at risk', value: '$1.58M', sub: 'next 12 months' },
+        { label: 'Held by at-risk accounts', value: '$565K', sub: '14% of accounts' },
+        { label: 'Accounts lost last year', value: '15.3%', sub: '4,527 of 29,511' },
+        { label: 'Accounts scored', value: '33,588' },
       ]}>
-        <ChartCard className="lg:col-span-2" label="Churn rate by risk score" caption="Last year's churn for each risk score (0–20). High-risk accounts (16–20) churn at 61–73%, compared with 15% or less for low-risk (0–8).">
-          <Columns
-            labels={churnByScore.map((_, score) => String(score))}
-            series={[{ name: 'Churn rate', values: churnByScore }]}
-            format={pct}
-            axisFormat={pctRound}
-            highlight={(score) => score >= 16}
-            height={190}
-            ariaLabel="Churn rate by risk score, climbing from 2.5% at score 0 to about 72% at scores 19 and 20"
+        <ChartCard
+          className="lg:col-span-2"
+          label="How is the risk score calculated?"
+          headline="Each warning sign adds points. 0 = healthy, 20 = every sign."
+        >
+          <HBar
+            data={warningSigns.map((d) => ({ label: d.label, value: d.points, display: `+${d.points}` }))}
+            format={(n) => `+${n} points`}
+            highlight={(_, i) => i === 0}
+            labelWidth="12rem"
+            ariaLabel="Risk score points per warning sign: onboarding not completed 4, no training 3, seat use under 60% 3, 31+ days to go live 3, 0 or 1 integrations 2, feature adoption under 50% 2, NPS detractor or no answer 2, escalated ticket 1"
           />
         </ChartCard>
-        <ChartCard label="Accounts lost vs. money lost, by plan" caption="Pro churns the most money, Starter the most accounts.">
-          <Legend items={[{ name: '% of churned accounts', className: 'bg-bar' }, { name: '% of lost MRR', className: 'bg-primary' }]} />
+        <ChartCard
+          className="lg:col-span-2"
+          label="Does a higher risk score mean more churn?"
+          headline="Yes. 4 in 10 at-risk accounts left, vs. 1 in 10 low-risk."
+          next="Fix their warning signs to get them under 11."
+        >
+          <Legend items={[{ name: 'At risk: score 11+', className: RED }, { name: 'Low risk: score 0–10', className: GREEN }]} />
+          <Columns
+            labels={scoresDesc.map((d) => String(d.score))}
+            series={[{ name: 'Churn rate', values: scoresDesc.map((d) => d.rate) }]}
+            format={pct}
+            axisFormat={pctRound}
+            barClass={(i) => (scoresDesc[i].score >= 11 ? RED : GREEN)}
+            refLine={{ value: 25, label: '25% goal' }}
+            tip={(i) => `Score ${scoresDesc[i].score}: ${num(scoresDesc[i].churned)} of ${num(scoresDesc[i].accounts)} accounts churned (${scoresDesc[i].rate}%)`}
+            height={190}
+            ariaLabel="Churn rate by risk score from 20 down to 0, falling from about 72% at scores 20 and 19 to 2.5% at score 0"
+          />
+        </ChartCard>
+        <ChartCard
+          label="Which plan loses the most money?"
+          headline="Pro: $762K of MRR lost last year."
+          caption="MRR (monthly recurring revenue) = what a customer pays each month."
+          next="Rank accounts by money at risk."
+        >
+          <Legend items={[{ name: 'Accounts lost', className: 'bg-bar' }, { name: 'MRR lost', className: 'bg-primary' }]} />
           <Columns
             labels={churnByPlan.map((d) => d.plan)}
             series={[
@@ -129,13 +157,19 @@ export default function ChurnAnalysis() {
               { name: 'MRR', values: churnByPlan.map((d) => d.mrr), className: 'bg-primary' },
             ]}
             format={pct}
-            axisFormat={pctRound}
+            axisFormat={() => ''}
+            valueLabel={(_, i, si) => (si === 0 ? num(churnByPlan[i].churned) : `$${Math.round(churnByPlan[i].lostMrr / 1000)}K`)}
+            tip={(i) => `${churnByPlan[i].plan} · ${num(churnByPlan[i].churned)} churned accounts (${churnByPlan[i].accounts}%) · ${money(churnByPlan[i].lostMrr)} monthly revenue lost (${churnByPlan[i].mrr}%)`}
             height={170}
             ariaLabel="Share of churned accounts and lost MRR by plan: Starter 61% of accounts but 18% of MRR, Pro 37% of accounts but 55% of MRR"
           />
         </ChartCard>
-        <ChartCard label="Churn rate by onboarding, by plan" caption="Accounts that skip onboarding churn 3–4x more on every plan.">
-          <Legend items={[{ name: 'Skipped', className: 'bg-primary' }, { name: 'Completed', className: 'bg-bar' }]} />
+        <ChartCard
+          label="What's the strongest warning sign?"
+          headline="Skipping onboarding: 3–4x more churn."
+          next="Remind accounts to finish onboarding."
+        >
+          <Legend items={[{ name: 'Skipped onboarding', className: 'bg-primary' }, { name: 'Completed', className: 'bg-bar' }]} />
           <Columns
             labels={onboardingByPlan.map((d) => d.plan)}
             series={[
@@ -144,11 +178,18 @@ export default function ChurnAnalysis() {
             ]}
             format={pct}
             axisFormat={pctRound}
+            valueLabel={pctRound}
+            tip={(i) => { const d = onboardingByPlan[i]; return `${d.plan} · skipped: ${num(d.skippedN[0])} of ${num(d.skippedN[1])} churned · completed: ${num(d.completedN[0])} of ${num(d.completedN[1])} churned` }}
             height={170}
             ariaLabel="Churn rate with onboarding skipped vs. completed: Starter 38% vs 13%, Pro 30% vs 8%, Enterprise 16% vs 4%"
           />
         </ChartCard>
-        <ChartCard className="lg:col-span-2" label="Cumulative % of monthly accounts lost" caption="18% of monthly contract accounts are lost by month 6.">
+        <ChartCard
+          className="lg:col-span-2"
+          label="When do customers leave?"
+          headline="Early: 18% are gone by month 6."
+          next="Rescore accounts every month."
+        >
           <TrendLine
             data={cumulativeLost}
             valueKey="pct"
@@ -163,33 +204,21 @@ export default function ChurnAnalysis() {
         </ChartCard>
       </BiDashboard>
 
-      <Slide title="The Conclusion">
+      <Slide title="What to do">
         <ShortAnswer finding={project.finding} />
-        <Takeaway headline="Pro churns the most money, Starter the most accounts.">
-          Counting accounts makes Starter look like the biggest problem. Counting money tells a different story.
-          Losing one Enterprise account is like losing almost 50 Starter accounts.
-        </Takeaway>
-        <StatGrid stats={STATS} />
-      </Slide>
-
-      <Slide title="Business recommendations">
         <Bullets items={RECOMMENDATIONS} />
-      </Slide>
-
-      <Slide title="Key findings">
-        <Bullets items={FINDINGS} />
       </Slide>
 
       <Details>
         <Slide title="Dashboard in Tableau" appendix>
           <DashboardFrame
             src={dashboardImage}
-            alt="Tableau dashboard with expected MRR lost, churn rate by risk score colored green, yellow and red, and the call list of accounts ranked by expected loss"
-            caption="The call list dashboard: 640 accounts ranked by how much MRR we expect to lose."
+            alt="Tableau dashboard with expected MRR lost, churn rate by risk score colored green, yellow and red, and every active account ranked by expected loss"
+            caption="The action dashboard: every active account by risk tier, ranked by how much MRR we expect to lose."
           />
         </Slide>
 
-        <Slide title="The Business Question" appendix>
+        <Slide title="Background" appendix>
           <MetaStrip meta={META} />
           <p className="mt-3 text-ink">
             Rotawise is a fictional B2B SaaS company that sells employee scheduling software to businesses with shift
@@ -197,9 +226,8 @@ export default function ChurnAnalysis() {
             three plans: Starter ($4), Pro ($8) or Enterprise ($12).
           </p>
           <p className="mt-3 text-ink">
-            The company has 8 Customer Success Managers (CSMs) and about 33,000 active accounts. If each CSM can
-            handle 80 accounts, that's only 640 accounts they can actually call. So the question isn't just "why do
-            customers churn?" It's:
+            The company has about 33,000 active accounts, and it can't give all of them the same attention. So the
+            question isn't just "why do customers churn?" It's:
           </p>
           <Bullets items={QUESTIONS} small />
         </Slide>
@@ -293,47 +321,91 @@ export default function ChurnAnalysis() {
             and it drops from there.
           </p>
 
-          <h3 className="mt-8 text-lg font-semibold text-ink">Building a risk score</h3>
+          <h3 className="mt-8 text-lg font-semibold text-ink">How the risk score works</h3>
           <p className="mt-2 text-ink">
-            I turned the 8 warning signs into a 0–20 point score, split where the gap suddenly jumps. I left CSM out
-            since it mostly just repeats plan. Green (0–8) churned at 7.8%, yellow (9–15) at 27.8% and red (16–20) at
-            65.2%.
+            Each account gets points for every warning sign it has, and the points add up to a score from 0 (no
+            warning signs) to 20 (all 8). Bigger gap, more points:
           </p>
-          <CodeBlock caption="T-SQL: risk score" code={SQL_SCORE} />
-
-          <h3 className="mt-8 text-lg font-semibold text-ink">Picking the 640</h3>
-          <p className="mt-2 text-ink">
-            A high score doesn't mean a lot of money, so I ranked accounts by expected loss: MRR × churn chance, where
-            the churn chance is last year's churn for accounts with the same plan and score. My first version used
-            score only and the list came out 520 Enterprise accounts out of 640. Enterprise churns about half as much
-            as the other plans at the same score, so I added plan to the lookup.
-          </p>
-          <CodeBlock caption="T-SQL: the 640 accounts with the most expected loss" code={SQL_CALL_LIST} />
           <div className="mt-4 overflow-x-auto rounded-lg border border-border">
             <table className="w-full border-collapse text-xs sm:text-sm">
               <thead>
                 <tr className="border-b border-border bg-surface text-left">
-                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Plan</th>
-                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Accounts</th>
-                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Expected MRR lost</th>
+                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Warning sign</th>
+                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Churn gap</th>
+                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Points</th>
                 </tr>
               </thead>
               <tbody>
-                {callList.map((row) => (
-                  <tr key={row.plan} className="border-b border-border">
-                    <td className="px-2.5 py-2 sm:px-4 text-ink">{row.plan}</td>
-                    <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{row.accounts}</td>
-                    <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{money(row.expectedLoss)}</td>
+                {warningSigns.map((row) => (
+                  <tr key={row.label} className="border-b border-border">
+                    <td className="px-2.5 py-2 sm:px-4 text-ink">{row.label}</td>
+                    <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">+{row.gap.toFixed(1)}</td>
+                    <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{row.points}</td>
                   </tr>
                 ))}
                 <tr className="font-semibold">
-                  <td className="px-2.5 py-2 sm:px-4 text-ink">Total</td>
-                  <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">640</td>
-                  <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{money(callListTotal)}</td>
+                  <td className="px-2.5 py-2 sm:px-4 text-ink">Highest possible score</td>
+                  <td className="px-2.5 py-2 sm:px-4" />
+                  <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{warningSigns.reduce((sum, s) => sum + s.points, 0)}</td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <p className="mt-4 text-ink">
+            To set the points, I sorted the signs by gap and split them where the gap jumps. Onboarding gets 4 on its
+            own, since the biggest jump in the list is right after it. The three signs around 17 points get 3, the next
+            three get 2, and escalated tickets gets 1. I left out having a Customer Success Manager (CSM), since that
+            mostly just repeats plan.
+          </p>
+          <CodeBlock caption="T-SQL: risk score" code={SQL_SCORE} />
+          <p className="mt-4 text-ink">
+            To check the score works, I looked at last year's churn for each score. It climbs steadily, from 2.5% at
+            score 0 to about 72% at 19–20 (the first chart on this page). Then I split the scores into two tiers at 11, where churn first goes over 25%:
+            at risk (11–20) churned at 43.6% (2,047 of 4,700 accounts) and low risk (0–10) at 10.0% (2,480 of 24,811).
+            An at-risk account is about 4x more likely to churn than a low-risk one.
+          </p>
+
+          <h3 className="mt-8 text-lg font-semibold text-ink">From score to money</h3>
+          <p className="mt-2 text-ink">
+            A high score doesn't mean a lot of money. A score-19 Starter account might put $100 at risk, while a
+            lower-score Enterprise account could put $1,000+ at risk. So inside each tier I ranked accounts by expected
+            loss: MRR × churn chance, where the churn chance is last year's churn for accounts with the same plan and
+            score. My first version used score only, but Enterprise churns about half as much as the other plans at the
+            same score (28.6% vs 60.7% at score 16), so I was overstating its risk and added plan to the lookup.
+          </p>
+          <CodeBlock caption="T-SQL: each account's tier and expected loss" code={SQL_TIERS} />
+          <div className="mt-4 overflow-x-auto rounded-lg border border-border">
+            <table className="w-full border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr className="border-b border-border bg-surface text-left">
+                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Tier</th>
+                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Accounts</th>
+                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Expected MRR lost</th>
+                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Share</th>
+                </tr>
+              </thead>
+              <tbody>
+                {riskTiers.map((row) => (
+                  <tr key={row.tier} className="border-b border-border">
+                    <td className="px-2.5 py-2 sm:px-4 text-ink">{row.tier}</td>
+                    <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{row.accounts.toLocaleString()}</td>
+                    <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{money(row.expectedLoss)}</td>
+                    <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{row.share}%</td>
+                  </tr>
+                ))}
+                <tr className="font-semibold">
+                  <td className="px-2.5 py-2 sm:px-4 text-ink">Total</td>
+                  <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{tierAccounts.toLocaleString()}</td>
+                  <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{money(tierTotal)}</td>
+                  <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">100%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-3 text-ink">
+            Low risk still holds 64% of the expected loss, but only because there are so many low-risk accounts. Each
+            one is worth about $35 of expected loss, compared with $123 for each at-risk account.
+          </p>
           <p className="mt-3 text-ink">
             As a sanity check, the expected loss for all active accounts adds up to $1.58M, and last year the company
             actually lost $1.39M of MRR, so the number is in the right range.

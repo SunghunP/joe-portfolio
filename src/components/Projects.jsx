@@ -10,7 +10,7 @@ import { projects, practice } from '../data/projects';
 const MEDIA = {
   'customer-churn-analysis': {
     src: churnDashboardImage,
-    alt: 'Tableau dashboard with expected MRR lost, churn rate by risk score, and a call list of accounts ranked by expected loss',
+    alt: 'Tableau dashboard with expected MRR lost, churn rate by risk score in green, yellow and red tiers, and every active account ranked by expected loss',
   },
   'wa-labor-cost': {
     src: wageChartsImage,
