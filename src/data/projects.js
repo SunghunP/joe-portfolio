@@ -1,5 +1,18 @@
 export const projects = [
   {
+    slug: 'customer-churn-analysis',
+    title: 'Customer Churn Analysis: Which Customers Should We Save?',
+    description:
+      'Rotawise, a fictional B2B SaaS company, expects to lose $1.58M of MRR (monthly recurring revenue) to churn in the next year, but its Customer Success team can only call about 640 of 33,000 accounts. I built a Python pipeline that pulls the raw data from Google Sheets, cleans it and loads it into SQL Server, then used SQL to find who churns, when, and the early warning signs. I turned those signs into a risk score and ranked every account by expected loss.',
+    tags: ['Python', 'SQL', 'Tableau'],
+    finding: 'We expect to lose $1.58M of MRR to churn in the next 12 months. If the Customer Success team calls the 640 accounts with the most expected loss, they can protect up to $414K of it.',
+    repoUrl: 'https://github.com/SunghunP/rotawise-churn-analysis',
+    caseStudyUrl: '/projects/customer-churn-analysis',
+    repoLabel: 'code',
+    dashboardUrl: 'https://public.tableau.com/app/profile/joe.park2461/viz/RotawiseChurnDashboard/3Action',
+    mediumUrl: 'https://medium.com/@joeparkda/which-customers-should-we-save-a-churn-analysis-for-a-b2b-saas-company-64d7ada14ae5',
+  },
+  {
     slug: 'pho-restaurant-analysis',
     title: 'Pho Restaurant Sales Analysis',
     description:

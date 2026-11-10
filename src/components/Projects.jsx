@@ -1,19 +1,24 @@
 import ProjectCard from './ProjectCard';
 import PracticeCard from './PracticeCard';
 import { SectionTitle } from './Section';
-import wageChartsImage from '../assets/images/wa/wa-analyst-wage-charts.png';
-import dashboardImage from '../assets/images/pho/sales_dashboard.png';
+import wageChartsImage from '../assets/images/wa/wa-dashboard-card.png';
+import dashboardImage from '../assets/images/pho/sales-heatmap-card.png';
 import coffeeDashboardImage from '../assets/images/coffee/coffee_shop_dashboard.png';
+import churnDashboardImage from '../assets/images/churn/action_dashboard.png';
 import { projects, practice } from '../data/projects';
 
 const MEDIA = {
+  'customer-churn-analysis': {
+    src: churnDashboardImage,
+    alt: 'Tableau dashboard with expected MRR lost, churn rate by risk score, and a call list of accounts ranked by expected loss',
+  },
   'wa-labor-cost': {
     src: wageChartsImage,
     alt: 'Power BI dashboard with a Washington wage map, annual analyst wage by area, and analyst cost vs. talent pool size',
   },
   'pho-restaurant-analysis': {
     src: dashboardImage,
-    alt: 'Pho restaurant sales dashboard with a day-by-hour sales heatmap and the top and bottom selling items',
+    alt: 'Heatmap of average pho restaurant sales by day of week and hour',
   },
   'coffee-shop-sales-analysis': {
     src: coffeeDashboardImage,

@@ -251,13 +251,25 @@ export function Heatmap({ rows, cols, values, format = money, mark, ariaLabel })
 }
 
 // Area + line over time with a dashed average. Zero baseline, so "flat" really looks flat.
-export function TrendLine({ data, valueKey, labelKey, format = money, average, ariaLabel }) {
+// `markIndex` picks out one point (orange dot and value label), e.g. the month the story is about.
+export function TrendLine({
+  data,
+  valueKey,
+  labelKey,
+  format = money,
+  average,
+  yTicks = [0, 10000, 20000, 30000],
+  tickFormat = (t) => (t ? `$${t / 1000}K` : '$0'),
+  tipLabel = (label) => `Week of ${label}`,
+  markIndex,
+  ariaLabel,
+}) {
   const { ref, show, hide, element } = useTooltip()
   const [box, W] = useWidth(640)
   const H = W < 480 ? 180 : 200
   const pad = { l: 40, r: 12, t: 24, b: 32 }
   const labelEvery = W < 480 ? 4 : 2
-  const yMax = 30000
+  const yMax = yTicks[yTicks.length - 1]
   const x = (i) => pad.l + (i / (data.length - 1)) * (W - pad.l - pad.r)
   const y = (v) => pad.t + (1 - v / yMax) * (H - pad.t - pad.b)
   const line = data.map((d, i) => `${i ? 'L' : 'M'}${x(i)},${y(d[valueKey])}`).join(' ')
@@ -268,10 +280,10 @@ export function TrendLine({ data, valueKey, labelKey, format = money, average, a
     <div ref={ref} className="relative">
       <div ref={box}>
         <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} role="img" aria-label={ariaLabel} className="block w-full font-sans">
-          {[0, 10000, 20000, 30000].map((t) => (
+          {yTicks.map((t) => (
             <g key={t}>
               <line x1={pad.l} x2={W - pad.r} y1={y(t)} y2={y(t)} className="stroke-border" />
-              <text x={pad.l - 8} y={y(t) + 3} textAnchor="end" fontSize="10" className="fill-muted">{t ? `$${t / 1000}K` : '$0'}</text>
+              <text x={pad.l - 8} y={y(t) + 3} textAnchor="end" fontSize="10" className="fill-muted">{tickFormat(t)}</text>
             </g>
           ))}
           <path d={area} className="fill-bar/15" />
@@ -287,7 +299,12 @@ export function TrendLine({ data, valueKey, labelKey, format = money, average, a
           {data.map((d, i) => (
             <g key={d[labelKey]}>
               {hover === i && <line x1={x(i)} x2={x(i)} y1={pad.t} y2={H - pad.b} className="stroke-muted" strokeDasharray="3 3" />}
-              <circle cx={x(i)} cy={y(d[valueKey])} r={hover === i ? 6 : 4} className="fill-bar stroke-card" strokeWidth="2" />
+              <circle cx={x(i)} cy={y(d[valueKey])} r={hover === i || markIndex === i ? 6 : 4} className={`${markIndex === i ? 'fill-primary' : 'fill-bar'} stroke-card`} strokeWidth="2" />
+              {markIndex === i && (
+                <text x={x(i) - 8} y={y(d[valueKey]) - 10} textAnchor="end" fontSize="11" fontWeight="700" className="fill-ink">
+                  {format(d[valueKey])}
+                </text>
+              )}
               {i % labelEvery === 0 && <text x={x(i)} y={H - 10} textAnchor="middle" fontSize="10" className="fill-muted">{d[labelKey]}</text>}
               <rect
                 x={x(i) - (W - pad.l - pad.r) / (data.length - 1) / 2}
@@ -295,7 +312,7 @@ export function TrendLine({ data, valueKey, labelKey, format = money, average, a
                 width={(W - pad.l - pad.r) / (data.length - 1)}
                 height={H - pad.t - pad.b}
                 fill="transparent"
-                onPointerMove={(e) => { setHover(i); show(e, `Week of ${d[labelKey]}: ${format(d[valueKey])}`) }}
+                onPointerMove={(e) => { setHover(i); show(e, `${tipLabel(d[labelKey])}: ${format(d[valueKey])}`) }}
                 onPointerLeave={() => { setHover(null); hide() }}
               />
             </g>

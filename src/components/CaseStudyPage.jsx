@@ -20,7 +20,8 @@ export default function CaseStudyPage({ project, title = project.title, children
 
         <div className="mt-10 flex flex-wrap gap-5 border-t border-border pt-6 text-sm font-semibold">
           <a href={project.repoUrl} className="text-primary hover:underline">Full write-up &amp; {project.repoLabel} on GitHub →</a>
-          <a href={project.mediumUrl} className="text-primary hover:underline">Read on Medium →</a>
+          {project.dashboardUrl && <a href={project.dashboardUrl} className="text-primary hover:underline">View the dashboard on Tableau Public →</a>}
+          {project.mediumUrl && <a href={project.mediumUrl} className="text-primary hover:underline">Read on Medium →</a>}
         </div>
 
         <NextCaseStudy currentSlug={project.slug} />

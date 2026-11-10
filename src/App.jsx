@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import CaseStudy from './pages/CaseStudy';
 import PhoAnalysis from './pages/PhoAnalysis';
 import CoffeeAnalysis from './pages/CoffeeAnalysis';
+import ChurnAnalysis from './pages/ChurnAnalysis';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/projects/pho-restaurant-analysis" element={<PhoAnalysis />} />
           <Route path="/projects/coffee-shop-sales-analysis" element={<CoffeeAnalysis />} />
+          <Route path="/projects/customer-churn-analysis" element={<ChurnAnalysis />} />
           <Route path="/projects/:slug" element={<CaseStudy />} />
         </Routes>
       </div>
