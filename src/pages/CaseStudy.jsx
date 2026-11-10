@@ -3,7 +3,7 @@ import Shell from '../components/Shell';
 import CaseStudyPage from '../components/CaseStudyPage';
 import ShortAnswer from '../components/ShortAnswer';
 import Details from '../components/Details';
-import { Bullets, MetaStrip, Slide, StatGrid, Takeaway } from '../components/Deck';
+import { Bullets, DataTable, MetaStrip, Slide, StatGrid, Takeaway } from '../components/Deck';
 import CodeBlock from '../components/CodeBlock';
 import WageBarChart from '../components/WageBarChart';
 import chartsImage from '../assets/images/wa/wa-analyst-wage-charts.png';
@@ -213,26 +213,10 @@ export default function CaseStudy() {
             Results across all 15 Washington labor market areas, ranked from lowest to highest weighted average analyst
             wage:
           </p>
-          <div className="mt-3 overflow-x-auto rounded-lg border border-border">
-            <table className="w-full border-collapse text-xs sm:text-sm">
-              <thead>
-                <tr className="border-b border-border bg-surface text-left">
-                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Labor Market Area</th>
-                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Total Analyst Employment</th>
-                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Weighted Avg. Annual Wage</th>
-                </tr>
-              </thead>
-              <tbody>
-                {wageData.map((area) => (
-                  <tr key={area.name} className="border-b border-border last:border-0">
-                    <td className="px-2.5 py-2 sm:px-4 text-ink">{area.name}</td>
-                    <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{area.emp.toLocaleString()}</td>
-                    <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{`$${area.wage.toLocaleString()}`}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <DataTable
+            head={['Labor Market Area', 'Total Analyst Employment', 'Weighted Avg. Annual Wage']}
+            rows={wageData.map((a) => [a.name, a.emp.toLocaleString(), `$${a.wage.toLocaleString()}`])}
+          />
 
           <div className="mt-2 rounded-xl border border-border bg-card p-4 shadow-sm">
             <WageBarChart />

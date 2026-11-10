@@ -1,4 +1,4 @@
-import { Children, cloneElement, createContext, isValidElement, useContext } from 'react'
+import { Children, Fragment, cloneElement, createContext, isValidElement, useContext } from 'react'
 
 const DeckContext = createContext('')
 
@@ -78,6 +78,31 @@ export function StatGrid({ stats }) {
           <p className="mt-3 text-sm text-muted">{stat.label}</p>
         </div>
       ))}
+    </div>
+  )
+}
+
+// Simple data table: first column is text, the rest are numbers. `foot` is an optional bold total row.
+const CELL = 'px-2.5 py-2 sm:px-4'
+export function DataTable({ head, rows, foot }) {
+  const row = (cells, className) => (
+    <tr className={className}>
+      {cells.map((c, i) => <td key={i} className={`${CELL} text-ink ${i ? 'font-mono' : ''}`}>{c}</td>)}
+    </tr>
+  )
+  return (
+    <div className="mt-4 overflow-x-auto rounded-lg border border-border">
+      <table className="w-full border-collapse text-xs sm:text-sm">
+        <thead>
+          <tr className="border-b border-border bg-surface text-left">
+            {head.map((h) => <th key={h} className={`${CELL} text-xs font-bold uppercase tracking-wide text-muted`}>{h}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((cells) => <Fragment key={cells[0]}>{row(cells, 'border-b border-border last:border-0')}</Fragment>)}
+          {foot && row(foot, 'border-t border-border font-semibold')}
+        </tbody>
+      </table>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import CaseStudyPage from '../components/CaseStudyPage';
 import ShortAnswer from '../components/ShortAnswer';
 import Details from '../components/Details';
-import { Bullets, MetaStrip, Slide } from '../components/Deck';
+import { Bullets, DataTable, MetaStrip, Slide } from '../components/Deck';
 import CodeBlock from '../components/CodeBlock';
 import { BiDashboard, ChartCard, Columns, DashboardFrame, HBar, Legend, TrendLine } from '../components/Charts';
 import dashboardImage from '../assets/images/churn/action_dashboard.png';
@@ -324,33 +324,8 @@ export default function ChurnAnalysis() {
           <h3 className="mt-8 text-lg font-semibold text-ink">How the risk score works</h3>
           <p className="mt-2 text-ink">
             Each account gets points for every warning sign it has, and the points add up to a score from 0 (no
-            warning signs) to 20 (all 8). Bigger gap, more points:
+            warning signs) to 20 (all 8). Bigger gap, more points (see the first chart on this page).
           </p>
-          <div className="mt-4 overflow-x-auto rounded-lg border border-border">
-            <table className="w-full border-collapse text-xs sm:text-sm">
-              <thead>
-                <tr className="border-b border-border bg-surface text-left">
-                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Warning sign</th>
-                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Churn gap</th>
-                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Points</th>
-                </tr>
-              </thead>
-              <tbody>
-                {warningSigns.map((row) => (
-                  <tr key={row.label} className="border-b border-border">
-                    <td className="px-2.5 py-2 sm:px-4 text-ink">{row.label}</td>
-                    <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">+{row.gap.toFixed(1)}</td>
-                    <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{row.points}</td>
-                  </tr>
-                ))}
-                <tr className="font-semibold">
-                  <td className="px-2.5 py-2 sm:px-4 text-ink">Highest possible score</td>
-                  <td className="px-2.5 py-2 sm:px-4" />
-                  <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{warningSigns.reduce((sum, s) => sum + s.points, 0)}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
           <p className="mt-4 text-ink">
             To set the points, I sorted the signs by gap and split them where the gap jumps. Onboarding gets 4 on its
             own, since the biggest jump in the list is right after it. The three signs around 17 points get 3, the next
@@ -374,34 +349,11 @@ export default function ChurnAnalysis() {
             same score (28.6% vs 60.7% at score 16), so I was overstating its risk and added plan to the lookup.
           </p>
           <CodeBlock caption="T-SQL: each account's tier and expected loss" code={SQL_TIERS} />
-          <div className="mt-4 overflow-x-auto rounded-lg border border-border">
-            <table className="w-full border-collapse text-xs sm:text-sm">
-              <thead>
-                <tr className="border-b border-border bg-surface text-left">
-                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Tier</th>
-                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Accounts</th>
-                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Expected MRR lost</th>
-                  <th className="px-2.5 py-2 sm:px-4 text-xs font-bold uppercase tracking-wide text-muted">Share</th>
-                </tr>
-              </thead>
-              <tbody>
-                {riskTiers.map((row) => (
-                  <tr key={row.tier} className="border-b border-border">
-                    <td className="px-2.5 py-2 sm:px-4 text-ink">{row.tier}</td>
-                    <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{row.accounts.toLocaleString()}</td>
-                    <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{money(row.expectedLoss)}</td>
-                    <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{row.share}%</td>
-                  </tr>
-                ))}
-                <tr className="font-semibold">
-                  <td className="px-2.5 py-2 sm:px-4 text-ink">Total</td>
-                  <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{tierAccounts.toLocaleString()}</td>
-                  <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">{money(tierTotal)}</td>
-                  <td className="px-2.5 py-2 sm:px-4 font-mono text-ink">100%</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <DataTable
+            head={['Tier', 'Accounts', 'Expected MRR lost', 'Share']}
+            rows={riskTiers.map((t) => [t.tier, num(t.accounts), money(t.expectedLoss), `${t.share}%`])}
+            foot={['Total', num(tierAccounts), money(tierTotal), '100%']}
+          />
           <p className="mt-3 text-ink">
             Low risk still holds 64% of the expected loss, but only because there are so many low-risk accounts. Each
             one is worth about $35 of expected loss, compared with $123 for each at-risk account.
